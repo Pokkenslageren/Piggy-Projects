@@ -1,4 +1,4 @@
-![Piggy](https://github.com/user-attachments/assets/31d05e43-a37c-497b-9270-0de6a75d8471)
+![planner](https://github.com/user-attachments/assets/3d2d9fcb-6fcb-433a-a7ee-34c730941e93)
 
 # Piggy Projects - A project management tool 
 
