@@ -1,4 +1,4 @@
-package PiggyProjects.Model;
+package ProjectPlanner.Model;
 
 public class Task {
     private String projectId;

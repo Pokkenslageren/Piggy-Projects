@@ -1,4 +1,4 @@
-package PiggyProjects.Model;
+package ProjectPlanner.Model;
 
 public class User {
     private int companyId;

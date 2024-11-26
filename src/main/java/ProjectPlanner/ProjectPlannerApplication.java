@@ -1,13 +1,13 @@
-package PiggyProjects;
+package ProjectPlanner;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PiggyProjectsApplication {
+public class ProjectPlannerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PiggyProjectsApplication.class, args);
+        SpringApplication.run(ProjectPlannerApplication.class, args);
     }
 
 }
