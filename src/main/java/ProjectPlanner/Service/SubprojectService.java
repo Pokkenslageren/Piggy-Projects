@@ -1,4 +1,4 @@
-package PiggyProjects.Service;
+package ProjectPlanner.Service;
 
 public class SubprojectService {
 }
