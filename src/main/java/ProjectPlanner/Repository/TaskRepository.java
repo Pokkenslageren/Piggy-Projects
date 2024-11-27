@@ -14,6 +14,8 @@ public class TaskRepository {
     private final String dbUsername = "root";
     private final String dbPassword = "password";
 
+    // application.properties ????
+
     /**
      * Find all tasks
      * @return
@@ -23,11 +25,11 @@ public class TaskRepository {
         String query = "SELECT * FROM tasks";
 
         try (Connection connection = DriverManager.getConnection(database, dbUsername, dbPassword);
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
 
-            while (resultSet.next()) {
-                tasks.add(mapRowToTask(resultSet));
+            while (rs.next()) {
+                tasks.add(mapRowToTask(rs));
             }
 
         } catch (SQLException e) {
@@ -44,13 +46,13 @@ public class TaskRepository {
      */
     public Optional<Task> findById(String taskId) {
         String query = "SELECT * FROM tasks WHERE taskId = ?";
-        try (Connection connection = DriverManager.getConnection(database, dbUsername, dbPassword);
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (Connection conn = DriverManager.getConnection(database, dbUsername, dbPassword);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            preparedStatement.setString(1, taskId);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    return Optional.of(mapRowToTask(resultSet));
+            pstmt.setString(1, taskId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(mapRowToTask(rs));
                 }
             }
 
@@ -69,20 +71,20 @@ public class TaskRepository {
     public Task saveTask(Task task) {
         String query = "INSERT INTO tasks (taskId, projectId, subprojectId, taskName, assignedEmployees, estimatedCost, startDate, endDate, isComplete, taskDescription) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = DriverManager.getConnection(database, dbUsername, dbPassword);
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (Connection conn = DriverManager.getConnection(database, dbUsername, dbPassword);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            preparedStatement.setString(1, task.getTaskId());
-            preparedStatement.setString(2, task.getProjectId());
-            preparedStatement.setString(3, task.getSubprojectId());
-            preparedStatement.setString(4, task.getTaskName());
-            preparedStatement.setInt(5, task.getAssignedEmployees());
-            preparedStatement.setDouble(6, task.getEstimatedCost());
-            preparedStatement.setString(7, task.getStartDate());
-            preparedStatement.setString(8, task.getEndDate());
-            preparedStatement.setBoolean(9, task.getIsComplete());
-            preparedStatement.setString(10, task.getTaskDescription());
-            preparedStatement.executeUpdate();
+            pstmt.setString(1, task.getTaskId());
+            pstmt.setString(2, task.getProjectId());
+            pstmt.setString(3, task.getSubprojectId());
+            pstmt.setString(4, task.getTaskName());
+            pstmt.setInt(5, task.getAssignedEmployees());
+            pstmt.setDouble(6, task.getEstimatedCost());
+            pstmt.setString(7, task.getStartDate());
+            pstmt.setString(8, task.getEndDate());
+            pstmt.setBoolean(9, task.getIsComplete());
+            pstmt.setString(10, task.getTaskDescription());
+            pstmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -98,11 +100,11 @@ public class TaskRepository {
     public void deleteById(String taskId) {
         String query = "DELETE FROM tasks WHERE taskId = ?";
 
-        try (Connection connection = DriverManager.getConnection(database, dbUsername, dbPassword);
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (Connection conn = DriverManager.getConnection(database, dbUsername, dbPassword);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            preparedStatement.setString(1, taskId);
-            preparedStatement.executeUpdate();
+            pstmt.setString(1, taskId);
+            pstmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -117,20 +119,20 @@ public class TaskRepository {
     public Task update(Task task) {
         String query = "UPDATE tasks SET projectId = ?, subprojectId = ?, taskName = ?, assignedEmployees = ?, estimatedCost = ?, startDate = ?, endDate = ?, isComplete = ?, taskDescription = ? WHERE taskId = ?";
 
-        try (Connection connection = DriverManager.getConnection(database, dbUsername, dbPassword);
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (Connection conn = DriverManager.getConnection(database, dbUsername, dbPassword);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            preparedStatement.setString(1, task.getProjectId());
-            preparedStatement.setString(2, task.getSubprojectId());
-            preparedStatement.setString(3, task.getTaskName());
-            preparedStatement.setInt(4, task.getAssignedEmployees());
-            preparedStatement.setDouble(5, task.getEstimatedCost());
-            preparedStatement.setString(6, task.getStartDate());
-            preparedStatement.setString(7, task.getEndDate());
-            preparedStatement.setBoolean(8, task.getIsComplete());
-            preparedStatement.setString(9, task.getTaskDescription());
-            preparedStatement.setString(10, task.getTaskId());
-            preparedStatement.executeUpdate();
+            pstmt.setString(1, task.getProjectId());
+            pstmt.setString(2, task.getSubprojectId());
+            pstmt.setString(3, task.getTaskName());
+            pstmt.setInt(4, task.getAssignedEmployees());
+            pstmt.setDouble(5, task.getEstimatedCost());
+            pstmt.setString(6, task.getStartDate());
+            pstmt.setString(7, task.getEndDate());
+            pstmt.setBoolean(8, task.getIsComplete());
+            pstmt.setString(9, task.getTaskDescription());
+            pstmt.setString(10, task.getTaskId());
+            pstmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -141,22 +143,22 @@ public class TaskRepository {
 
     /**
      * Mapping database-row to a Task-object
-     * @param resultSet
+     * @param rs
      * @return
      * @throws SQLException
      */
-    private Task mapRowToTask(ResultSet resultSet) throws SQLException {
+    private Task mapRowToTask(ResultSet rs) throws SQLException {
         return new Task(
-                resultSet.getString("projectId"),
-                resultSet.getString("subprojectId"),
-                resultSet.getString("taskId"),
-                resultSet.getString("taskName"),
-                resultSet.getInt("assignedEmployees"),
-                resultSet.getDouble("estimatedCost"),
-                resultSet.getString("startDate"),
-                resultSet.getString("endDate"),
-                resultSet.getBoolean("isComplete"),
-                resultSet.getString("taskDescription")
+                rs.getString("projectId"),
+                rs.getString("subprojectId"),
+                rs.getString("taskId"),
+                rs.getString("taskName"),
+                rs.getInt("assignedEmployees"),
+                rs.getDouble("estimatedCost"),
+                rs.getString("startDate"),
+                rs.getString("endDate"),
+                rs.getBoolean("isComplete"),
+                rs.getString("taskDescription")
         );
     }
 }
