@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tasks")
+@RequestMapping("")
 public class TaskController {
 
     private final TaskService taskService;
@@ -24,7 +24,7 @@ public class TaskController {
      * Retrieve all tasks
      * @return
      */
-    @GetMapping
+    @GetMapping("/tasks")
     public ResponseEntity<List<Task>> getAllTasks() {
         List<Task> tasks = taskService.getAllTasks();
         return new ResponseEntity<>(tasks, HttpStatus.OK);
@@ -49,34 +49,40 @@ public class TaskController {
      */
     @PostMapping
     public ResponseEntity<Task> createTask(@RequestBody Task task) {
-        Task createdTask = taskService.createTask(task);
+        Task createdTask = taskService.saveTask(task);
         return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
     }
 
     /**
-     * Update an existing task
+     * Updates a task
      * @param taskId
      * @param updatedTask
      * @return
      */
     @PutMapping("/{taskId}")
-    public ResponseEntity<Task> updateTask(@PathVariable String taskId, @RequestBody Task updatedTask) {
+    public ResponseEntity<Void> updateTask(@PathVariable int taskId, @RequestBody Task updatedTask) {
         try {
-            Task task = taskService.updateTask(taskId, updatedTask);
-            return new ResponseEntity<>(task, HttpStatus.OK);
+            taskService.updateTask(taskId, updatedTask);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
+
     /**
-     * Delete a task by ID
+     * Deletes a task
      * @param taskId
      * @return
      */
     @DeleteMapping("/{taskId}")
-    public ResponseEntity<Void> deleteTask(@PathVariable String taskId) {
-        taskService.deleteTask(taskId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<Void> deleteTask(@PathVariable int taskId) {
+        try {
+            taskService.deleteTask(taskId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
+
 }

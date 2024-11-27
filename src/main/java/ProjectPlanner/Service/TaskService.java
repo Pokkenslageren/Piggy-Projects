@@ -23,7 +23,7 @@ public class TaskService {
      * @return
      */
     public List<Task> getAllTasks() {
-        return taskRepository.findAll();
+        return taskRepository.getAllTasks();
     }
 
     /**
@@ -32,7 +32,7 @@ public class TaskService {
      * @return
      */
     public Optional<Task> getTaskById(String taskId) {
-        return taskRepository.findById(taskId);
+        return Optional.ofNullable(taskRepository.getTaskById(Integer.parseInt(taskId)));
     }
 
     /**
@@ -40,33 +40,40 @@ public class TaskService {
      * @param task
      * @return
      */
-    public Task createTask(Task task) {
-        return taskRepository.saveTask(task);
+    public Task saveTask(Task task) {
+        taskRepository.saveTask(
+                task.getTaskName(),
+                Integer.parseInt(task.getTaskId()),
+                task.getAssignedEmployees(),
+                (int) task.getEstimatedCost(),
+                Integer.parseInt(task.getStartDate()),
+                Integer.parseInt(task.getEndDate()),
+                task.getIsComplete(),
+                task.getTaskDescription()
+        );
+        return task;
     }
 
+
     /**
-     * Update existing Task
+     * Updates a task
      * @param taskId
      * @param updatedTask
-     * @return
      */
-    public Task updateTask(String taskId, Task updatedTask) {
-        // Find the task to update
-        Optional<Task> existingTask = taskRepository.findById(taskId);
+    public void updateTask(int taskId, Task updatedTask) {
+        Optional<Task> existingTask = getTaskById(String.valueOf(taskId));
 
         if (existingTask.isPresent()) {
-            // Update relevant fields
-            Task task = existingTask.get();
-            task.setTaskName(updatedTask.getTaskName());
-            task.setAssignedEmployees(updatedTask.getAssignedEmployees());
-            task.setEstimatedCost(updatedTask.getEstimatedCost());
-            task.setStartDate(updatedTask.getStartDate());
-            task.setEndDate(updatedTask.getEndDate());
-            task.setIsComplete(updatedTask.getIsComplete());
-            task.setTaskDescription(updatedTask.getTaskDescription());
-
-            // Save updated task
-            return taskRepository.update(task);
+            taskRepository.updateTask(
+                    updatedTask.getTaskName(),
+                    taskId,
+                    updatedTask.getAssignedEmployees(),
+                    (int) updatedTask.getEstimatedCost(),
+                    Integer.parseInt(updatedTask.getStartDate()),
+                    Integer.parseInt(updatedTask.getEndDate()),
+                    updatedTask.getIsComplete(),
+                    updatedTask.getTaskDescription()
+            );
         } else {
             throw new IllegalArgumentException("Task with ID " + taskId + " does not exist.");
         }
@@ -76,7 +83,7 @@ public class TaskService {
      * Delete a task by ID
      * @param taskId
      */
-    public void deleteTask(String taskId) {
-        taskRepository.deleteById(taskId);
+    public void deleteTask(int taskId) {
+        taskRepository.deleteTaskById(Integer.parseInt(String.valueOf(taskId)));
     }
 }

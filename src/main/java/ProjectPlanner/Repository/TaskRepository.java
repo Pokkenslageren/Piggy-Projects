@@ -1,6 +1,10 @@
 package ProjectPlanner.Repository;
 
 import ProjectPlanner.Model.Task;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -10,136 +14,97 @@ import java.util.Optional;
 
 @Repository
 public class TaskRepository {
-    private final String database = "jdbc:mysql://localhost:3306/projectplanner";
-    private final String dbUsername = "root";
-    private final String dbPassword = "password";
 
-    // application.properties ????
+    private final JdbcTemplate jdbcTemplate;
 
-    /**
-     * Find all tasks
-     * @return
-     */
-    public List<Task> findAll() {
-        List<Task> tasks = new ArrayList<>();
-        String query = "SELECT * FROM tasks";
-
-        try (Connection connection = DriverManager.getConnection(database, dbUsername, dbPassword);
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            while (rs.next()) {
-                tasks.add(mapRowToTask(rs));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return tasks;
+    @Autowired
+    public TaskRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     /**
-     * Find a task by ID
+     * Get all tasks
+     * @return
+     */
+    public List<Task> getAllTasks() {
+        String query = "SELECT * FROM tasks;";
+        RowMapper rowMapper = new BeanPropertyRowMapper(Task.class);
+        return jdbcTemplate.query(query, rowMapper);
+    }
+
+    /**
+     * Get a single task by ID
+     * @param id
+     * @return
+     */
+    public Task getTaskById(int id) {
+        String query = "SELECT * FROM tasks WHERE id = ?;";
+        RowMapper<Task> rowMapper = new BeanPropertyRowMapper<>(Task.class);
+        return jdbcTemplate.queryForObject(query, rowMapper, id);
+    }
+
+    /**
+     * Create a new task with variables
+     * @param taskName
      * @param taskId
-     * @return
+     * @param assignedEmployees
+     * @param estimatedCost
+     * @param startDate
+     * @param endDate
+     * @param isComplete
+     * @param description
      */
-    public Optional<Task> findById(String taskId) {
-        String query = "SELECT * FROM tasks WHERE taskId = ?";
-        try (Connection conn = DriverManager.getConnection(database, dbUsername, dbPassword);
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setString(1, taskId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return Optional.of(mapRowToTask(rs));
-                }
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return Optional.empty();
+    public void saveTask(String taskName, int taskId, int assignedEmployees, int estimatedCost, int startDate, int endDate, boolean isComplete, String description) {
+        String query = "INSERT INTO tasks (task_name, task_id, assigned_employees, estimated_cost, start_date, end_date, is_complete, task_description)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(query, taskName, taskId, assignedEmployees, estimatedCost, startDate, endDate, isComplete, description);
     }
 
     /**
-     * Create new task
-     * @param task
-     * @return
-     */
-    public Task saveTask(Task task) {
-        String query = "INSERT INTO tasks (taskId, projectId, subprojectId, taskName, assignedEmployees, estimatedCost, startDate, endDate, isComplete, taskDescription) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        try (Connection conn = DriverManager.getConnection(database, dbUsername, dbPassword);
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setString(1, task.getTaskId());
-            pstmt.setString(2, task.getProjectId());
-            pstmt.setString(3, task.getSubprojectId());
-            pstmt.setString(4, task.getTaskName());
-            pstmt.setInt(5, task.getAssignedEmployees());
-            pstmt.setDouble(6, task.getEstimatedCost());
-            pstmt.setString(7, task.getStartDate());
-            pstmt.setString(8, task.getEndDate());
-            pstmt.setBoolean(9, task.getIsComplete());
-            pstmt.setString(10, task.getTaskDescription());
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return task;
-    }
-
-    /**
-     * Delete a task by ID
+     * Deletes a task by ID
      * @param taskId
      */
-    public void deleteById(String taskId) {
-        String query = "DELETE FROM tasks WHERE taskId = ?";
-
-        try (Connection conn = DriverManager.getConnection(database, dbUsername, dbPassword);
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setString(1, taskId);
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void deleteTaskById(int taskId) {
+        String query = "DELETE FROM tasks WHERE task_id = ?;";
+        jdbcTemplate.update(query, taskId);
     }
 
     /**
-     * Updates a task
-     * @param task
-     * @return
+     * Update a task
+     * @param taskName
+     * @param taskId
+     * @param assignedEmployees
+     * @param estimatedCost
+     * @param startDate
+     * @param endDate
+     * @param isComplete
+     * @param description
      */
-    public Task update(Task task) {
-        String query = "UPDATE tasks SET projectId = ?, subprojectId = ?, taskName = ?, assignedEmployees = ?, estimatedCost = ?, startDate = ?, endDate = ?, isComplete = ?, taskDescription = ? WHERE taskId = ?";
-
-        try (Connection conn = DriverManager.getConnection(database, dbUsername, dbPassword);
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setString(1, task.getProjectId());
-            pstmt.setString(2, task.getSubprojectId());
-            pstmt.setString(3, task.getTaskName());
-            pstmt.setInt(4, task.getAssignedEmployees());
-            pstmt.setDouble(5, task.getEstimatedCost());
-            pstmt.setString(6, task.getStartDate());
-            pstmt.setString(7, task.getEndDate());
-            pstmt.setBoolean(8, task.getIsComplete());
-            pstmt.setString(9, task.getTaskDescription());
-            pstmt.setString(10, task.getTaskId());
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return task;
+    public void updateTask(String taskName, int taskId, int assignedEmployees, int estimatedCost, int startDate, int endDate, boolean isComplete, String description){
+        String query = "UPDATE tasks" +
+                "SET task_name = ?, " +
+                "task_id = ?, " +
+                "assigned_employees = ?, " +
+                "estimated_cost = ?, " +
+                "start_date = ?, " +
+                "end_date = ?, " +
+                "is_complete = ?, " +
+                "task_description = ? " +
+                "WHERE task_id = ?;";
+        jdbcTemplate.update(query, taskName, taskId, assignedEmployees, estimatedCost, startDate, endDate, isComplete, description);
     }
+
+    /**
+     *
+     * @param task
+     */
+    /*
+    public void update(Task task) {
+        String query = "UPDATE tasks SET task_name = ?, assigned_employees = ?, estimated_cost = ?, start_date = ?, end_date = ?, is_complete = ?, task_description = ? WHERE task_id = ?;";
+        jdbcTemplate.update(query, task.getTaskName(), task.getAssignedEmployees(), task.getEstimatedCost(), task.getStartDate(), task.getEndDate(), task.getIsComplete(), task.getTaskDescription(), Integer.parseInt(task.getTaskId()));
+    }
+
+     */
+
 
     /**
      * Mapping database-row to a Task-object
