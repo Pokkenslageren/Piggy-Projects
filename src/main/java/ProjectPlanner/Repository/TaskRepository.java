@@ -66,7 +66,7 @@ public class TaskRepository {
      * @param task
      * @return
      */
-    public Task save(Task task) {
+    public Task saveTask(Task task) {
         String query = "INSERT INTO tasks (taskId, projectId, subprojectId, taskName, assignedEmployees, estimatedCost, startDate, endDate, isComplete, taskDescription) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(database, dbUsername, dbPassword);
