@@ -5,14 +5,14 @@ public class Task {
     private String subprojectId;
     private String taskId;
     private String taskName;
-    private String assignedEmployees;
+    private int assignedEmployees;
     private double estimatedCost;
     private String startDate;
     private String endDate;
     private boolean isComplete;
     private String taskDescription;
 
-    public Task(String projectId, String subprojectId, String taskId, String taskName, String assignedEmployees, double estimatedCost, String startDate, String endDate, boolean isComplete, String taskDescription) {
+    public Task(String projectId, String subprojectId, String taskId, String taskName, int assignedEmployees, double estimatedCost, String startDate, String endDate, boolean isComplete, String taskDescription) {
         this.projectId = projectId;
         this.subprojectId = subprojectId;
         this.taskId = taskId;
@@ -27,31 +27,31 @@ public class Task {
     public String getProjectId() {
         return projectId;
     }
-    public String subprojectId() {
+    public String getSubprojectId() {
         return subprojectId;
     }
-    public String taskId() {
+    public String getTaskId() {
         return taskId;
     }
-    public String taskName() {
+    public String getTaskName() {
         return taskName;
     }
-    public String assignedEmployees() {
+    public int getAssignedEmployees() {
         return assignedEmployees;
     }
-    public double estimatedCost() {
+    public double getEstimatedCost() {
         return estimatedCost;
     }
-    public String startDate() {
+    public String getStartDate() {
         return startDate;
     }
-    public String endDate() {
+    public String getEndDate() {
         return endDate;
     }
-    public boolean isComplete() {
+    public boolean getIsComplete() {
         return isComplete;
     }
-    public String taskDescription() {
+    public String getTaskDescription() {
         return taskDescription;
     }
 
@@ -67,7 +67,7 @@ public class Task {
     public void setTaskName(String taskName) {
         this.taskName = taskName;
     }
-    public void setAssignedEmployees(String assignedEmployees) {
+    public void setAssignedEmployees(int assignedEmployees) {
         this.assignedEmployees = assignedEmployees;
     }
     public void setEstimatedCost(double estimatedCost) {
