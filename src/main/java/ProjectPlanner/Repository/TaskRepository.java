@@ -10,9 +10,9 @@ import java.util.Optional;
 
 @Repository
 public class TaskRepository {
-    private final String url = "jdbc:mysql://localhost:3306/projectplanner";
-    private final String username = "root";
-    private final String password = "password";
+    private final String database = "jdbc:mysql://localhost:3306/projectplanner";
+    private final String dbUsername = "root";
+    private final String dbPassword = "password";
 
     /**
      * Find all tasks
@@ -22,7 +22,7 @@ public class TaskRepository {
         List<Task> tasks = new ArrayList<>();
         String query = "SELECT * FROM tasks";
 
-        try (Connection connection = DriverManager.getConnection(url, username, password);
+        try (Connection connection = DriverManager.getConnection(database, dbUsername, dbPassword);
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
 
@@ -44,7 +44,7 @@ public class TaskRepository {
      */
     public Optional<Task> findById(String taskId) {
         String query = "SELECT * FROM tasks WHERE taskId = ?";
-        try (Connection connection = DriverManager.getConnection(url, username, password);
+        try (Connection connection = DriverManager.getConnection(database, dbUsername, dbPassword);
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, taskId);
@@ -69,7 +69,7 @@ public class TaskRepository {
     public Task save(Task task) {
         String query = "INSERT INTO tasks (taskId, projectId, subprojectId, taskName, assignedEmployees, estimatedCost, startDate, endDate, isComplete, taskDescription) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = DriverManager.getConnection(url, username, password);
+        try (Connection connection = DriverManager.getConnection(database, dbUsername, dbPassword);
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, task.getTaskId());
@@ -98,7 +98,7 @@ public class TaskRepository {
     public void deleteById(String taskId) {
         String query = "DELETE FROM tasks WHERE taskId = ?";
 
-        try (Connection connection = DriverManager.getConnection(url, username, password);
+        try (Connection connection = DriverManager.getConnection(database, dbUsername, dbPassword);
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, taskId);
@@ -117,7 +117,7 @@ public class TaskRepository {
     public Task update(Task task) {
         String query = "UPDATE tasks SET projectId = ?, subprojectId = ?, taskName = ?, assignedEmployees = ?, estimatedCost = ?, startDate = ?, endDate = ?, isComplete = ?, taskDescription = ? WHERE taskId = ?";
 
-        try (Connection connection = DriverManager.getConnection(url, username, password);
+        try (Connection connection = DriverManager.getConnection(database, dbUsername, dbPassword);
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, task.getProjectId());
