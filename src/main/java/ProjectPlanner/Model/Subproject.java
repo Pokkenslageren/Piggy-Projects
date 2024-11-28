@@ -13,7 +13,7 @@ public class Subproject {
     private boolean isComplete;
     private String subprojectDescription;
 
-    public Subproject(int projectID, String subprojectName, String subprojectId, String startDate,String totalEstimatedCost, String totalActualCost, String totalAvailiableEmployees, String totalAssignedEmployees, String endDate, boolean isComplete) {
+    public Subproject(int projectID, String subprojectName, String subprojectId, String startDate, String totalEstimatedCost, String totalActualCost, String totalAvailiableEmployees, String totalAssignedEmployees, String endDate, boolean isComplete) {
         this.projectID = projectID;
         this.subprojectName = subprojectName;
         this.subprojectId = subprojectId;
