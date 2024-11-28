@@ -19,10 +19,9 @@ public class ProjectRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-
-
-    public void createProject(){
-
+    public void createProject(int companyId, String projectName, String startDate, String endDate, String assignedEmployees, double totalEstimatedCost, int totalAvailableEmployees, boolean isComplete, String projectDescription){
+        String query = "INSERT INTO projects(company_id, project_name, start_date, end_date, total_estimated_cost, total_available_employees, is_complete, project_description) VALUES (?,?,?,?,?,?,?,?,?);";
+        jdbcTemplate.update(query, companyId, projectName, startDate, endDate, assignedEmployees, totalEstimatedCost, totalAvailableEmployees, isComplete, projectDescription);
     }
 
     public Project readProject(int projectId){
@@ -32,13 +31,14 @@ public class ProjectRepository {
     }
 
     public List<Project> readAllProjects(){
-        String query = "SELECT * FROM projets;";
+        String query = "SELECT * FROM projects;";
         RowMapper rowMapper = new BeanPropertyRowMapper(Project.class);
         return jdbcTemplate.query(query, rowMapper);
     }
 
-    public void updateProject(int projectId){
-
+    public void updateProject(int companyId, String projectName, String startDate, String endDate, String assignedEmployees, double totalEstimatedCost, int totalAvailableEmployees, boolean isComplete, String projectDescription){
+        String query = "UPDATE projects SET company_id = ?, project_name = ?, start_date = ?, end_date = ?, total_estimated_cost = ?, total_available_employees = ?, is_complete = ?, project_description = ?;";
+        jdbcTemplate.update(query, companyId, projectName, startDate, endDate, assignedEmployees, totalEstimatedCost, totalAvailableEmployees, isComplete, projectDescription);
     }
 
     public void deleteProject(int projectId){

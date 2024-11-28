@@ -11,8 +11,8 @@ import java.util.*;
 public class ProjectService {
     private final ProjectRepository projectRepository = new ProjectRepository(new JdbcTemplate()); //maybe?
 
-    public void createProject(){
-        projectRepository.createProject();
+    public void createProject(int companyId, String projectName, String startDate, String endDate, String assignedEmployees, double totalEstimatedCost, int totalAvailableEmployees, boolean isComplete, String projectDescription){
+        projectRepository.createProject(companyId, projectName, startDate, endDate, assignedEmployees, totalEstimatedCost, totalAvailableEmployees, isComplete,projectDescription);
     }
 
     public Project readProject(int projectId){
@@ -23,11 +23,11 @@ public class ProjectService {
         return projectRepository.readAllProjects();
     }
 
-    public void updateProject(int projectId){
-        projectRepository.updateProject(projectId);
+    public void updateProject(int companyId, String projectName, String startDate, String endDate, String assignedEmployees, double totalEstimatedCost, int totalAvailableEmployees, boolean isComplete, String projectDescription){
+        projectRepository.updateProject(companyId, projectName, startDate, endDate, assignedEmployees, totalEstimatedCost, totalAvailableEmployees, isComplete,projectDescription);
     }
 
-    public void delteProject(int projectId){
+    public void deleteProject(int projectId){
         projectRepository.deleteProject(projectId);
     }
 
