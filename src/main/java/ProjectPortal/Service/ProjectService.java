@@ -1,7 +1,7 @@
-package ProjectPlanner.Service;
+package ProjectPortal.Service;
 
-import ProjectPlanner.Model.Project;
-import ProjectPlanner.Repository.ProjectRepository;
+import ProjectPortal.Model.Project;
+import ProjectPortal.Repository.ProjectRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 

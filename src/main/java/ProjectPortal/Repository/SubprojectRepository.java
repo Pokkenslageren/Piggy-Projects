@@ -1,7 +1,7 @@
-package ProjectPlanner.Repository;
+package ProjectPortal.Repository;
 
 
-import ProjectPlanner.Model.Subproject;
+import ProjectPortal.Model.Subproject;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.RowMapper;

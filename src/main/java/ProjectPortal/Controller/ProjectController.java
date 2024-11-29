@@ -1,6 +1,6 @@
-package ProjectPlanner.Controller;
+package ProjectPortal.Controller;
 
-import ProjectPlanner.Service.ProjectService;
+import ProjectPortal.Service.ProjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("")
 public class ProjectController {
 
-    private final ProjectService projectService();
+    private final ProjectService projectService() {
+        return null;
+    }
+
     public ProjectController() {
 
     }

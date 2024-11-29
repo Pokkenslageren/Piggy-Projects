@@ -1,4 +1,4 @@
-package ProjectPlanner.Model;
+package ProjectPortal.Model;
 
 public class Company {
     private String companyName;

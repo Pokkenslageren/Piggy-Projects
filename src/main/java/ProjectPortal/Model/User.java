@@ -1,4 +1,4 @@
-package ProjectPlanner.Model;
+package ProjectPortal.Model;
 
 public class User {
     private int companyId;

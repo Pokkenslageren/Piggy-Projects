@@ -1,4 +1,4 @@
-package ProjectPlanner.Controller;
+package ProjectPortal.Controller;
 
 public class SubprojectController {
 

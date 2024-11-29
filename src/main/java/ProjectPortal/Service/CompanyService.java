@@ -1,4 +1,4 @@
-package ProjectPlanner.Service;
+package ProjectPortal.Service;
 
 public class CompanyService {
 }

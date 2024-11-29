@@ -1,7 +1,7 @@
-package ProjectPlanner.Service;
+package ProjectPortal.Service;
 
-import ProjectPlanner.Model.Task;
-import ProjectPlanner.Repository.TaskRepository;
+import ProjectPortal.Model.Task;
+import ProjectPortal.Repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

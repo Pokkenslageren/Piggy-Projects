@@ -1,7 +1,7 @@
-package ProjectPlanner.Controller;
+package ProjectPortal.Controller;
 
-import ProjectPlanner.Model.Task;
-import ProjectPlanner.Service.TaskService;
+import ProjectPortal.Model.Task;
+import ProjectPortal.Service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

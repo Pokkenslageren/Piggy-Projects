@@ -1,6 +1,6 @@
-package ProjectPlanner.Repository;
+package ProjectPortal.Repository;
 
-import ProjectPlanner.Model.Project;
+import ProjectPortal.Model.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
