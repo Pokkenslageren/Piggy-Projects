@@ -3,17 +3,17 @@ package ProjectPlanner.Model;
 public class Subproject {
     private int projectID;
     private String subprojectName;
-    private String subprojectId;
-    private String startDate;
-    private String totalEstimatedCost;
-    private String totalActualCost;
-    private String totalAvailiableEmployees;
-    private String totalAssignedEmployees;
-    private String endDate;
+    private int subprojectId;
+    private int startDate;
+    private double totalEstimatedCost;
+    private double totalActualCost;
+    private int totalAvailiableEmployees;
+    private int totalAssignedEmployees;
+    private int endDate;
     private boolean isComplete;
     private String subprojectDescription;
 
-    public Subproject(int projectID, String subprojectName, String subprojectId, String startDate, String totalEstimatedCost, String totalActualCost, String totalAvailiableEmployees, String totalAssignedEmployees, String endDate, boolean isComplete) {
+    public Subproject(int projectID, String subprojectName, int subprojectId, int startDate, int totalEstimatedCost, int totalActualCost, int totalAvailiableEmployees, int totalAssignedEmployees, int endDate, boolean isComplete) {
         this.projectID = projectID;
         this.subprojectName = subprojectName;
         this.subprojectId = subprojectId;
@@ -32,25 +32,23 @@ public class Subproject {
     public String getSubprojectName() {
         return subprojectName;
     }
-    public String getSubprojectId() {
+    public int getSubprojectId() {
         return subprojectId;
     }
-    public String getStartDate() {
+    public int getStartDate() {
         return startDate;
     }
-    public String getTotalEstimatedCost() {
+    public double getTotalEstimatedCost() {
         return totalEstimatedCost;
     }
-    public String getTotalActualCost() {
+    public double getTotalActualCost() {
         return totalActualCost;
     }
-    public String getTotalAvailiableEmployees() {
-        return totalAvailiableEmployees;
-    }
-    public String getTotalAssignedEmployees() {
+    public int getTotalAvailiableEmployees() {return totalAvailiableEmployees;}
+    public int getTotalAssignedEmployees() {
         return totalAssignedEmployees;
     }
-    public String getEndDate() {
+    public int getEndDate() {
         return endDate;
     }
     public boolean isComplete() {
@@ -66,25 +64,25 @@ public class Subproject {
     public void setSubprojectName(String subprojectName) {
         this.subprojectName = subprojectName;
     }
-    public void setSubprojectId(String subprojectId) {
+    public void setSubprojectId(int subprojectId) {
         this.subprojectId = subprojectId;
     }
-    public void setStartDate(String startDate) {
+    public void setStartDate(int startDate) {
         this.startDate = startDate;
     }
-    public void setTotalEstimatedCost(String totalEstimatedCost) {
+    public void setTotalEstimatedCost(double totalEstimatedCost) {
         this.totalEstimatedCost = totalEstimatedCost;
     }
-    public void setTotalActualCost(String totalActualCost) {
+    public void setTotalActualCost(double totalActualCost) {
         this.totalActualCost = totalActualCost;
     }
-    public void setTotalAvailiableEmployees(String totalAvailiableEmployees) {
+    public void setTotalAvailiableEmployees(int totalAvailiableEmployees) {
         this.totalAvailiableEmployees = totalAvailiableEmployees;
     }
-    public void setTotalAssignedEmployees(String totalAssignedEmployees) {
+    public void setTotalAssignedEmployees(int totalAssignedEmployees) {
         this.totalAssignedEmployees = totalAssignedEmployees;
     }
-    public void setEndDate(String endDate) {
+    public void setEndDate(int endDate) {
         this.endDate = endDate;
     }
     public void setComplete(boolean isComplete) {
