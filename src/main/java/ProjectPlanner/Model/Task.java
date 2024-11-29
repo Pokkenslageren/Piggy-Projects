@@ -1,18 +1,18 @@
 package ProjectPlanner.Model;
 
 public class Task {
-    private String projectId;
-    private String subprojectId;
-    private String taskId;
+    private int projectId;
+    private int subprojectId;
+    private int taskId;
     private String taskName;
-    private String assignedEmployees;
+    private int assignedEmployees;
     private double estimatedCost;
-    private String startDate;
-    private String endDate;
+    private int startDate;
+    private int endDate;
     private boolean isComplete;
     private String taskDescription;
 
-    public Task(String projectId, String subprojectId, String taskId, String taskName, String assignedEmployees, double estimatedCost, String startDate, String endDate, boolean isComplete, String taskDescription) {
+    public Task(int projectId, int subprojectId, int taskId, String taskName, int assignedEmployees, double estimatedCost, int startDate, int endDate, boolean isComplete, String taskDescription) {
         this.projectId = projectId;
         this.subprojectId = subprojectId;
         this.taskId = taskId;
@@ -24,59 +24,59 @@ public class Task {
         this.isComplete = isComplete;
         this.taskDescription = taskDescription;
     }
-    public String getProjectId() {
+    public int getProjectId() {
         return projectId;
     }
-    public String subprojectId() {
+    public int getSubprojectId() {
         return subprojectId;
     }
-    public String taskId() {
+    public int getTaskId() {
         return taskId;
     }
-    public String taskName() {
+    public String getTaskName() {
         return taskName;
     }
-    public String assignedEmployees() {
+    public int getAssignedEmployees() {
         return assignedEmployees;
     }
-    public double estimatedCost() {
+    public double getEstimatedCost() {
         return estimatedCost;
     }
-    public String startDate() {
+    public int getStartDate() {
         return startDate;
     }
-    public String endDate() {
+    public int getEndDate() {
         return endDate;
     }
-    public boolean isComplete() {
+    public boolean getIsComplete() {
         return isComplete;
     }
-    public String taskDescription() {
+    public String getTaskDescription() {
         return taskDescription;
     }
 
-    public void setProjectId(String projectId) {
+    public void setProjectId(int projectId) {
         this.projectId = projectId;
     }
-    public void setSubprojectId(String subprojectId) {
+    public void setSubprojectId(int subprojectId) {
         this.subprojectId = subprojectId;
     }
-    public void setTaskId(String taskId) {
+    public void setTaskId(int taskId) {
         this.taskId = taskId;
     }
     public void setTaskName(String taskName) {
         this.taskName = taskName;
     }
-    public void setAssignedEmployees(String assignedEmployees) {
+    public void setAssignedEmployees(int assignedEmployees) {
         this.assignedEmployees = assignedEmployees;
     }
     public void setEstimatedCost(double estimatedCost) {
         this.estimatedCost = estimatedCost;
     }
-    public void setStartDate(String startDate) {
+    public void setStartDate(int startDate) {
         this.startDate = startDate;
     }
-    public void setEndDate(String endDate) {
+    public void setEndDate(int endDate) {
         this.endDate = endDate;
     }
     public void setIsComplete(boolean isComplete) {
