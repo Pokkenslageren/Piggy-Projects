@@ -23,7 +23,7 @@ public class Project {
         this.actualCost = actualCost;
         this.availableEmployees = availableEmployees;
         this.assignedEmployees = assignedEmployees;
-        this.isComplete = isComplete;
+        this.isComplete = false;
         this.projectDescription = projectDescription;
     }
     public int getCompanyId() {
