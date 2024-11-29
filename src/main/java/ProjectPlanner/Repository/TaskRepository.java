@@ -120,8 +120,8 @@ public class TaskRepository {
                 rs.getString("taskName"),
                 rs.getInt("assignedEmployees"),
                 rs.getDouble("estimatedCost"),
-                rs.getString("startDate"),
-                rs.getString("endDate"),
+                rs.getInt("startDate"),
+                rs.getInt("endDate"),
                 rs.getBoolean("isComplete"),
                 rs.getString("taskDescription")
         );

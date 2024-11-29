@@ -7,12 +7,12 @@ public class Task {
     private String taskName;
     private int assignedEmployees;
     private double estimatedCost;
-    private String startDate;
-    private String endDate;
+    private int startDate;
+    private int endDate;
     private boolean isComplete;
     private String taskDescription;
 
-    public Task(int projectId, int subprojectId, int taskId, String taskName, int assignedEmployees, double estimatedCost, String startDate, String endDate, boolean isComplete, String taskDescription) {
+    public Task(int projectId, int subprojectId, int taskId, String taskName, int assignedEmployees, double estimatedCost, int startDate, int endDate, boolean isComplete, String taskDescription) {
         this.projectId = projectId;
         this.subprojectId = subprojectId;
         this.taskId = taskId;
@@ -42,10 +42,10 @@ public class Task {
     public double getEstimatedCost() {
         return estimatedCost;
     }
-    public String getStartDate() {
+    public int getStartDate() {
         return startDate;
     }
-    public String getEndDate() {
+    public int getEndDate() {
         return endDate;
     }
     public boolean getIsComplete() {
@@ -73,10 +73,10 @@ public class Task {
     public void setEstimatedCost(double estimatedCost) {
         this.estimatedCost = estimatedCost;
     }
-    public void setStartDate(String startDate) {
+    public void setStartDate(int startDate) {
         this.startDate = startDate;
     }
-    public void setEndDate(String endDate) {
+    public void setEndDate(int endDate) {
         this.endDate = endDate;
     }
     public void setIsComplete(boolean isComplete) {
