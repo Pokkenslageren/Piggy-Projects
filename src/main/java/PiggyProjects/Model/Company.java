@@ -1,8 +1,11 @@
 package PiggyProjects.Model;
 
 public class Company {
+
     private String companyName;
     private int companyId;
+
+    
     public Company(String companyName, int companyId) {
         this.companyName = companyName;
         this.companyId = companyId;
