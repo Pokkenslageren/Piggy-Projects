@@ -114,9 +114,9 @@ public class TaskRepository {
      */
     private Task mapRowToTask(ResultSet rs) throws SQLException {
         return new Task(
-                rs.getString("projectId"),
-                rs.getString("subprojectId"),
-                rs.getString("taskId"),
+                rs.getInt("projectId"),
+                rs.getInt("subprojectId"),
+                rs.getInt("taskId"),
                 rs.getString("taskName"),
                 rs.getInt("assignedEmployees"),
                 rs.getDouble("estimatedCost"),

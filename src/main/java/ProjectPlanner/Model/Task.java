@@ -1,9 +1,9 @@
 package ProjectPlanner.Model;
 
 public class Task {
-    private String projectId;
-    private String subprojectId;
-    private String taskId;
+    private int projectId;
+    private int subprojectId;
+    private int taskId;
     private String taskName;
     private int assignedEmployees;
     private double estimatedCost;
@@ -12,7 +12,7 @@ public class Task {
     private boolean isComplete;
     private String taskDescription;
 
-    public Task(String projectId, String subprojectId, String taskId, String taskName, int assignedEmployees, double estimatedCost, String startDate, String endDate, boolean isComplete, String taskDescription) {
+    public Task(int projectId, int subprojectId, int taskId, String taskName, int assignedEmployees, double estimatedCost, String startDate, String endDate, boolean isComplete, String taskDescription) {
         this.projectId = projectId;
         this.subprojectId = subprojectId;
         this.taskId = taskId;
@@ -24,13 +24,13 @@ public class Task {
         this.isComplete = isComplete;
         this.taskDescription = taskDescription;
     }
-    public String getProjectId() {
+    public int getProjectId() {
         return projectId;
     }
-    public String getSubprojectId() {
+    public int getSubprojectId() {
         return subprojectId;
     }
-    public String getTaskId() {
+    public int getTaskId() {
         return taskId;
     }
     public String getTaskName() {
@@ -55,13 +55,13 @@ public class Task {
         return taskDescription;
     }
 
-    public void setProjectId(String projectId) {
+    public void setProjectId(int projectId) {
         this.projectId = projectId;
     }
-    public void setSubprojectId(String subprojectId) {
+    public void setSubprojectId(int subprojectId) {
         this.subprojectId = subprojectId;
     }
-    public void setTaskId(String taskId) {
+    public void setTaskId(int taskId) {
         this.taskId = taskId;
     }
     public void setTaskName(String taskName) {
