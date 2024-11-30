@@ -1,7 +1,6 @@
 package ProjectPortal.Controller;
 
 import ProjectPortal.Model.Project;
-import ProjectPortal.Model.User;
 import ProjectPortal.Service.ProjectService;
 import ProjectPortal.Service.UserService;
 import org.springframework.stereotype.Controller;
@@ -24,7 +23,7 @@ public class ProjectController {
         userService.readUserById(userId);
         Project project = new Project();
         model.addAttribute("project", project);
-        return "createproject";
+        return "create-project";
     }
 
     @PostMapping("/{user}/home/createproject")

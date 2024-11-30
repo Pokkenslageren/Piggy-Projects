@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+<!--    <link rel="stylesheet" th:href="@{/main.css}">
+    <link rel="stylesheet" href="/formbox.css" th:href="@{/formbox.css}">-->
+
+</head>
+
+<body>
+<div class="wrapper">
+
+<!--    <div th:insert="~{fragments/topnav :: topnav}"></div>-->
+
+    <div class="form-container">
+        <div class="form-box">
+            <h1>Opret nyt projekt</h1>
+            <form th:action="@{/{user}/home/createproject}" th:object="${project}" method="post">
+                <!-- hidden companyid-->
+                <div>
+                    <label for="username">Projektnavn:</label>
+                    <input type="text" id="username" th:field="*{projectName}" placeholder="Indtast navn på projektet" required />
+                </div>
+                <div>
+                    <label for="project-start-date">Startdato for projektet</label>
+                    <input type="date" th:field="${project.startDate}" id="project-start-date">
+                </div>
+                <div>
+                    <label for="project-end-date">Slutdato for projektet</label>
+                    <input type="date" th:field="${project.endDate}" id="project-end-date">
+                </div>
+                <div>
+                    <label for="project-cost-estimate">Indtast projektets estimerede samlede omkostninger</label>
+                    <input type="text" id="project-cost-estimate" th:field="*{totalEstimatedCost}" placeholder="Budget i DKK"/>
+                </div>
+                <div>
+                    <label for="total-employees">Indtast samlet antal ansatte tilknyttet projektet</label>
+                    <input type="text" id="total-employees" th:field="*{assignedEmployees}" placeholder="Samlet antal ansatte">
+                </div>
+                <!-- hidden isComplete-->
+                <div>
+                    <label for="project-description">Giv en beskrivelse af projektet:</label>
+                    <input type="text" id="project-description" th:field="*{projectDescription}" placeholder="Projektbeskrivelse" required />
+                </div>
+                <div class="button-container">
+                    <button type="submit">Opret projekt</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<!--    <div th:insert="~{fragments/footer :: footer}"></div>-->
+
+</div>
+</body>
+</html>
