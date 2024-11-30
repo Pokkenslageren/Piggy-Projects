@@ -26,6 +26,8 @@ public class Project {
         this.isComplete = false;
         this.projectDescription = projectDescription;
     }
+
+    public Project(){}
     public int getCompanyId() {
         return companyId;
     }
