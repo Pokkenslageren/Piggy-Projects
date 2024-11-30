@@ -28,6 +28,7 @@ public class ProjectController {
 
     @PostMapping("/{user}/home/createproject")
     public String createProject(@PathVariable("user") int userId, @ModelAttribute Project project){
+
         return "redirect:/home";
     }
 

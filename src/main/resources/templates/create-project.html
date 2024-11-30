@@ -18,8 +18,8 @@
             <form th:action="@{/{user}/home/createproject}" th:object="${project}" method="post">
                 <!-- hidden companyid-->
                 <div>
-                    <label for="username">Projektnavn:</label>
-                    <input type="text" id="username" th:field="*{projectName}" placeholder="Indtast navn på projektet" required />
+                    <label for="project-name">Projektnavn:</label>
+                    <input type="text" id="project-name" th:field="*{projectName}" placeholder="Indtast navn på projektet" required />
                 </div>
                 <div>
                     <label for="project-start-date">Startdato for projektet</label>
