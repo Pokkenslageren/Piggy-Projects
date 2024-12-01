@@ -1,10 +1,13 @@
 package ProjectPortal.Controller;
 
 import ProjectPortal.Model.Task;
+import ProjectPortal.Model.User;
 import ProjectPortal.Service.TaskService;
+import ProjectPortal.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,75 +17,27 @@ import java.util.List;
 public class TaskController {
 
     private final TaskService taskService;
+    private final UserService userService;
 
-    @Autowired
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService, UserService userService) {
         this.taskService = taskService;
+        this.userService = userService;
     }
 
-    /**
-     * Retrieve all tasks
-     * @return
-     */
-    @GetMapping("/tasks")
-    public ResponseEntity<List<Task>> getAllTasks() {
-        List<Task> tasks = taskService.getAllTasks();
-        return new ResponseEntity<>(tasks, HttpStatus.OK);
+    @GetMapping("/{user}/home/createtask")
+    public String createTask(@PathVariable("user") int userId, Model model) {
+        User user = userService.readUserById(userId);
+        Task task = new Task();
+        task.setCompanyId(user.getCompanyId());
+        task.setComplete(false);
+        model.addAttribute("task", task);
+        return "create-task";
     }
 
-    /**
-     * Retrieve a task by ID
-     * @param taskId
-     * @return
-     */
-    @GetMapping("/{taskId}")
-    public ResponseEntity<Task> getTaskById(@PathVariable String taskId) {
-        return taskService.getTaskById(taskId)
-                .map(task -> new ResponseEntity<>(task, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    /**
-     * Create a new task
-     * @param task
-     * @return
-     */
-    @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody Task task) {
-        Task createdTask = taskService.saveTask(task);
-        return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
-    }
-
-    /**
-     * Updates a task
-     * @param taskId
-     * @param updatedTask
-     * @return
-     */
-    @PutMapping("/{taskId}")
-    public ResponseEntity<Void> updateTask(@PathVariable int taskId, @RequestBody Task updatedTask) {
-        try {
-            taskService.updateTask(taskId, updatedTask);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-
-    /**
-     * Deletes a task
-     * @param taskId
-     * @return
-     */
-    @DeleteMapping("/{taskId}")
-    public ResponseEntity<Void> deleteTask(@PathVariable int taskId) {
-        try {
-            taskService.deleteTask(taskId);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @PostMapping("/{user}/home/createtask")
+    public String createTask(@PathVariable("user") int userId, @ModelAttribute Task task){
+        taskService.createTask(task);
+        return "redirect:/home";
     }
 
 }
