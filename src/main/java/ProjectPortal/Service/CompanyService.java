@@ -1,9 +1,8 @@
 package ProjectPortal.Service;
 
-import ProjectPlanner.Model.Company;
-import ProjectPlanner.Repository.CompanyRepository;
+import ProjectPortal.Model.Company;
+import ProjectPortal.Repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +21,7 @@ public class CompanyService {
         return companyRepository.readAllCompanies();
     }
 
-    public Company createCompany(String companyName, int companyId) {
+    public void createCompany(String companyName, int companyId) {
         companyRepository.createCompany(companyName, companyId);
     }
 
@@ -36,5 +35,4 @@ public class CompanyService {
     public void deleteCompanyById(int companyId) {
         companyRepository.deleteCompanyById(companyId);
     }
-
 }

@@ -1,6 +1,6 @@
 package ProjectPortal.Repository;
 
-import ProjectPlanner.Model.Company;
+import ProjectPortal.Model.Company;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -67,4 +67,3 @@ public class CompanyRepository {
         jdbcTemplate.update(query, companyId);
     }
 }
-

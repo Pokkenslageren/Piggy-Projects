@@ -26,7 +26,7 @@ public class Subproject {
         this.isComplete = isComplete;
         this.subprojectDescription = "";
     }
-    public int getProjectID() {
+    public int getParentProjectID() {
         return projectID;
     }
     public String getSubprojectName() {
@@ -58,7 +58,7 @@ public class Subproject {
         return subprojectDescription;
     }
 
-    public void setProjectID(int projectID) {
+    public void setParentProjectID(int projectID) {
         this.projectID = projectID;
     }
     public void setSubprojectName(String subprojectName) {

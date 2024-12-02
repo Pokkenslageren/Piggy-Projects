@@ -40,14 +40,14 @@ public class TaskService {
      * @param task
      * @return
      */
-    public Task saveTask(Task task) {
+    public Task createTask(Task task) {
         taskRepository.saveTask(
                 task.getTaskName(),
-                Integer.parseInt(task.getTaskId()),
+                task.getTaskId(),
                 task.getAssignedEmployees(),
                 (int) task.getEstimatedCost(),
-                Integer.parseInt(task.getStartDate()),
-                Integer.parseInt(task.getEndDate()),
+                task.getStartDate(),
+                task.getEndDate(),
                 task.getIsComplete(),
                 task.getTaskDescription()
         );
@@ -69,8 +69,8 @@ public class TaskService {
                     taskId,
                     updatedTask.getAssignedEmployees(),
                     (int) updatedTask.getEstimatedCost(),
-                    Integer.parseInt(updatedTask.getStartDate()),
-                    Integer.parseInt(updatedTask.getEndDate()),
+                    updatedTask.getStartDate(),
+                    updatedTask.getEndDate(),
                     updatedTask.getIsComplete(),
                     updatedTask.getTaskDescription()
             );
