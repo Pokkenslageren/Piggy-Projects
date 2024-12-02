@@ -22,9 +22,9 @@ public class UserRepository {
      * Gets all users
      * @return
      */
-    public List<User> readUsers() { //Er i tvivl om der skal være String userName i ()
+    public List<User> readUsers(String username) {
         String query = "SELECT * FROM user";
-        RowMapper rowMapper = new BeanPropertyRowMapper<>(User.class);
+        RowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
         return jdbcTemplate.query(query, rowMapper);
     }
 
@@ -35,7 +35,7 @@ public class UserRepository {
      */
     public User readUserById(int userId){
         String query = "SELECT * FROM user WHERE id = ?";
-        RowMapper rowMapper = new BeanPropertyRowMapper<>(User.class);
+        RowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
         return (User) jdbcTemplate.query(query, rowMapper, userId);
     }
 
@@ -47,7 +47,7 @@ public class UserRepository {
      * @param userId
      */
     public void createUser(String username, String password, int companyId, int userId) {
-        String query = "INSERT INTO users (user_name, user_password, company_Id, user_Id) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO users (user_name, user_password, company_Id) VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(query, username, password, companyId, userId);
     }
 
@@ -60,11 +60,9 @@ public class UserRepository {
      */
     public void updateUser(String username, String password, int companyId, int userId) {
         String query = "UPDATE User " +
-                "SET id = ?," +
-                "user_name = ?, " +
+                "SET user_name = ?," +
                 "user_password = ?, " +
-                "companyId = ?, " +
-                "user_Id = ?, " +
+                "companyId = ? " +
                 "WHERE id = ?";
         jdbcTemplate.update(query, username, password, companyId, userId);
     }
