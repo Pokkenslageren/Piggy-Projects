@@ -22,6 +22,7 @@ public class SubprojectController {
             this.userService = userService;
         }
 
+        //todo fix user
         @GetMapping("/{user}/home/{projectId]/createsubproject")
         public String createProject(@PathVariable("user") int userId, @PathVariable("projectId") int projectId, Model model){
             User user = userService.readUserById(userId);
