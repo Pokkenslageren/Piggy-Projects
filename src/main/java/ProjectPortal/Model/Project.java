@@ -3,17 +3,17 @@ package ProjectPortal.Model;
 public class Project {
     private int companyId;
     private String projectName;
-    private String projectId;
-    private String startDate;
-    private String endDate;
+    private int projectId;
+    private int startDate;
+    private int endDate;
     private double totalEstimatedCost;
     private double actualCost;
-    private String availableEmployees;
-    private String assignedEmployees;
+    private int availableEmployees;
+    private int assignedEmployees;
     private boolean isComplete;
-    private String projectDescription = "";
+    private String projectDescription;
 
-    public Project(int companyId,String projectName,String projectId, String startDate, String endDate, double totalEstimatedCost, double actualCost, String availableEmployees, String assignedEmployees, boolean isComplete) {
+    public Project(int companyId,String projectName, int projectId, int startDate, int endDate, double totalEstimatedCost, double actualCost, int availableEmployees, int assignedEmployees, boolean isComplete, String projectDescription) {
         this.companyId = companyId;
         this.projectName = projectName;
         this.projectId = projectId;
