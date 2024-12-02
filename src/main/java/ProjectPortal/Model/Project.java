@@ -7,9 +7,9 @@ public class Project {
     private int startDate;
     private int endDate;
     private double totalEstimatedCost;
-    private double actualCost;
-    private int availableEmployees;
-    private int assignedEmployees;
+    private double totalActualCost;
+    private int totalAvailableEmployees;
+    private int totalAssignedEmployees;
     private boolean isComplete;
     private String projectDescription;
 
@@ -20,9 +20,9 @@ public class Project {
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalEstimatedCost = totalEstimatedCost;
-        this.actualCost = actualCost;
-        this.availableEmployees = availableEmployees;
-        this.assignedEmployees = assignedEmployees;
+        this.totalActualCost = actualCost;
+        this.totalAvailableEmployees = availableEmployees;
+        this.totalAssignedEmployees = assignedEmployees;
         this.isComplete = false;
         this.projectDescription = projectDescription;
     }
@@ -47,13 +47,13 @@ public class Project {
         return totalEstimatedCost;
     }
     public double getActualCost() {
-        return actualCost;
+        return totalActualCost;
     }
     public int getAvailableEmployees() {
-        return availableEmployees;
+        return totalAvailableEmployees;
     }
     public int getAssignedEmployees() {
-        return assignedEmployees;
+        return totalAssignedEmployees;
     }
     public boolean isComplete() {
         return isComplete;
@@ -80,13 +80,13 @@ public class Project {
         this.totalEstimatedCost = totalEstimatedCost;
     }
     public void setActualCost(double actualCost) {
-        this.actualCost = actualCost;
+        this.totalActualCost = actualCost;
     }
     public void setAvailableEmployees(int availableEmployees) {
-        this.availableEmployees = availableEmployees;
+        this.totalAvailableEmployees = availableEmployees;
     }
     public void setAssignedEmployees(int assignedEmployees) {
-        this.assignedEmployees = assignedEmployees;
+        this.totalAssignedEmployees = assignedEmployees;
     }
     public void setProjectDescription(String projectDescription) {
         this.projectDescription = projectDescription;
