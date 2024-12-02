@@ -24,6 +24,9 @@ public class Task {
         this.isComplete = isComplete;
         this.taskDescription = taskDescription;
     }
+
+    public Task() {}
+
     public int getProjectId() {
         return projectId;
     }
