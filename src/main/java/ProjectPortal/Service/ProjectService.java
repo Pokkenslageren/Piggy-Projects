@@ -9,10 +9,12 @@ import java.util.*;
 
 @Service
 public class ProjectService {
+
+    public ProjectService(){}
     private final ProjectRepository projectRepository = new ProjectRepository(new JdbcTemplate()); //maybe?
 
-    public void createProject(int companyId, String projectName, String startDate, String endDate, String assignedEmployees, double totalEstimatedCost, int totalAvailableEmployees, boolean isComplete, String projectDescription){
-        projectRepository.createProject(companyId, projectName, startDate, endDate, assignedEmployees, totalEstimatedCost, totalAvailableEmployees, isComplete,projectDescription);
+    public void createProject(Project project){
+        projectRepository.createProject(project);
     }
 
     public Project readProject(int projectId){

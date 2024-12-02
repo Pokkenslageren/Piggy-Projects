@@ -19,9 +19,9 @@ public class ProjectRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void createProject(int companyId, String projectName, String startDate, String endDate, String assignedEmployees, double totalEstimatedCost, int totalAvailableEmployees, boolean isComplete, String projectDescription){
-        String query = "INSERT INTO projects(company_id, project_name, start_date, end_date, total_estimated_cost, total_available_employees, is_complete, project_description) VALUES (?,?,?,?,?,?,?,?,?);";
-        jdbcTemplate.update(query, companyId, projectName, startDate, endDate, assignedEmployees, totalEstimatedCost, totalAvailableEmployees, isComplete, projectDescription);
+    public void createProject(Project project){
+        String query = "INSERT INTO projects(company_id, project_name, start_date, end_date, total_estimated_cost, total_estimated_employees, is_complete, project_description) VALUES (?,?,?,?,?,?,?,?,?);";
+        jdbcTemplate.update(query, project.getProjectId(), project.getProjectName(), project.getStartDate(), project.getEndDate(), project.getTotalEstimatedCost(), project.getAssignedEmployees(), false, project.getProjectDescription());
     }
 
     public Project readProject(int projectId){
@@ -36,9 +36,9 @@ public class ProjectRepository {
         return jdbcTemplate.query(query, rowMapper);
     }
 
-    public void updateProject(int companyId, String projectName, String startDate, String endDate, String assignedEmployees, double totalEstimatedCost, int totalAvailableEmployees, boolean isComplete, String projectDescription){
+    public void updateProject(Project project){
         String query = "UPDATE projects SET company_id = ?, project_name = ?, start_date = ?, end_date = ?, total_estimated_cost = ?, total_available_employees = ?, is_complete = ?, project_description = ?;";
-        jdbcTemplate.update(query, companyId, projectName, startDate, endDate, assignedEmployees, totalEstimatedCost, totalAvailableEmployees, isComplete, projectDescription);
+        jdbcTemplate.update(query, project.getCompanyId(), project.getProjectName(), project.getStartDate(), project.getEndDate(),  project.getTotalEstimatedCost(), project.getAssignedEmployees(), project.isComplete(), project.getProjectDescription());
     }
 
     public void deleteProject(int projectId){
