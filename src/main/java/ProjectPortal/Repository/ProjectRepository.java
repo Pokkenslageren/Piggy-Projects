@@ -46,5 +46,13 @@ public class ProjectRepository {
         jdbcTemplate.update(query,projectId);
     }
 
-
+    public int calculateTotalAvailableEmployees(Project project){
+        List<Integer> taskEmployees = project.getTaskEmployees();
+        int totalProjectEmployees = project.getAssignedEmployees();
+        int totalEmployeesInUse = 0;
+        for(Integer employee : taskEmployees){
+            totalEmployeesInUse = totalEmployeesInUse + employee;
+        }
+        return totalProjectEmployees - totalEmployeesInUse;
+    }
 }
