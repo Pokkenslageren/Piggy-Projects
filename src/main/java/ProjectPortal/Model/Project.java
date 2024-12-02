@@ -34,13 +34,13 @@ public class Project {
     public String getProjectName() {
         return projectName;
     }
-    public String getProjectId() {
+    public int getProjectId() {
         return projectId;
     }
-    public String getStartDate() {
+    public int getStartDate() {
         return startDate;
     }
-    public String getEndDate() {
+    public int getEndDate() {
         return endDate;
     }
     public double getTotalEstimatedCost() {
@@ -49,10 +49,10 @@ public class Project {
     public double getActualCost() {
         return actualCost;
     }
-    public String getAvailableEmployees() {
+    public int getAvailableEmployees() {
         return availableEmployees;
     }
-    public String getAssignedEmployees() {
+    public int getAssignedEmployees() {
         return assignedEmployees;
     }
     public boolean isComplete() {
@@ -67,13 +67,13 @@ public class Project {
     public void setProjectName(String projectName) {
         this.projectName = projectName;
     }
-    public void setProjectId(String projectId) {
+    public void setProjectId(int projectId) {
         this.projectId = projectId;
     }
-    public void setStartDate(String startDate) {
+    public void setStartDate(int startDate) {
         this.startDate = startDate;
     }
-    public void setEndDate(String endDate) {
+    public void setEndDate(int endDate) {
         this.endDate = endDate;
     }
     public void setTotalEstimatedCost(double totalEstimatedCost) {
@@ -82,10 +82,10 @@ public class Project {
     public void setActualCost(double actualCost) {
         this.actualCost = actualCost;
     }
-    public void setAvailableEmployees(String availableEmployees) {
+    public void setAvailableEmployees(int availableEmployees) {
         this.availableEmployees = availableEmployees;
     }
-    public void setAssignedEmployees(String assignedEmployees) {
+    public void setAssignedEmployees(int assignedEmployees) {
         this.assignedEmployees = assignedEmployees;
     }
     public void setProjectDescription(String projectDescription) {
@@ -94,8 +94,4 @@ public class Project {
     public void setComplete(boolean isComplete) {
         this.isComplete = isComplete;
     }
-    public void setProjectDescription() {
-        this.projectDescription = "";
-    }
-
 }
