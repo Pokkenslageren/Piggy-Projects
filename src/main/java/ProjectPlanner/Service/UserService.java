@@ -13,21 +13,21 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Autowired
-    private UserService(UserRepository userRepository) {
-
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     public List<User> readUsers(String username) {
-        return userRepository.readUsers();
+        return userRepository.readUsers(username);
     }
 
     public User readUserById(int userId) {
         return userRepository.readUserById(userId);
     }
 
-    public void createUser(String username, String password, int companyId, int userId) {
+    public User createUser(String username, String password, int companyId, int userId) {
         userRepository.createUser(username, password, companyId, userId);
+        return userRepository.readUserById(userId);
     }
     public void updateUser(String username, String password, int companyId, int userId) {
         userRepository.updateUser(username, password, companyId, userId);
