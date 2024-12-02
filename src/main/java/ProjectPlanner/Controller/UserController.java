@@ -17,6 +17,15 @@ public class UserController {
         this.userService = userService;
     }
 
+    /**
+     * Get mapping
+     * @param userId
+     * @param username
+     * @param password
+     * @param companyId
+     * @param model
+     * @return
+     */
     @GetMapping("/{user}/home/createUser")
     public String createUser(@PathVariable("user")int userId, String username, String password, int companyId, Model model) {
         User user = userService.readUserById(userId);
@@ -33,4 +42,5 @@ public class UserController {
         userService.createUser(user.getUsername(),user.getPassword(), user.getUserId(),user.getCompanyId());
         return "redirect:/home";
     }
+
 }
