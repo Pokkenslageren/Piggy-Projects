@@ -28,8 +28,6 @@ public class TaskController {
     public String createTask(@PathVariable("user") int userId, Model model) {
         User user = userService.readUserById(userId);
         Task task = new Task();
-        task.setCompanyId(user.getCompanyId());
-        task.setComplete(false);
         model.addAttribute("task", task);
         return "create-task";
     }

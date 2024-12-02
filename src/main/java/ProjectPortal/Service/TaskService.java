@@ -40,7 +40,7 @@ public class TaskService {
      * @param task
      * @return
      */
-    public Task saveTask(Task task) {
+    public Task createTask(Task task) {
         taskRepository.saveTask(
                 task.getTaskName(),
                 task.getTaskId(),
