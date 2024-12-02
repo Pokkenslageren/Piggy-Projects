@@ -35,4 +35,11 @@ public class ProjectController {
         return "redirect:/home";
     }
 
+
+
+    @GetMapping("/{user}/home/{projectid}/delete")
+    public String deleteProject(@PathVariable("projectid") int projectId){
+        projectService.deleteProject(projectId);
+        return "redirect:/home";
+    }
 }
