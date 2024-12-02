@@ -24,7 +24,7 @@ public class TaskController {
         this.userService = userService;
     }
 
-    @GetMapping("/{user}/home/createtask")
+    @GetMapping("/{user}/home/{projectId}/{subprojectId}/createtask")
     public String createTask(@PathVariable("user") int userId, Model model) {
         User user = userService.readUserById(userId);
         Task task = new Task();
