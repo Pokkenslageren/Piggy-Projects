@@ -1,5 +1,7 @@
 package ProjectPortal.Model;
 
+import java.util.*;
+
 public class Project {
     private int companyId;
     private String projectName;
@@ -13,6 +15,12 @@ public class Project {
     private boolean isComplete;
     private String projectDescription;
 
+    List<Integer> taskEmployees;
+    List<Integer> subprojectEmployees;
+    List<Double> totalCostPerTask;
+    List<Double> totalCostPerSubproject;
+
+
     public Project(int companyId,String projectName, int projectId, int startDate, int endDate, double totalEstimatedCost, double actualCost, int availableEmployees, int assignedEmployees, boolean isComplete, String projectDescription) {
         this.companyId = companyId;
         this.projectName = projectName;
@@ -25,6 +33,10 @@ public class Project {
         this.totalAssignedEmployees = assignedEmployees;
         this.isComplete = false;
         this.projectDescription = projectDescription;
+        this.taskEmployees = new ArrayList<>();
+        this.subprojectEmployees = new ArrayList<>();
+        this.totalCostPerTask = new ArrayList<>();
+        this.totalCostPerSubproject = new ArrayList<>();
     }
 
     public Project(){}
@@ -61,6 +73,10 @@ public class Project {
     public String getProjectDescription() {
         return projectDescription;
     }
+    public List<Integer> getTaskEmployees(){return taskEmployees;}
+    public List<Integer> getSubprojectEmployees(){return subprojectEmployees;}
+    public List<Double> getTotalCostPerTask(){return totalCostPerTask;}
+    public List<Double> getTotalCostPerSubproject(){return totalCostPerSubproject;}
     public void setCompanyId(int companyId) {
         this.companyId = companyId;
     }
@@ -93,5 +109,19 @@ public class Project {
     }
     public void setComplete(boolean isComplete) {
         this.isComplete = isComplete;
+    }
+
+    public void setTaskEmployees(List<Integer> taskEmployees){
+        this.taskEmployees = taskEmployees;
+    }
+    public void setSubprojectEmployees(List<Integer> subprojectEmployees){
+        this.subprojectEmployees = subprojectEmployees;
+    }
+    public void setTotalCostPerTask(List<Double> totalCostPerTask){
+        this.totalCostPerTask = totalCostPerTask;
+    }
+
+    public void setTotalCostPerSubproject(List<Double> totalCostPerSubproject){
+        this.totalCostPerSubproject = totalCostPerSubproject;
     }
 }
