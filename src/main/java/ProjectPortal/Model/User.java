@@ -12,6 +12,9 @@ public class User {
         this.password = password;
         this.userId = userId;
     }
+
+    public User() {}
+
     public int getCompanyId() {
         return companyId;
     }
