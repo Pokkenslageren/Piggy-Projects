@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--    <link rel="stylesheet" th:href="@{/main.css}">
+        <link rel="stylesheet" href="/formbox.css" th:href="@{/formbox.css}">-->
+
+</head>
+
+<body>
+<div class="wrapper">
+
+    <!--    <div th:insert="~{fragments/topnav :: topnav}"></div>-->
+
+    <div class="form-container">
+        <div class="form-box">
+            <h1>Opret ny opgave</h1>
+            <form th:action="@{/{user}/home/createtask}" th:object="${task}" method="post">
+                <!-- hidden companyid-->
+                <div>
+                    <label for="task-name">Opgavenavn:</label>
+                    <input type="text" id="task-name" th:field="*{taskName}" placeholder="Indtast navn på opgaven" required />
+                </div>
+                <div>
+                    <label for="task-start-date">Startdato for opgaven</label>
+                    <input type="date" th:field="${task.startDate}" id="task-start-date">
+                </div>
+                <div>
+                    <label for="task-end-date">Slutdato for opgaven</label>
+                    <input type="date" th:field="${task.endDate}" id="task-end-date">
+                </div>
+                <div>
+                    <label for="task-cost-estimate">Indtast opgavens estimerede omkostninger</label>
+                    <input type="text" id="task-cost-estimate" th:field="*{estimatedCost}" placeholder="Budget i DKK"/>
+                </div>
+                <div>
+                    <label for="total-employees">Indtast samlet antal ansatte tilknyttet projektet</label>
+                    <input type="text" id="total-employees" th:field="*{assignedEmployees}" placeholder="Samlet antal ansatte">
+                </div>
+                <!-- hidden isComplete-->
+                <div>
+                    <label for="task-description">Giv en beskrivelse af opgaven:</label>
+                    <input type="text" id="task-description" th:field="*{taskDescription}" placeholder="Opgavebeskrivelse" required />
+                </div>
+                <div class="button-container">
+                    <button type="submit">Opret opgave</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--    <div th:insert="~{fragments/footer :: footer}"></div>-->
+
+</div>
+</body>
+</html>

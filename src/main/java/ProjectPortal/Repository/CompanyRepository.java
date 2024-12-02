@@ -67,4 +67,3 @@ public class CompanyRepository {
         jdbcTemplate.update(query, companyId);
     }
 }
-
