@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create new subproject</title>
+
+    <!--    <link rel="stylesheet" th:href="@{/main.css}">
+    <link rel="stylesheet" href="/formbox.css" th:href="@{/formbox.css}">-->
+
+</head>
+
+<body>
+<div class="wrapper">
+
+    <!--    <div th:insert="~{fragments/topnav :: topnav}"></div>-->
+
+    <div class="form-container">
+        <div class="form-box">
+            <h1>Create new sub-project</h1>
+            <form th:action="@{/{user}/home/{projectId}/createsubproject}" th:object="${subproject}" method="post">
+                <!-- hidden companyid-->
+                <!-- hidden parentProjectId -->
+
+                <div>
+                    <label for="subproject-name">Subproject name:</label>
+                    <input type="text" id="subproject-name" th:field="*{subprojectName}" placeholder="Enter subproject name" required />
+                </div>
+                <div>
+                    <label for="subproject-start-date">Enter start date:</label>
+                    <input type="date" th:field="${subproject.startDate}" id="subproject-start-date">
+                </div>
+                <div>
+                    <label for="subproject-end-date">Enter end date:</label>
+                    <input type="date" th:field="${subproject.endDate}" id="subproject-end-date">
+                </div>
+                <div>
+                    <label for="subproject-cost-estimate">Enter estimated budget:</label>
+                    <input type="text" id="subproject-cost-estimate" th:field="*{totalEstimatedCost}" placeholder="Budget"/>
+                </div>
+                <div>
+                    <label for="total-employees">Enter number of assigned employees:</label>
+                    <input type="text" id="total-employees" th:field="*{totalAssignedEmployees}" placeholder="Assigned employees">
+                </div>
+                <!-- hidden isComplete-->
+                <div>
+                    <label for="subproject-description">Enter subproject description:</label>
+                    <input type="text" id="subproject-description" th:field="*{subprojectDescription}" placeholder="Subproject description" required />
+                </div>
+                <div class="button-container">
+                    <button type="submit">create subproject</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--    <div th:insert="~{fragments/footer :: footer}"></div>-->
+
+</div>
+</body>
+</html>

@@ -3,9 +3,11 @@ package ProjectPortal.Service;
 import ProjectPortal.Repository.SubprojectRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import ProjectPortal.Model.Subproject;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class SubprojectService {
 
     private final SubprojectRepository subprojectRepository = new SubprojectRepository(new JdbcTemplate());
