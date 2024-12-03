@@ -6,3 +6,21 @@
         <link rel="stylesheet" href="/formbox.css" th:href="@{/formbox.css}">-->
 
 </head>
+
+<body>
+
+<div class="wrapper">
+    <div class="form-container">
+        <div class="form-box">
+            <h1>Read a task</h1>
+            <form th:action="@{/{user}/home/readtask}" th:object="${task}" method="post">
+                <div>
+                    <label for="task-id">Task-ID:</label>
+                    <input type="text" id="task-id" th:field="*{taskId}" placeholder="Insert ID on task" required />
+                </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
