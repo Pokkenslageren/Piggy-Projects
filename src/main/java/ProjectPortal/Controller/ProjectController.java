@@ -35,6 +35,18 @@ public class ProjectController {
         return "redirect:/home";
     }
 
+    @GetMapping("/{user}/home/{projectid}/update")
+    public String updateProject(@PathVariable("projectid") int projectId, Model model){
+        Project project = projectService.readProject(projectId);
+        model.addAttribute("project", project);
+        return "update-project";
+    }
+
+    @PostMapping("/{user}/home/{projectid}/update")
+    public String updateProject(@PathVariable("projectid")int projectid, @ModelAttribute Project project){
+        projectService.updateProject(project, projectid);
+    }
+
 
 
     @GetMapping("/{user}/home/{projectid}/delete")

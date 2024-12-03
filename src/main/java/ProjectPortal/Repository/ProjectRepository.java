@@ -36,8 +36,8 @@ public class ProjectRepository {
         return jdbcTemplate.query(query, rowMapper);
     }
 
-    public void updateProject(Project project){
-        String query = "UPDATE projects SET company_id = ?, project_name = ?, start_date = ?, end_date = ?, total_estimated_cost = ?, total_available_employees = ?, is_complete = ?, project_description = ?;";
+    public void updateProject(Project project, int projectId){
+        String query = "UPDATE projects SET company_id = ?, project_name = ?, start_date = ?, end_date = ?, total_estimated_cost = ?, total_available_employees = ?, is_complete = ?, project_description = ? WHERE project_id = ?;";
         jdbcTemplate.update(query, project.getCompanyId(), project.getProjectName(), project.getStartDate(), project.getEndDate(),  project.getTotalEstimatedCost(), project.getAssignedEmployees(), project.isComplete(), project.getProjectDescription());
     }
 
@@ -55,4 +55,6 @@ public class ProjectRepository {
         }
         return totalProjectEmployees - totalEmployeesInUse;
     }
+
+    
 }
