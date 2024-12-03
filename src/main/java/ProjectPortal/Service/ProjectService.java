@@ -25,8 +25,8 @@ public class ProjectService {
         return projectRepository.readAllProjects();
     }
 
-    public void updateProject(int companyId, String projectName, String startDate, String endDate, String assignedEmployees, double totalEstimatedCost, int totalAvailableEmployees, boolean isComplete, String projectDescription){
-        projectRepository.updateProject(companyId, projectName, startDate, endDate, assignedEmployees, totalEstimatedCost, totalAvailableEmployees, isComplete,projectDescription);
+    public void updateProject(Project project, int projectId){
+        projectRepository.updateProject(project, projectId);
     }
 
     public void deleteProject(int projectId){
