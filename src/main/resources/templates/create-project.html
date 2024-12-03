@@ -18,32 +18,32 @@
             <form th:action="@{/{user}/home/createproject}" th:object="${project}" method="post">
                 <!-- hidden companyid-->
                 <div>
-                    <label for="project-name">Projektnavn:</label>
-                    <input type="text" id="project-name" th:field="*{projectName}" placeholder="Indtast navn på projektet" required />
+                    <label for="project-name">Name of Project</label>
+                    <input type="text" id="project-name" th:field="*{projectName}" placeholder="Enter the project name" required />
                 </div>
                 <div>
-                    <label for="project-start-date">Startdato for projektet</label>
+                    <label for="project-start-date">Project start date</label>
                     <input type="date" th:field="${project.startDate}" id="project-start-date">
                 </div>
                 <div>
-                    <label for="project-end-date">Slutdato for projektet</label>
+                    <label for="project-end-date">Project end date</label>
                     <input type="date" th:field="${project.endDate}" id="project-end-date">
                 </div>
                 <div>
-                    <label for="project-cost-estimate">Indtast projektets estimerede samlede omkostninger</label>
-                    <input type="text" id="project-cost-estimate" th:field="*{totalEstimatedCost}" placeholder="Budget i DKK"/>
+                    <label for="project-cost-estimate">Enter estimated total project cost</label>
+                    <input type="text" id="project-cost-estimate" th:field="*{totalEstimatedCost}" placeholder="Estimated total project cost"/>
                 </div>
                 <div>
-                    <label for="total-employees">Indtast samlet antal ansatte tilknyttet projektet</label>
-                    <input type="text" id="total-employees" th:field="*{assignedEmployees}" placeholder="Samlet antal ansatte">
+                    <label for="total-employees">Enter total number of employees assigned to the project</label>
+                    <input type="text" id="total-employees" th:field="*{assignedEmployees}" placeholder="Total number of employees">
                 </div>
                 <!-- hidden isComplete-->
                 <div>
-                    <label for="project-description">Giv en beskrivelse af projektet:</label>
-                    <input type="text" id="project-description" th:field="*{projectDescription}" placeholder="Projektbeskrivelse" required />
+                    <label for="project-description">Provide a description of the project:</label>
+                    <input type="text" id="project-description" th:field="*{projectDescription}" placeholder="Project description" required />
                 </div>
                 <div class="button-container">
-                    <button type="submit">Opret projekt</button>
+                    <button type="submit">Create project</button>
                 </div>
             </form>
         </div>
