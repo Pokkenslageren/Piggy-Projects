@@ -45,6 +45,7 @@ public class ProjectController {
     @PostMapping("/{user}/home/{projectid}/update")
     public String updateProject(@PathVariable("projectid")int projectid, @ModelAttribute Project project){
         projectService.updateProject(project, projectid);
+        return "redirect:/home";
     }
 
 
