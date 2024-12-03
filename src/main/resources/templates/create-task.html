@@ -14,36 +14,36 @@
 
     <div class="form-container">
         <div class="form-box">
-            <h1>Opret ny opgave</h1>
+            <h1>Create a new task</h1>
             <form th:action="@{/{user}/home/createtask}" th:object="${task}" method="post">
                 <!-- hidden companyid-->
                 <div>
-                    <label for="task-name">Opgavenavn:</label>
-                    <input type="text" id="task-name" th:field="*{taskName}" placeholder="Indtast navn på opgaven" required />
+                    <label for="task-name">Name of task:</label>
+                    <input type="text" id="task-name" th:field="*{taskName}" placeholder="Insert the name of the task" required />
                 </div>
                 <div>
-                    <label for="task-start-date">Startdato for opgaven</label>
+                    <label for="task-start-date">Startdate for task</label>
                     <input type="date" th:field="${task.startDate}" id="task-start-date">
                 </div>
                 <div>
-                    <label for="task-end-date">Slutdato for opgaven</label>
+                    <label for="task-end-date">Enddate for task</label>
                     <input type="date" th:field="${task.endDate}" id="task-end-date">
                 </div>
                 <div>
-                    <label for="task-cost-estimate">Indtast opgavens estimerede omkostninger</label>
-                    <input type="text" id="task-cost-estimate" th:field="*{estimatedCost}" placeholder="Budget i DKK"/>
+                    <label for="task-cost-estimate">Insert estimated cost for task</label>
+                    <input type="text" id="task-cost-estimate" th:field="*{estimatedCost}" placeholder="Budget in DKK"/>
                 </div>
                 <div>
-                    <label for="total-employees">Indtast samlet antal ansatte tilknyttet projektet</label>
-                    <input type="text" id="total-employees" th:field="*{assignedEmployees}" placeholder="Samlet antal ansatte">
+                    <label for="total-employees">Insert number of assigned employees for task</label>
+                    <input type="text" id="total-employees" th:field="*{assignedEmployees}" placeholder="Total number of employees">
                 </div>
                 <!-- hidden isComplete-->
                 <div>
-                    <label for="task-description">Giv en beskrivelse af opgaven:</label>
-                    <input type="text" id="task-description" th:field="*{taskDescription}" placeholder="Opgavebeskrivelse" required />
+                    <label for="task-description">Give the task a description:</label>
+                    <input type="text" id="task-description" th:field="*{taskDescription}" placeholder="Taskdescription" required />
                 </div>
                 <div class="button-container">
-                    <button type="submit">Opret opgave</button>
+                    <button type="submit">Create task</button>
                 </div>
             </form>
         </div>
