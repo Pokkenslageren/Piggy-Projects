@@ -15,7 +15,7 @@
     <div class="tasklist">
         <div class="table-container">
             <header>
-                <h1>Task, <span th:text="${task.taskName}">:</span>!</h1>
+                <h1>Task, <span th:text="${task.taskName}"></span></h1>
             </header>
             <table>
                 <thead>
@@ -45,8 +45,8 @@
                 </tbody>
             </table>
             <div class="button-container">
-                <a th:href="@{/{user}/createTask(user=${user.userId})}">
-                    <button type="button">Add task</button>
+                <a th:href="@{/{user}/updateTask(user=${user.userId})}">
+                    <button type="button">Update task</button>
                 </a>
             </div>
         </div>
