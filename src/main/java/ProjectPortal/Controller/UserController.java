@@ -39,7 +39,7 @@ public class UserController {
 
     @PostMapping("/{user}/home/createUser")
     public String createUser(@PathVariable("user") int userId,@ModelAttribute User user) {
-        userService.createUser(user.getUsername(),user.getPassword(), user.getUserId(),user.getCompanyId());
+        userService.createUser(user.getUserName(),user.getPassword(), user.getUserId(),user.getCompanyId());
         return "redirect:/home";
     }
 

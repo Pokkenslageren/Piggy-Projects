@@ -18,7 +18,7 @@ public class User {
     public int getCompanyId() {
         return companyId;
     }
-    public String getUsername() {
+    public String getUserName() {
         return username;
     }
     public String getPassword() {
@@ -30,7 +30,7 @@ public class User {
     public void setCompanyId(int companyId) {
         this.companyId = companyId;
     }
-    public void setUsername(String username) {
+    public void setUserName(String username) {
         this.username = username;
     }
     public void setPassword(String password) {
