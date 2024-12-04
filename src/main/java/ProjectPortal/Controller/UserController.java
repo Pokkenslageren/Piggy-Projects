@@ -2,7 +2,7 @@ package ProjectPortal.Controller;
 
 import ProjectPortal.Service.UserService;
 import ProjectPortal.Model.User;
-import ch.qos.logback.core.model.Model;
+import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -43,4 +43,21 @@ public class UserController {
         return "redirect:/home";
     }
 
+    @GetMapping("/{user}/home/{user}/update")
+    public String updateUser(@PathVariable("user")String username, String password, int companyId, int userId, @ModelAttribute User user) {
+        userService.updateUser(username, password, companyId, userId);
+        return "update-user";
+    }
+
+    @PostMapping("/{user}/home/{user}/update")
+    public String updateUser(@ModelAttribute("user") String username, String password, int companyId, int userId) {
+        userService.updateUser(username, password, companyId, userId);
+        return "redirect:/home";
+    }
+
+    @GetMapping("/{user}/home/{user}/delete")
+    public String deleteUser(@PathVariable("user")int userId) {
+        userService.deleteUser(userId);
+        return "redirect:/home";
+    }
 }
