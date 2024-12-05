@@ -23,7 +23,7 @@ public class SubprojectController {
         }
 
         //todo fix user
-        @GetMapping("/{user}/home/{projectId]/createsubproject")
+        @GetMapping("/{user}/home/{projectId}/createsubproject")
         public String createProject(@PathVariable("user") int userId, @PathVariable("projectId") int projectId, Model model){
             User user = userService.readUserById(userId);
             Subproject subproject = new Subproject();
@@ -40,4 +40,4 @@ public class SubprojectController {
         }
 
     }
-}
+

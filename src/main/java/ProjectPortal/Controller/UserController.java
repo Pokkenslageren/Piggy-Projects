@@ -43,19 +43,19 @@ public class UserController {
         return "redirect:/home";
     }
 
-    @GetMapping("/{user}/home/{user}/update")
+    @GetMapping("/{user}/home/update")
     public String updateUser(@PathVariable("user")String username, String password, int companyId, int userId, @ModelAttribute User user) {
         userService.updateUser(username, password, companyId, userId);
         return "update-user";
     }
 
-    @PostMapping("/{user}/home/{user}/update")
+    @PostMapping("/{user}/home/update")
     public String updateUser(@ModelAttribute("user") String username, String password, int companyId, int userId) {
         userService.updateUser(username, password, companyId, userId);
         return "redirect:/home";
     }
 
-    @GetMapping("/{user}/home/{user}/delete")
+    @GetMapping("/{user}/home/delete")
     public String deleteUser(@PathVariable("user")int userId) {
         userService.deleteUser(userId);
         return "redirect:/home";
