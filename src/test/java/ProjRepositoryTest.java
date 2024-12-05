@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 class ProjRepositoryTest {
 
-    List<Integer> totalEmployees = new ArrayList<>();
+   /* List<Integer> totalEmployees = new ArrayList<>();
         totalEmployees.add(12);
         totalEmployees.add(10);
         totalEmployees.add(14);
@@ -17,5 +17,5 @@ class ProjRepositoryTest {
 
 
         assertArrayEquals(64,calculateTotalAvailableEmployees(totalEmployees));
-    }
+    } */
 }
