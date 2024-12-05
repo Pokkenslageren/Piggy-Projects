@@ -41,16 +41,7 @@ public class TaskService {
      * @return
      */
     public Task createTask(Task task) {
-        taskRepository.saveTask(
-                task.getTaskName(),
-                task.getTaskId(),
-                task.getAssignedEmployees(),
-                (int) task.getEstimatedCost(),
-                task.getStartDate(),
-                task.getEndDate(),
-                task.getIsComplete(),
-                task.getTaskDescription()
-        );
+        taskRepository.saveTask(task);
         return task;
     }
 
