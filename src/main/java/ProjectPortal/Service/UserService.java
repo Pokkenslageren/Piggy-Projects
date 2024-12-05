@@ -26,11 +26,11 @@ public class UserService {
         return userRepository.readUserById(userId);
     }
 
-    public void createUser(String username, String password, int companyId, int userId) {
-        userRepository.createUser(username, password, companyId, userId);
+    public void createUser(User user) {
+        userRepository.createUser(user);
     }
-    public void updateUser(String username, String password, int companyId, int userId) {
-        userRepository.updateUser(username, password, companyId, userId);
+    public void updateUser(User user, int userId) {
+        userRepository.updateUser(user, userId);
     }
 
     public void deleteUser(int userId) {

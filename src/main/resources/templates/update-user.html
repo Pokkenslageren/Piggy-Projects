@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create User</title>
+    <title>Update User</title>
 </head>
 <body>
 <div class="wrapper">
@@ -18,14 +18,6 @@
                 <div>
                     <label for="user-password">Password:</label>
                     <input type="password" id="user-password" th:field="*{user.password}" placeholder="Type new password" />
-                </div>
-                <div>
-                    <label for="user-companyId">CompanyID:</label>
-                    <input type="text" id="user-companyId" th:field="*{user.companyId}" placeholder = "Type new companyID" />
-                </div>
-                <div>
-                    <label for="user-id">UserID:</label>
-                    <input type="text" id="user-id" th:field="*{user.userId}" placeholder = "Genererate new User ID" />
                 </div>
                 <div class="button-container">
                     <button type="submit">Update user</button>
