@@ -10,7 +10,6 @@
             <div class="form-box">
                 <h1>Create new user</h1>
                 <form th:action="@{/{user}/home/createUser}" th:object="${user}" method="post">
-
                     <div>
                         <label for="user-Name">Username:</label>
                         <input type="text" id="user-Name" th:field="*{user.username}" placeholder="Indtast navn" required />

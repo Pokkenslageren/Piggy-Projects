@@ -22,10 +22,10 @@ public class UserRepository {
      * Gets all users
      * @return
      */
-    public List<User> readUsers() { //Er i tvivl om der skal være String userName i ()
+    public List<User> readUsers(String username, int userId, int companyId) { //Er i tvivl om der skal være String userName i ()
         String query = "SELECT * FROM user";
         RowMapper rowMapper = new BeanPropertyRowMapper<>(User.class);
-        return jdbcTemplate.query(query, rowMapper);
+        return jdbcTemplate.query(query, rowMapper, username, userId, companyId);
     }
 
     /**

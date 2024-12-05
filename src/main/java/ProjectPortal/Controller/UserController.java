@@ -38,8 +38,13 @@ public class UserController {
     }
 
     @PostMapping("/{user}/home/createUser")
-    public String createUser(@PathVariable("user") int userId,@ModelAttribute User user) {
+    public String createUser(@PathVariable("user") int userId, String username, String password, int companyId, @ModelAttribute User user) {
         userService.createUser(user.getUserName(),user.getPassword(), user.getUserId(),user.getCompanyId());
+        return "redirect:/home";
+    }
+    @GetMapping
+    public String readAllUsers(User user) {
+        userService.readUsers(user.getUserName(), user.getCompanyId(), user.getUserId());
         return "redirect:/home";
     }
 

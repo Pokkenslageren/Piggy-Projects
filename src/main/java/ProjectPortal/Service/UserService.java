@@ -18,8 +18,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> readUsers(String username) {
-        return userRepository.readUsers();
+    public List<User> readUsers(String username, int companyId, int userId) {
+        return userRepository.readUsers(username, userId, companyId);
     }
 
     public User readUserById(int userId) {
