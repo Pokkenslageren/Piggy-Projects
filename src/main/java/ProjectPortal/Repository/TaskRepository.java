@@ -42,19 +42,12 @@ public class TaskRepository {
     }
 
     /**
-     * Create a new task with variables
-     * @param taskName
-     * @param taskId
-     * @param assignedEmployees
-     * @param estimatedCost
-     * @param startDate
-     * @param endDate
-     * @param isComplete
-     * @param description
+     *
+     * @param task
      */
-    public void saveTask(String taskName, int taskId, int assignedEmployees, int estimatedCost, int startDate, int endDate, boolean isComplete, String description) {
-        String query = "INSERT INTO tasks (task_name, task_id, assigned_employees, estimated_cost, start_date, end_date, is_complete, task_description)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(query, taskName, taskId, assignedEmployees, estimatedCost, startDate, endDate, isComplete, description);
+    public void saveTask(Task task) {
+        String query = "INSERT INTO tasks (get_task_name, get_task_id, get_assigned_employees, get_estimated_cost, get_start_date, get_end_date, get_is_complete, get_task_description)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(query, task);
     }
 
     /**
