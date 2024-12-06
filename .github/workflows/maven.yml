@@ -19,20 +19,3 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn -B test
-
-  qodana:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-      checks: write
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: 'Qodana Scan'
-        uses: JetBrains/qodana-action@v2024.2
-        env:
-          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN_1525056941 }}
-          QODANA_ENDPOINT: 'https://qodana.cloud'
