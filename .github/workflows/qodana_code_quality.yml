@@ -5,6 +5,7 @@ on:
   push:
     branches: # Specify your branches here
       - main # The 'main' branch
+      - master # The 'master' branch
       - 'releases/*' # The release branches
 
 jobs:
@@ -20,18 +21,6 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}  # to check out the actual pull request commit, not the merge commit
           fetch-depth: 0  # a full history is required for pull request analysis
       - name: 'Qodana Scan'
-        uses: JetBrains/qodana-action@latest
+        uses: JetBrains/qodana-action@v2024.2
         env:
-          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN_1525056941 }}
-          QODANA_ENDPOINT: 'https://qodana.cloud'
-          DEBUG: true  # Enable detailed logging
-
-      - name: Debug Environment
-        run: printenv | sort  # Print environment variables for debugging
-
-      - name: Debug Checkout
-        run: |
-          echo "HEAD: $(git rev-parse HEAD)"
-          git log -1
-
-
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
