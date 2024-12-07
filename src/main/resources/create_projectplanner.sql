@@ -42,6 +42,8 @@ CREATE TABLE if not exists `subprojects`(
     total_available_employees int,
     is_complete boolean,
     subproject_description text,
+    hours_allocated int,
+    priority varchar(10),
     PRIMARY KEY (`subproject_id`),
     FOREIGN KEY (`project_id`) REFERENCES `projects` (`project_id`)
 );
@@ -56,6 +58,8 @@ CREATE TABLE if not exists `tasks`(
     assigned_employees int,
     is_complete boolean,
     task_description text,
+    hours_allocated int,
+    priority varchar(10),
     PRIMARY KEY (`task_id`),
     FOREIGN KEY (`subproject_id`) REFERENCES `subprojects` (`subproject_id`)
 );
