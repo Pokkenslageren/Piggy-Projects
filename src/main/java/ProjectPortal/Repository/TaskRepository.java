@@ -103,7 +103,7 @@ public class TaskRepository {
      * @return
      * @throws SQLException
      */
-    private Task mapRowToTask(ResultSet rs) throws SQLException {
+/*    private Task mapRowToTask(ResultSet rs) throws SQLException {
         return new Task(
                 rs.getInt("projectId"),
                 rs.getInt("subprojectId"),
@@ -116,5 +116,5 @@ public class TaskRepository {
                 rs.getBoolean("isComplete"),
                 rs.getString("taskDescription")
         );
-    }
+    }*/
 }

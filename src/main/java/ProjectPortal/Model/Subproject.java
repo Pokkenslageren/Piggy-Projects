@@ -1,6 +1,12 @@
 package ProjectPortal.Model;
 
 public class Subproject {
+
+    enum Priority{
+        LOW,
+        MEDIUM,
+        HIGH;
+    }
     private int projectID;
     private String subprojectName;
     private int subprojectId;
@@ -10,10 +16,14 @@ public class Subproject {
     private int availiableEmployees;
     private int assignedEmployees;
     private int endDate;
+
+    Priority priority;
+
+    private int hoursAllocated;
     private boolean isComplete;
     private String subprojectDescription;
 
-    public Subproject(int projectID, String subprojectName, int subprojectId, int startDate, int totalEstimatedCost, int totalActualCost, int totalAvailiableEmployees, int totalAssignedEmployees, int endDate, boolean isComplete) {
+    public Subproject(int projectID, String subprojectName, int subprojectId, int startDate, int totalEstimatedCost, int totalActualCost, int totalAvailiableEmployees, int totalAssignedEmployees, int endDate, boolean isComplete, Priority priority, int hoursAllocated) {
         this.projectID = projectID;
         this.subprojectName = subprojectName;
         this.subprojectId = subprojectId;
@@ -25,6 +35,8 @@ public class Subproject {
         this.endDate = endDate;
         this.isComplete = isComplete;
         this.subprojectDescription = "";
+        this.priority = priority;
+        this.hoursAllocated = hoursAllocated;
     }
 
     public Subproject() {}

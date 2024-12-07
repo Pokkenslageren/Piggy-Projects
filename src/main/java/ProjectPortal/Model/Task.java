@@ -1,6 +1,6 @@
 package ProjectPortal.Model;
 
-public class Task {
+public class Task extends Subproject {
     private int projectId;
     private int subprojectId;
     private int taskId;
@@ -12,7 +12,11 @@ public class Task {
     private boolean isComplete;
     private String taskDescription;
 
-    public Task(int projectId, int subprojectId, int taskId, String taskName, int assignedEmployees, double estimatedCost, int startDate, int endDate, boolean isComplete, String taskDescription) {
+    Priority priority;
+
+    int hoursAllocated;
+
+    public Task(int projectId, int subprojectId, int taskId, String taskName, int assignedEmployees, double estimatedCost, int startDate, int endDate, boolean isComplete, String taskDescription, Priority priority, int hoursAllocated) {
         this.projectId = projectId;
         this.subprojectId = subprojectId;
         this.taskId = taskId;
@@ -23,6 +27,8 @@ public class Task {
         this.endDate = endDate;
         this.isComplete = isComplete;
         this.taskDescription = taskDescription;
+        this.priority = priority;
+        this.hoursAllocated = hoursAllocated;
     }
 
     public Task() {}
