@@ -63,7 +63,12 @@ public class Task extends Subproject {
     public String getTaskDescription() {
         return taskDescription;
     }
-
+    public Priority getPriority(){
+        return priority;
+    }
+    public int getHoursAllocated(){
+        return hoursAllocated;
+    }
     public void setProjectId(int projectId) {
         this.projectId = projectId;
     }
@@ -94,4 +99,11 @@ public class Task extends Subproject {
     public void setTaskDescription(String taskDescription) {
         this.taskDescription = taskDescription;
     }
+    public void setPriority(String priority){
+        this.priority =Priority.valueOf(priority);
+    }
+    public void setHoursAllocated(int hoursAllocated){
+        this.hoursAllocated = hoursAllocated;
+    }
 }
+

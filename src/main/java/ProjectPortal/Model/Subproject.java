@@ -72,6 +72,12 @@ public class Subproject {
     public String getSubprojectDescription() {
         return subprojectDescription;
     }
+    public Priority getPriority(){
+        return priority;
+    }
+    public int getHoursAllocated(){
+        return hoursAllocated;
+    }
 
     public void setParentProjectID(int projectID) {
         this.projectID = projectID;
@@ -93,6 +99,13 @@ public class Subproject {
     }
     public void setTotalAvailiableEmployees(int totalAvailiableEmployees) {
         this.availiableEmployees = totalAvailiableEmployees;
+    }
+    public void setPriority(String priority){
+        this.priority =Priority.valueOf(priority);
+    }
+
+    public void setHoursAllocated(int hoursAllocated){
+        this.hoursAllocated = hoursAllocated;
     }
     public void setTotalAssignedEmployees(int totalAssignedEmployees) {
         this.assignedEmployees = totalAssignedEmployees;
