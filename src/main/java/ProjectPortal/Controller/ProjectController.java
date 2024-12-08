@@ -8,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("")
 public class ProjectController {
@@ -21,7 +19,7 @@ public class ProjectController {
         this.userService = userService;
     }
 
-    @GetMapping("/{user}/home/createproject")
+    @GetMapping("/{user}/portfolio/createproject")
     public String createProject(@PathVariable("user") int userId, Model model){
         User user = userService.readUserById(userId);
         Project project = new Project();
@@ -31,36 +29,37 @@ public class ProjectController {
         return "create-project";
     }
 
-    //tester css
-    @GetMapping("/projects")
-    public String projects(Model model) {
+    @GetMapping("/{user}/portfolio/{projectId}")
+    public String project(@PathVariable String user, @PathVariable int projectId, Model model) {
+        Project project = projectService.readProject(projectId);
+        model.addAttribute("project", project);
         return "project-overview";
     }
 
-    @PostMapping("/{user}/home/createproject")
+    @PostMapping("/{user}/portfolio/createproject")
     public String createProject(@PathVariable("user") int userId, @ModelAttribute Project project){
         projectService.createProject(project);
-        return "redirect:/home";
+        return "redirect:/portfolio";
     }
 
-    @GetMapping("/{user}/home/{projectid}/update")
+    @GetMapping("/{user}/portfolio/{projectid}/update")
     public String updateProject(@PathVariable("projectid") int projectId, Model model){
         Project project = projectService.readProject(projectId);
         model.addAttribute("project", project);
         return "update-project";
     }
 
-    @PostMapping("/{user}/home/{projectid}/update")
+    @PostMapping("/{user}/portfolio/{projectid}/update")
     public String updateProject(@PathVariable("projectid")int projectid, @ModelAttribute Project project){
         projectService.updateProject(project, projectid);
-        return "redirect:/home";
+        return "redirect:/portfolio";
     }
 
 
 
-    @GetMapping("/{user}/home/{projectid}/delete")
+    @GetMapping("/{user}/portfolio/{projectid}/delete")
     public String deleteProject(@PathVariable("projectid") int projectId){
         projectService.deleteProject(projectId);
-        return "redirect:/home";
+        return "redirect:/portfolio";
     }
 }

@@ -1,29 +1,27 @@
 package ProjectPortal.Model;
 
+import java.time.LocalDate;
+import ProjectPortal.Model.Priority;
+
 public class Subproject {
 
-    enum Priority{
-        LOW,
-        MEDIUM,
-        HIGH;
-    }
     private int projectID;
     private String subprojectName;
     private int subprojectId;
-    private int startDate;
+    private LocalDate startDate;
     private double estimatedCost;
     private double actualCost;
     private int availiableEmployees;
     private int assignedEmployees;
-    private int endDate;
+    private LocalDate endDate;
 
-    Priority priority;
+    private Priority priority;
 
     private int hoursAllocated;
     private boolean isComplete;
     private String subprojectDescription;
 
-    public Subproject(int projectID, String subprojectName, int subprojectId, int startDate, int totalEstimatedCost, int totalActualCost, int totalAvailiableEmployees, int totalAssignedEmployees, int endDate, boolean isComplete, Priority priority, int hoursAllocated) {
+    public Subproject(int projectID, String subprojectName, int subprojectId, LocalDate startDate, int totalEstimatedCost, int totalActualCost, int totalAvailiableEmployees, int totalAssignedEmployees, LocalDate endDate, boolean isComplete, Priority priority, int hoursAllocated) {
         this.projectID = projectID;
         this.subprojectName = subprojectName;
         this.subprojectId = subprojectId;
@@ -50,7 +48,7 @@ public class Subproject {
     public int getSubprojectId() {
         return subprojectId;
     }
-    public int getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
     public double getTotalEstimatedCost() {
@@ -63,7 +61,7 @@ public class Subproject {
     public int getTotalAssignedEmployees() {
         return assignedEmployees;
     }
-    public int getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
     public boolean isComplete() {
@@ -88,7 +86,7 @@ public class Subproject {
     public void setSubprojectId(int subprojectId) {
         this.subprojectId = subprojectId;
     }
-    public void setStartDate(int startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
     public void setTotalEstimatedCost(double totalEstimatedCost) {
@@ -110,7 +108,7 @@ public class Subproject {
     public void setTotalAssignedEmployees(int totalAssignedEmployees) {
         this.assignedEmployees = totalAssignedEmployees;
     }
-    public void setEndDate(int endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
     public void setComplete(boolean isComplete) {

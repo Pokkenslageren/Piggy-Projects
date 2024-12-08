@@ -2,8 +2,10 @@
 <html xmlns:th="https://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link th:href="@{/css/main.css}" rel="stylesheet">
     <link th:href="@{/css/sidebar.css}" rel="stylesheet">
 
@@ -16,36 +18,83 @@
 
     <div class="wrapper">
 
-        <div class="topnav">
-            <a href="/home" class="title-link">
-                <h1 class="title">Project Portfolio</h1>
-            </a>
+        <div class="section">
+            <div class="top_navbar">
+
+            </div>
+
         </div>
 
         <div class="sidebar">
             <div class="logo">
-                <img src="../static/pp_logo.png" alt="Project Portal logo"/>
+                <img th:src="@{/alpha_solutions_logo.png}" alt="Alpha Solutions"/>
+                <h3>Alpha Solutions</h3>
+                <p>Portfolio</p>
             </div>
 
             <ul>
                 <li>
                     <a href="#" class="active">
                         <span class="icon"><i class="fas fa-home"></i></span>
+                        <span class="item">Portfolio</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="active">
+                        <span class="icon"><i class="fas fa-plus-circle"></i></span>
                         <span class="item">New subproject</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
-                        <span class="icon"><i class="fas fa-desktop"></i></span>
+                    <a href="#" class="active">
+                        <span class="icon"><i class="fas fa-plus-circle"></i></span>
                         <span class="item">New task</span>
                     </a>
                 </li>
             </ul>
         </div>
 
-        <div class="overview">
+        <div class="project-container">
+            <!-- Project Header -->
+            <div class="project-header">
+                <h1 th:text="${project.projectName}"></h1>
+                <div class="project-metrics">
+                    <div class="metric">
+                        <i class="fas fa-money-bill"></i>
+                        <span>Estimated Cost: <span th:text="${project.totalEstimatedCost}"></span></span>
+                    </div>
+                    <div class="metric">
+                        <i class="fas fa-users"></i>
+                        <span>Employees: <span th:text="${project.totalAssignedEmployees + '/' + project.totalAvailableEmployees}"></span></span>
+                    </div>
+                    <div class="metric">
+                        <i class="fas fa-calendar"></i>
+                        <span>Deadline: <span th:text="${#temporals.format(project.endDate, 'dd-MM-yyyy')}"></span></span>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Subprojects Section -->
+            <div class="subprojects-section">
+                <div th:each="subproject : ${subprojects}"
+                     th:class="'subproject-card priority-' + ${subproject.priority.toString().toLowerCase()}">
+                    <div class="subproject-header" onclick="toggleTasks(${subproject.subprojectId})">
+                        <div class="priority-badge" th:text="${subproject.priority}"></div>
+                        <h3 th:text="${subproject.subprojectName}"></h3>
+                        <div class="subproject-metrics">
+                            <span class="cost" th:text="${subproject.estimatedCost}"></span>
+                            <span class="employees" th:text="${subproject.assignedEmployees + '/' + subproject.availiableEmployees}"></span>
+                            <span class="deadline" th:text="${#temporals.format(subproject.endDate, 'dd-MM-yyyy')}"></span>
+                        </div>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
 
+                    <!-- Tasks goes here -->
+                    <div th:id="'tasks-' + ${subproject.subprojectId}" class="tasks-container" style="display: none;">
+                        <!-- Tasks -->
+                    </div>
+                </div>
+            </div>
         </div>
 
 
@@ -53,6 +102,7 @@
 
 
 </body>
+
 
 
 </html>

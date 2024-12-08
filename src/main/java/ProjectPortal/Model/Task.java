@@ -1,22 +1,25 @@
 package ProjectPortal.Model;
 
-public class Task extends Subproject {
+import java.time.LocalDate;
+import ProjectPortal.Model.Priority;
+
+public class Task {
     private int projectId;
     private int subprojectId;
     private int taskId;
     private String taskName;
     private int assignedEmployees;
     private double estimatedCost;
-    private int startDate;
-    private int endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private boolean isComplete;
     private String taskDescription;
 
-    Priority priority;
+    private Priority priority;
 
     int hoursAllocated;
 
-    public Task(int projectId, int subprojectId, int taskId, String taskName, int assignedEmployees, double estimatedCost, int startDate, int endDate, boolean isComplete, String taskDescription, Priority priority, int hoursAllocated) {
+    public Task(int projectId, int subprojectId, int taskId, String taskName, int assignedEmployees, double estimatedCost, LocalDate startDate, LocalDate endDate, boolean isComplete, String taskDescription, Priority priority, int hoursAllocated) {
         this.projectId = projectId;
         this.subprojectId = subprojectId;
         this.taskId = taskId;
@@ -51,10 +54,10 @@ public class Task extends Subproject {
     public double getEstimatedCost() {
         return estimatedCost;
     }
-    public int getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
-    public int getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
     public boolean getIsComplete() {
@@ -87,10 +90,10 @@ public class Task extends Subproject {
     public void setEstimatedCost(double estimatedCost) {
         this.estimatedCost = estimatedCost;
     }
-    public void setStartDate(int startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
-    public void setEndDate(int endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
     public void setIsComplete(boolean isComplete) {

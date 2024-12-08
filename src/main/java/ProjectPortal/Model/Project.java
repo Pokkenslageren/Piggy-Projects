@@ -1,13 +1,14 @@
 package ProjectPortal.Model;
 
 import java.util.*;
+import java.time.LocalDate;
 
 public class Project {
     private int companyId;
     private String projectName;
     private int projectId;
-    private int startDate;
-    private int endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private double totalEstimatedCost;
     private double totalActualCost;
     private int totalAvailableEmployees;
@@ -21,7 +22,7 @@ public class Project {
     List<Double> totalCostPerSubproject;
 
 
-    public Project(int companyId,String projectName, int projectId, int startDate, int endDate, double totalEstimatedCost, double actualCost, int availableEmployees, int assignedEmployees, boolean isComplete, String projectDescription) {
+    public Project(int companyId,String projectName, int projectId, LocalDate startDate, LocalDate endDate, double totalEstimatedCost, double actualCost, int availableEmployees, int assignedEmployees, boolean isComplete, String projectDescription) {
         this.companyId = companyId;
         this.projectName = projectName;
         this.projectId = projectId;
@@ -49,10 +50,10 @@ public class Project {
     public int getProjectId() {
         return projectId;
     }
-    public int getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
-    public int getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
     public double getTotalEstimatedCost() {
@@ -86,10 +87,10 @@ public class Project {
     public void setProjectId(int projectId) {
         this.projectId = projectId;
     }
-    public void setStartDate(int startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
-    public void setEndDate(int endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
     public void setTotalEstimatedCost(double totalEstimatedCost) {
