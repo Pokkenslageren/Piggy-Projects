@@ -1,22 +1,28 @@
 package ProjectPortal.Repository;
 
 import ProjectPortal.Model.Project;
+import ProjectPortal.Model.Subproject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.Iterator;
 import java.util.List;
 
 @Repository
-public class ProjectRepository {
+public class ProjectRepository implements Iterable<Double>  {
 
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
     public ProjectRepository(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    public Iterator<Double> iterator(){
+        return null;
     }
 
     public void createProject(Project project){
@@ -46,15 +52,38 @@ public class ProjectRepository {
         jdbcTemplate.update(query,projectId);
     }
 
-    public int calculateTotalAvailableEmployees(Project project){
-        List<Integer> taskEmployees = project.getTaskEmployees();
+    /**
+     * Calculates number of available employees based on assigned employees in subprojects
+     * @param listOfSubprojects A list of all subprojects associated with the project
+     * @param project The given project
+     * @return The number of employees not assigned to a subproject or task
+     */
+    public int calculateTotalAvailableEmployees(List<Subproject> listOfSubprojects, Project project){
+        var iterator = listOfSubprojects.iterator();
         int totalProjectEmployees = project.getAssignedEmployees();
         int totalEmployeesInUse = 0;
-        for(Integer employee : taskEmployees){
-            totalEmployeesInUse = totalEmployeesInUse + employee;
+        while(iterator.hasNext()){
+            totalEmployeesInUse = totalProjectEmployees + iterator.next().getTotalAssignedEmployees();
         }
         return totalProjectEmployees - totalEmployeesInUse;
     }
+
+    /**
+     * Calculates the actual total project cost based on the sum of all subproject costs
+     * @return the actual total cost of the project
+     */
+    public double calculateTotalActualCost(List<Subproject> listOfSubprojects){
+        var iterator = listOfSubprojects.iterator();
+        double totalActualCost = 0.0;
+        while(iterator.hasNext()){
+            totalActualCost = totalActualCost + iterator.next().getTotalActualCost();
+        }
+/*        for(Subproject subproject : listOfSubprojects){
+            totalActualCost = totalActualCost + subproject.getTotalActualCost();
+        }*/
+        return totalActualCost;
+    }
+
 
     
 }

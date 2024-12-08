@@ -1,6 +1,12 @@
 package ProjectPortal.Model;
 
 public class Subproject {
+
+    enum Priority{
+        LOW,
+        MEDIUM,
+        HIGH;
+    }
     private int projectID;
     private String subprojectName;
     private int subprojectId;
@@ -10,10 +16,14 @@ public class Subproject {
     private int availiableEmployees;
     private int assignedEmployees;
     private int endDate;
+
+    Priority priority;
+
+    private int hoursAllocated;
     private boolean isComplete;
     private String subprojectDescription;
 
-    public Subproject(int projectID, String subprojectName, int subprojectId, int startDate, int totalEstimatedCost, int totalActualCost, int totalAvailiableEmployees, int totalAssignedEmployees, int endDate, boolean isComplete) {
+    public Subproject(int projectID, String subprojectName, int subprojectId, int startDate, int totalEstimatedCost, int totalActualCost, int totalAvailiableEmployees, int totalAssignedEmployees, int endDate, boolean isComplete, Priority priority, int hoursAllocated) {
         this.projectID = projectID;
         this.subprojectName = subprojectName;
         this.subprojectId = subprojectId;
@@ -25,6 +35,8 @@ public class Subproject {
         this.endDate = endDate;
         this.isComplete = isComplete;
         this.subprojectDescription = "";
+        this.priority = priority;
+        this.hoursAllocated = hoursAllocated;
     }
 
     public Subproject() {}
@@ -60,6 +72,12 @@ public class Subproject {
     public String getSubprojectDescription() {
         return subprojectDescription;
     }
+    public Priority getPriority(){
+        return priority;
+    }
+    public int getHoursAllocated(){
+        return hoursAllocated;
+    }
 
     public void setParentProjectID(int projectID) {
         this.projectID = projectID;
@@ -81,6 +99,13 @@ public class Subproject {
     }
     public void setTotalAvailiableEmployees(int totalAvailiableEmployees) {
         this.availiableEmployees = totalAvailiableEmployees;
+    }
+    public void setPriority(String priority){
+        this.priority =Priority.valueOf(priority);
+    }
+
+    public void setHoursAllocated(int hoursAllocated){
+        this.hoursAllocated = hoursAllocated;
     }
     public void setTotalAssignedEmployees(int totalAssignedEmployees) {
         this.assignedEmployees = totalAssignedEmployees;
