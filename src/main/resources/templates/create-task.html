@@ -18,28 +18,28 @@
             <form th:action="@{/{user}/home/createtask}" th:object="${task}" method="post">
                 <!-- hidden companyid-->
                 <div>
-                    <label for="task-name">Name of task:</label>
+                    <label for="task-name">Task name:</label>
                     <input type="text" id="task-name" th:field="*{taskName}" placeholder="Insert task-name" required />
                 </div>
                 <div>
-                    <label for="task-start-date">Startdate for task</label>
+                    <label for="task-start-date">Task start date</label>
                     <input type="date" th:field="${task.startDate}" id="task-start-date">
                 </div>
                 <div>
-                    <label for="task-end-date">Enddate for task</label>
+                    <label for="task-end-date">Task end date</label>
                     <input type="date" th:field="${task.endDate}" id="task-end-date">
                 </div>
                 <div>
-                    <label for="task-cost-estimate">Insert estimated cost for task</label>
+                    <label for="task-cost-estimate">Estimated total task cost</label>
                     <input type="text" id="task-cost-estimate" th:field="*{estimatedCost}" placeholder="Budget in DKK"/>
                 </div>
                 <div>
-                    <label for="total-employees">Insert number of assigned employees for task</label>
+                    <label for="total-employees">Enter number of employees assigned to the task</label>
                     <input type="text" id="total-employees" th:field="*{assignedEmployees}" placeholder="Total number of employees">
                 </div>
                 <!-- hidden isComplete-->
                 <div>
-                    <label for="task-description">Give the task a description:</label>
+                    <label for="task-description">Enter task description:</label>
                     <input type="text" id="task-description" th:field="*{taskDescription}" placeholder="Task-description" required />
                 </div>
                 <div class="button-container">

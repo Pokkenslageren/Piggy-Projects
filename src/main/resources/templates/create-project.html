@@ -18,7 +18,7 @@
             <form th:action="@{/{user}/home/createproject}" th:object="${project}" method="post">
                 <!-- hidden companyid-->
                 <div>
-                    <label for="project-name">Name of Project</label>
+                    <label for="project-name">Project name</label>
                     <input type="text" id="project-name" th:field="*{projectName}" placeholder="Enter the project name" required />
                 </div>
                 <div>
@@ -30,7 +30,7 @@
                     <input type="date" th:field="${project.endDate}" id="project-end-date">
                 </div>
                 <div>
-                    <label for="project-cost-estimate">Enter estimated total project cost</label>
+                    <label for="project-cost-estimate">Estimated total project cost</label>
                     <input type="text" id="project-cost-estimate" th:field="*{totalEstimatedCost}" placeholder="Estimated total project cost"/>
                 </div>
                 <div>
@@ -39,7 +39,7 @@
                 </div>
                 <!-- hidden isComplete-->
                 <div>
-                    <label for="project-description">Provide a description of the project:</label>
+                    <label for="project-description">Enter project description:</label>
                     <input type="text" id="project-description" th:field="*{projectDescription}" placeholder="Project description" required />
                 </div>
                 <div class="button-container">
