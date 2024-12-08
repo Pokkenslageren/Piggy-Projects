@@ -1,12 +1,15 @@
 package ProjectPortal.Controller;
 
 import ProjectPortal.Model.Project;
+import ProjectPortal.Model.Subproject;
 import ProjectPortal.Model.User;
 import ProjectPortal.Service.ProjectService;
 import ProjectPortal.Service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import java.util.*;
+import ProjectPortal.Service.SubprojectService;
 
 @Controller
 @RequestMapping("")
@@ -14,6 +17,7 @@ public class ProjectController {
 
     private final ProjectService projectService;
     private final UserService userService;
+    private final SubprojectService subprojectService;
     public ProjectController(ProjectService projectService, UserService userService) {
         this.projectService = projectService;
         this.userService = userService;
@@ -29,10 +33,13 @@ public class ProjectController {
         return "create-project";
     }
 
+
     @GetMapping("/{user}/portfolio/{projectId}")
-    public String project(@PathVariable String user, @PathVariable int projectId, Model model) {
+    public String showProject(@PathVariable String user, @PathVariable int projectId, Model model) {
         Project project = projectService.readProject(projectId);
+        List<Subproject> subprojects = subprojectService.readAllSubprojectsByProjectId(projectId);
         model.addAttribute("project", project);
+        model.addAttribute("subprojects", subprojects);
         return "project-overview";
     }
 
