@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("")
 public class ProjectController {
@@ -27,6 +29,12 @@ public class ProjectController {
         project.setComplete(false);
         model.addAttribute("project", project);
         return "create-project";
+    }
+
+    //tester css
+    @GetMapping("/projects")
+    public String projects(Model model) {
+        return "project-overview";
     }
 
     @PostMapping("/{user}/home/createproject")

@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <title>Create new subproject</title>
 
-    <!--    <link rel="stylesheet" th:href="@{/main.css}">
-    <link rel="stylesheet" href="/formbox.css" th:href="@{/formbox.css}">-->
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link th:href="@{/css/sidebar.css}" rel="stylesheet">
+
 
 </head>
 
@@ -16,7 +17,7 @@
 
     <div class="form-container">
         <div class="form-box">
-            <h1>Create new sub-project</h1>
+            <h1>Create new subproject</h1>
             <form th:action="@{/{user}/home/{projectId}/createsubproject}" th:object="${subproject}" method="post">
                 <!-- hidden companyid-->
                 <!-- hidden parentProjectId -->
