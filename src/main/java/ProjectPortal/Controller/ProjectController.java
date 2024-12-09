@@ -18,9 +18,10 @@ public class ProjectController {
     private final ProjectService projectService;
     private final UserService userService;
     private final SubprojectService subprojectService;
-    public ProjectController(ProjectService projectService, UserService userService) {
+    public ProjectController(ProjectService projectService, UserService userService, SubprojectService subprojectService) {
         this.projectService = projectService;
         this.userService = userService;
+        this.subprojectService = subprojectService;
     }
 
     @GetMapping("/{user}/portfolio/createproject")
@@ -31,6 +32,15 @@ public class ProjectController {
         project.setComplete(false);
         model.addAttribute("project", project);
         return "create-project";
+    }
+
+    @GetMapping("/{user}/portfolio")
+    public String showPortfolio(@PathVariable("user") int userId, Model model){
+        User user = userService.readUserById(userId);
+        List<Project> projects = projectService.readAllProjects();
+        model.addAttribute("projects", projects);
+        model.addAttribute("user", user);
+        return "portfolio";
     }
 
 
