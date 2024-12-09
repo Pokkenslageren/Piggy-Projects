@@ -86,6 +86,27 @@ public class TaskRepository {
     }
 
     /**
+     * Computes the total number of hours as a function of number of days and number of employees
+     * assuming eight-hour work days for each employee
+     * @param task
+     * @return
+     */
+    public int totalTaskHours(Task task){
+        int taskDays = task.getEndDate().getDayOfYear() - task.getStartDate().getDayOfYear();
+        return taskDays * task.getAssignedEmployees() * 8;
+    }
+
+    /**
+     * Checks if enough hours have been allocated to the task
+     * @param task
+     * @return
+     */
+    public boolean sufficientHours(Task task){
+        int totalTaskHours = totalTaskHours(task);
+        return (task.getHoursAllocated() > totalTaskHours );
+    }
+
+    /**
      *
      * @param task
      */

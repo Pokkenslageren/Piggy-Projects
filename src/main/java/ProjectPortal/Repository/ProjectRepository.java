@@ -26,8 +26,8 @@ public class ProjectRepository implements Iterable<Double>  {
     }
 
     public void createProject(Project project){
-        String query = "INSERT INTO projects(company_id, project_name, start_date, end_date, total_estimated_cost, total_estimated_employees, is_complete, project_description) VALUES (?,?,?,?,?,?,?,?,?);";
-        jdbcTemplate.update(query, project.getProjectId(), project.getProjectName(), project.getStartDate(), project.getEndDate(), project.getTotalEstimatedCost(), project.getAssignedEmployees(), false, project.getProjectDescription());
+        String query = "INSERT INTO projects(company_id, project_name, user_id, start_date, end_date, total_estimated_cost, total_estimated_employees, is_complete, project_description) VALUES (?,?,?,?,?,?,?,?,?,?);";
+        jdbcTemplate.update(query, project.getProjectId(), project.getProjectName(), project.getUserId(), project.getStartDate(), project.getEndDate(), project.getTotalEstimatedCost(), project.getAssignedEmployees(), false, project.getProjectDescription());
     }
 
     public Project readProject(int projectId){
@@ -78,10 +78,10 @@ public class ProjectRepository implements Iterable<Double>  {
         while(iterator.hasNext()){
             totalActualCost = totalActualCost + iterator.next().getTotalActualCost();
         }
-/*        for(Subproject subproject : listOfSubprojects){
-            totalActualCost = totalActualCost + subproject.getTotalActualCost();
-        }*/
+
         return totalActualCost;
     }
+
+
 
 }
