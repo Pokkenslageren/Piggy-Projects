@@ -78,9 +78,7 @@ public class ProjectRepository implements Iterable<Double>  {
         while(iterator.hasNext()){
             totalActualCost = totalActualCost + iterator.next().getTotalActualCost();
         }
-/*        for(Subproject subproject : listOfSubprojects){
-            totalActualCost = totalActualCost + subproject.getTotalActualCost();
-        }*/
+
         return totalActualCost;
     }
 

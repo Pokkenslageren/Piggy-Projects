@@ -1,15 +1,33 @@
 import ProjectPortal.Model.Priority;
+import ProjectPortal.Model.Project;
+import ProjectPortal.Model.Subproject;
 import ProjectPortal.Model.Task;
 
 import java.time.*;
+import java.util.List;
 
 public class DynamicValues {
 
 
 
-/*    LocalDate startDate = LocalDate.of(2024, 12,5);
-    LocalDate endDate = LocalDate.of(2024, 12, 15);*/
+    public int calculateTotalAvailableEmployees(List<Subproject> listOfSubprojects, Project project){
+        var iterator = listOfSubprojects.iterator();
+        int totalProjectEmployees = project.getAssignedEmployees();
+        int totalEmployeesInUse = 0;
+        while(iterator.hasNext()){
+            totalEmployeesInUse = totalEmployeesInUse + iterator.next().getTotalAssignedEmployees();
+        }
+        return totalProjectEmployees - totalEmployeesInUse;
+    }
 
+    public double calculateTotalActualCost(List<Subproject> listOfSubprojects){
+        var iterator = listOfSubprojects.iterator();
+        double totalActualCost = 0.0;
+        while(iterator.hasNext()){
+            totalActualCost = totalActualCost + iterator.next().getTotalActualCost();
+        }
+        return totalActualCost;
+    }
 
     public int totalTaskHours(Task task){
 
