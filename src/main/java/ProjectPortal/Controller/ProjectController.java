@@ -24,8 +24,8 @@ public class ProjectController {
         this.subprojectService = subprojectService;
     }
 
-    @GetMapping("/{user}/portfolio/createproject")
-    public String createProject(@PathVariable("user") int userId, Model model){
+    @GetMapping("/{userId}/portfolio/createproject")
+    public String createProject(@PathVariable("userId") int userId, Model model){
         User user = userService.readUserById(userId);
         Project project = new Project();
         project.setCompanyId(user.getCompanyId());
@@ -34,8 +34,8 @@ public class ProjectController {
         return "create-project";
     }
 
-    @GetMapping("/{user}/portfolio")
-    public String showPortfolio(@PathVariable("user") int userId, Model model){
+    @GetMapping("/{userId}/portfolio")
+    public String showPortfolio(@PathVariable("userId") int userId, Model model){
         User user = userService.readUserById(userId);
         List<Project> projects = projectService.readAllProjects();
         model.addAttribute("projects", projects);
@@ -44,8 +44,8 @@ public class ProjectController {
     }
 
 
-    @GetMapping("/{user}/portfolio/{projectId}")
-    public String showProject(@PathVariable String user, @PathVariable int projectId, Model model) {
+    @GetMapping("/{userId}/portfolio/{projectId}")
+    public String showProject(@PathVariable int userId, @PathVariable int projectId, Model model) {
         Project project = projectService.readProject(projectId);
         List<Subproject> subprojects = subprojectService.readAllSubprojectsByProjectId(projectId);
         model.addAttribute("project", project);
@@ -53,29 +53,29 @@ public class ProjectController {
         return "project-overview";
     }
 
-    @PostMapping("/{user}/portfolio/createproject")
-    public String createProject(@PathVariable("user") int userId, @ModelAttribute Project project){
+    @PostMapping("/{userId}/portfolio/createproject")
+    public String createProject(@PathVariable("userId") int userId, @ModelAttribute Project project){
         projectService.createProject(project);
         return "redirect:/portfolio";
     }
 
-    @GetMapping("/{user}/portfolio/{projectid}/update")
-    public String updateProject(@PathVariable("projectid") int projectId, Model model){
+    @GetMapping("/{userId}/portfolio/{projectid}/update")
+    public String updateProject(@PathVariable("userId") int userId, @PathVariable("projectid") int projectId, Model model){
         Project project = projectService.readProject(projectId);
         model.addAttribute("project", project);
         return "update-project";
     }
 
-    @PostMapping("/{user}/portfolio/{projectid}/update")
-    public String updateProject(@PathVariable("projectid")int projectid, @ModelAttribute Project project){
+    @PostMapping("/{userId}/portfolio/{projectid}/update")
+    public String updateProject(@PathVariable("userId") int userId, @PathVariable("projectid")int projectid, @ModelAttribute Project project){
         projectService.updateProject(project, projectid);
         return "redirect:/portfolio";
     }
 
 
 
-    @GetMapping("/{user}/portfolio/{projectid}/delete")
-    public String deleteProject(@PathVariable("projectid") int projectId){
+    @GetMapping("/{userId}/portfolio/{projectid}/delete")
+    public String deleteProject(@PathVariable("userId") int userId, @PathVariable("projectid") int projectId){
         projectService.deleteProject(projectId);
         return "redirect:/portfolio";
     }

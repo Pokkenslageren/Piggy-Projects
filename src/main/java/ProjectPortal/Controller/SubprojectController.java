@@ -23,8 +23,8 @@ public class SubprojectController {
         }
 
         //todo fix user
-        @GetMapping("/{user}/portfolio/{projectId}/createsubproject")
-        public String createProject(@PathVariable("user") int userId, @PathVariable("projectId") int projectId, Model model){
+        @GetMapping("/{userId}/portfolio/{projectId}/createsubproject")
+        public String createProject(@PathVariable("userId") int userId, @PathVariable("projectId") int projectId, Model model){
             User user = userService.readUserById(userId);
             Subproject subproject = new Subproject();
             subproject.setParentProjectID(subproject.getParentProjectID());
@@ -33,8 +33,8 @@ public class SubprojectController {
             return "create-subproject";
         }
 
-        @PostMapping("/{user}/portfolio/{projectId}/createsubproject")
-        public String createProject(@PathVariable("user") int userId, @PathVariable("projectId") int projectId, @ModelAttribute Subproject subproject){
+        @PostMapping("/{userId}/portfolio/{projectId}/createsubproject")
+        public String createProject(@PathVariable("userId") int userId, @PathVariable("projectId") int projectId, @ModelAttribute Subproject subproject){
             subprojectService.createSubproject(subproject);
             return "redirect:/{user}/portfolio/{projectId}";
         }

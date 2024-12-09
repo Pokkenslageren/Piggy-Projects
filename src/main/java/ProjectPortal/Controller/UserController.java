@@ -22,8 +22,8 @@ public class UserController {
      * @param model
      * @return
      */
-    @GetMapping("/{user}/portfolio/createUser")
-    public String createUser(@PathVariable("user") Model model) {
+    @GetMapping("/{userId}/portfolio/createUser")
+    public String createUser(@PathVariable("userId") Model model) {
         User user = new User();
 //            if(user == null) {
 //                model.addAttribute("Error", "user not found");
@@ -33,8 +33,8 @@ public class UserController {
         return "create-user";
     }
 
-    @PostMapping("/{user}/portfolio/createUser")
-    public String createUser(@PathVariable("user") @ModelAttribute User user) {
+    @PostMapping("/{userId}/portfolio/createUser")
+    public String createUser(@PathVariable("userId") @ModelAttribute User user) {
         userService.createUser(user);
         return "redirect:/portfolio";
     }
@@ -45,20 +45,20 @@ public class UserController {
         return "redirect:/home";
     }
 
-    @GetMapping("/{user}/portfolio/update")
-    public String updateUser(@PathVariable("user") User user, int userId) {
+    @GetMapping("/{userId}/portfolio/update")
+    public String updateUser(@PathVariable("userId") User user, int userId) {
         userService.updateUser(user, userId);
         return "update-user";
     }
 
-    @PostMapping("/{user}/portfolio/update")
-    public String updateUser(@PathVariable("user")int userId,  @ModelAttribute User user) {
+    @PostMapping("/{userId}/portfolio/update")
+    public String updateUser(@PathVariable("userId")int userId,  @ModelAttribute User user) {
         userService.updateUser(user,userId);
         return "redirect:/home";
     }
 
-    @GetMapping("/{user}/portfolio/delete")
-    public String deleteUser(@PathVariable("user")int userId) {
+    @GetMapping("/{userId}/portfolio/delete")
+    public String deleteUser(@PathVariable("userId")int userId) {
         userService.deleteUser(userId);
         return "redirect:/home";
     }
