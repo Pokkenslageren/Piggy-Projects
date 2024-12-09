@@ -21,6 +21,7 @@ class DynamicValuesTest {
     Subproject subproject2 = new Subproject(1,"subproject 2", 2, LocalDate.of(2024,3,1),30000, 0, 30, 30,LocalDate.of(2024,4,1), false, Priority.valueOf("HIGH"),1500);
 
     List<Subproject> subprojectList = Arrays.asList(subproject1,subproject2);
+    List<Task> taskList = Arrays.asList(task);
 
 
 
@@ -42,5 +43,10 @@ class DynamicValuesTest {
     @Test
     void calculateTotalActualCost(){
         assertEquals(0.0, dynamicValues.calculateTotalActualCost(subprojectList));
+    }
+
+    @Test
+    void calculateTotalAvailableEmployeesSubproject(){
+        assertEquals(10,dynamicValues.calculateTotalAvailableEmployeesSubproject(taskList, subproject1));
     }
 }
