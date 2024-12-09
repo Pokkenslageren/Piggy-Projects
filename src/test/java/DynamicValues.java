@@ -17,5 +17,10 @@ public class DynamicValues {
         return (task.getEndDate().getDayOfYear() - task.getStartDate().getDayOfYear()) * numberOfEmployees * 8;
     }
 
+    public boolean sufficientHours(Task task){
+        int totalTaskHours = totalTaskHours(task);
+        return (task.getHoursAllocated() > totalTaskHours );
+    }
+
 
 }

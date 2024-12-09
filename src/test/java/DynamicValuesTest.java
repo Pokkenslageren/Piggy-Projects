@@ -19,4 +19,11 @@ class DynamicValuesTest {
 
         assertEquals(800,dynamicValues.totalTaskHours(task));
     }
+
+    @Test
+    void sufficientHours(){
+        assertEquals(false, dynamicValues.sufficientHours(task));
+    }
+
+
 }

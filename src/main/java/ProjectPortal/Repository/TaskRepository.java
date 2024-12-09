@@ -97,6 +97,16 @@ public class TaskRepository {
     }
 
     /**
+     * Checks if enough hours have been allocated to the task
+     * @param task
+     * @return
+     */
+    public boolean sufficientHours(Task task){
+        int totalTaskHours = totalTaskHours(task);
+        return (task.getHoursAllocated() > totalTaskHours );
+    }
+
+    /**
      *
      * @param task
      */
