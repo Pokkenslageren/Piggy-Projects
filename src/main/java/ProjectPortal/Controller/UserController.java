@@ -19,16 +19,12 @@ public class UserController {
 
     /**
      * Get mapping
-     * @param userId
-     * @param username
-     * @param password
-     * @param companyId
      * @param model
      * @return
      */
     @GetMapping("/{user}/portfolio/createUser")
-    public String createUser(@PathVariable("user")int userId, String username, String password, int companyId, Model model) {
-        User user = userService.readUserById(userId);
+    public String createUser(@PathVariable("user") Model model) {
+        User user = new User();
 //            if(user == null) {
 //                model.addAttribute("Error", "user not found");
 //            return "redirect:/error";
@@ -38,26 +34,32 @@ public class UserController {
     }
 
     @PostMapping("/{user}/portfolio/createUser")
-    public String createUser(@PathVariable("user") int userId,@ModelAttribute User user) {
-        userService.createUser(user.getUsername(),user.getPassword(), user.getUserId(),user.getCompanyId());
+    public String createUser(@PathVariable("user") @ModelAttribute User user) {
+        userService.createUser(user);
         return "redirect:/portfolio";
     }
 
+    @GetMapping
+    public String readAllUsers(User user) {
+        userService.readUsers(user.getUserName(), user.getCompanyId(), user.getUserId());
+        return "redirect:/home";
+    }
+
     @GetMapping("/{user}/portfolio/update")
-    public String updateUser(@PathVariable("user")String username, String password, int companyId, int userId, @ModelAttribute User user) {
-        userService.updateUser(username, password, companyId, userId);
+    public String updateUser(@PathVariable("user") User user, int userId) {
+        userService.updateUser(user, userId);
         return "update-user";
     }
 
     @PostMapping("/{user}/portfolio/update")
-    public String updateUser(@ModelAttribute("user") String username, String password, int companyId, int userId) {
-        userService.updateUser(username, password, companyId, userId);
-        return "redirect:/portfolio";
+    public String updateUser(@PathVariable("user")int userId,  @ModelAttribute User user) {
+        userService.updateUser(user,userId);
+        return "redirect:/home";
     }
 
     @GetMapping("/{user}/portfolio/delete")
     public String deleteUser(@PathVariable("user")int userId) {
         userService.deleteUser(userId);
-        return "redirect:/portfolio";
+        return "redirect:/home";
     }
 }

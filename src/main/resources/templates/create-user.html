@@ -5,27 +5,26 @@
     <title>Create User</title>
 </head>
 <body>
-    <div class="wrapper">
-        <div class="form-container">
-            <div class="form-box">
-                <h1>Opret ny bruger</h1>
-                <form th:action="@{/{user}/home/createUser}" th:object="${user}" method="post">
-
-                    <div>
-                        <label for="user-name">Brugernavn:</label>
-                        <input type="text" id="user-name" th:field="*{username}" placeholder="Indtast navn" required />
-                    </div>
-                    <div>
-                        <label for="user-password">Password:</label>
-                        <input type="password" id="user-password" th:field="*{password}" placeholder="Indtast password" required />
-                    </div>
-                    <div class="button-container">
-                        <button type="submit">Opret bruger</button>
-                    </div>
-                </form>
-            </div>
+<div class="wrapper">
+    <div class="form-container">
+        <div class="form-box">
+            <h1>Create new user</h1>
+            <form th:action="@{/{user}/home/createUser}" th:object="${user}" method="post">
+                <div>
+                    <label for="user-Name">Username:</label>
+                    <input type="text" id="user-Name" th:field="*{user.username}" placeholder="Indtast navn" required />
+                </div>
+                <div>
+                    <label for="user-password">Password:</label>
+                    <input type="password" id="user-password" th:field="*{user.password}" placeholder="Indtast password" required />
+                </div>
+                <div class="button-container">
+                    <button type="submit">Create user</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
 </body>
 </html>
