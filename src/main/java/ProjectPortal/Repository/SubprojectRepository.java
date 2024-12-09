@@ -75,6 +75,12 @@ public class SubprojectRepository extends ProjectRepository{
         jdbcTemplate.update(query, subprojectId);
     }
 
+    /**
+     * Calculates number of available employees based on assigned employees in tasks
+     * @param listOfTasks A list of all tasks associated with the subproject
+     * @param subproject The given subproject
+     * @return The number of employees not assigned to a task.
+     */
     public int calculateTotalAvailableEmployees(List<Task> listOfTasks, Subproject subproject){
         var iterator = listOfTasks.iterator();
         int totalSubprojectEmployees = subproject.getTotalAssignedEmployees();
