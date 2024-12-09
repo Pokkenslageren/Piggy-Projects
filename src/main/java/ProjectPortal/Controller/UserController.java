@@ -26,7 +26,7 @@ public class UserController {
      * @param model
      * @return
      */
-    @GetMapping("/{user}/home/createUser")
+    @GetMapping("/{user}/portfolio/createUser")
     public String createUser(@PathVariable("user")int userId, String username, String password, int companyId, Model model) {
         User user = userService.readUserById(userId);
 //            if(user == null) {
@@ -37,27 +37,27 @@ public class UserController {
         return "create-user";
     }
 
-    @PostMapping("/{user}/home/createUser")
+    @PostMapping("/{user}/portfolio/createUser")
     public String createUser(@PathVariable("user") int userId,@ModelAttribute User user) {
         userService.createUser(user.getUsername(),user.getPassword(), user.getUserId(),user.getCompanyId());
-        return "redirect:/home";
+        return "redirect:/portfolio";
     }
 
-    @GetMapping("/{user}/home/update")
+    @GetMapping("/{user}/portfolio/update")
     public String updateUser(@PathVariable("user")String username, String password, int companyId, int userId, @ModelAttribute User user) {
         userService.updateUser(username, password, companyId, userId);
         return "update-user";
     }
 
-    @PostMapping("/{user}/home/update")
+    @PostMapping("/{user}/portfolio/update")
     public String updateUser(@ModelAttribute("user") String username, String password, int companyId, int userId) {
         userService.updateUser(username, password, companyId, userId);
-        return "redirect:/home";
+        return "redirect:/portfolio";
     }
 
-    @GetMapping("/{user}/home/delete")
+    @GetMapping("/{user}/portfolio/delete")
     public String deleteUser(@PathVariable("user")int userId) {
         userService.deleteUser(userId);
-        return "redirect:/home";
+        return "redirect:/portfolio";
     }
 }

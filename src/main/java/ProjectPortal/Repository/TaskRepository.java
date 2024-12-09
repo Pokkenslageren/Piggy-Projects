@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import java.time.LocalDate;
 
 import java.sql.*;
 import java.util.List;
@@ -70,7 +71,7 @@ public class TaskRepository {
      * @param isComplete
      * @param description
      */
-    public void updateTask(String taskName, int taskId, int assignedEmployees, int estimatedCost, int startDate, int endDate, boolean isComplete, String description){
+    public void updateTask(String taskName, int taskId, int assignedEmployees, int estimatedCost, LocalDate startDate, LocalDate endDate, boolean isComplete, String description){
         String query = "UPDATE tasks" +
                 "SET task_name = ?, " +
                 "task_id = ?, " +

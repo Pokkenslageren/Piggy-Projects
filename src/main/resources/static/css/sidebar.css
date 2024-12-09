@@ -1,10 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+*{
+    list-style: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
 
 body{
     background: #dfe7f6;
-}
-
-body {
-    background-color: red;
 }
 
 .wrapper .sidebar{
@@ -15,6 +21,11 @@ body {
     width: 225px;
     height: 100%;
     padding: 20px 0;
+    transition: all 0.5s ease;
+}
+.wrapper .sidebar .logo{
+    margin-bottom: 30px;
+    text-align: center;
 }
 
 .wrapper .sidebar .logo img{
@@ -25,6 +36,15 @@ body {
     margin: 0 auto;
 }
 
+.wrapper .sidebar .logo h3{
+color: #ffffff;
+margin: 10px 0 5px;
+}
+
+.wrapper .sidebar .logo p{
+    color: rgb(206, 240, 253);
+    font-size: 14px;
+}
 
 .wrapper .sidebar ul li a{
     display: block;
@@ -41,6 +61,8 @@ body {
     display: inline-block;
 }
 
+
+.w
 .wrapper .sidebar ul li a:hover,
 .wrapper .sidebar ul li a.active{
     color: #0c7db1;
@@ -58,3 +80,22 @@ body {
 .wrapper .sidebar ul li a.active:before{
     display: block;
 }
+
+
+.wrapper .section{
+    width: calc(100% - 225px);
+    margin-left: 225px;
+    transition: all 0.5s ease;
+}
+
+/* TOP NAV CSS START */
+.wrapper .section .top_navbar{
+    background: rgb(7, 105, 185);
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+
+}
+
+

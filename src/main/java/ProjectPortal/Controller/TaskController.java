@@ -24,7 +24,7 @@ public class TaskController {
         this.userService = userService;
     }
 
-    @GetMapping("/{user}/home/{projectId}/{subprojectId}/createtask")
+    @GetMapping("/{user}/portfolio/{projectId}/{subprojectId}/createtask")
     public String createTask(@PathVariable("user") int userId, Model model) {
         User user = userService.readUserById(userId);
         Task task = new Task();
@@ -32,10 +32,10 @@ public class TaskController {
         return "create-task";
     }
 
-    @PostMapping("/{user}/home/createtask")
+    @PostMapping("/{user}/portfolio/createtask")
     public String createTask(@PathVariable("user") int userId, @ModelAttribute Task task){
         taskService.createTask(task);
-        return "redirect:/home";
+        return "redirect:/portfolio";
     }
 
 }
