@@ -84,6 +84,4 @@ public class ProjectRepository implements Iterable<Double>  {
         return totalActualCost;
     }
 
-
-    
 }

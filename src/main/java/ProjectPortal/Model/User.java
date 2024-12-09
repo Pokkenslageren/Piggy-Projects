@@ -5,12 +5,14 @@ public class User {
     private String username;
     private String password;
     private int userId;
+    private Role role;
 
-    public User(int companyId, String username, String password, int userId) {
+    public User(int companyId, String username, String password, int userId, Role role) {
         this.companyId = companyId;
         this.username = username;
         this.password = password;
         this.userId = userId;
+        this.role = role;
     }
 
     public User() {}

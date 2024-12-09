@@ -15,6 +15,7 @@ CREATE TABLE if not exists `users`(
     company_id int DEFAULT NULL,
     user_name varchar(255),
     user_password varchar(64) NOT NULL,
+    role varchar(30) NOT NULL,
     PRIMARY KEY (`user_id`),
     FOREIGN KEY (`company_id`) REFERENCES `companies` (`company_id`)
 );
