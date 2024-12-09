@@ -17,8 +17,8 @@ class DynamicValuesTest {
 
     Task task = new Task(1, 2, 1, "testingTask",10, 25000.0, LocalDate.of(12,10,5), LocalDate.of(12,10,15), false, "a task for testing functionality", Priority.valueOf("HIGH"),500);
     Project project = new Project(1, "Testing Project", 1, 1, LocalDate.of(2024,1,1), LocalDate.of(2025,1,1), 1000000.0, 0,50,50,false, "A test project");
-    Subproject subproject1 = new Subproject(1,"subproject 1", 1, LocalDate.of(2024,2,1),30000, 0, 20, 20,LocalDate.of(2024,3,1), false, Priority.valueOf("HIGH"),1000);
-    Subproject subproject2 = new Subproject(1,"subproject 2", 2, LocalDate.of(2024,3,1),30000, 0, 30, 30,LocalDate.of(2024,4,1), false, Priority.valueOf("HIGH"),1500);
+    Subproject subproject1 = new Subproject(1,"subproject 1", 1, LocalDate.of(2024,2,1),LocalDate.of(2024,3,1), 0, 20, 20,30000, false, Priority.valueOf("HIGH"),1000);
+    Subproject subproject2 = new Subproject(1,"subproject 2", 2, LocalDate.of(2024,3,1),LocalDate.of(2024,4,1), 0, 30, 30,30000, false, Priority.valueOf("HIGH"),1500);
 
     List<Subproject> subprojectList = Arrays.asList(subproject1,subproject2);
     List<Task> taskList = Arrays.asList(task);

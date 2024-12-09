@@ -21,13 +21,12 @@ public class Subproject {
     private boolean isComplete;
     private String subprojectDescription;
 
-    public Subproject(int projectID, String subprojectName, int subprojectId, LocalDate startDate, int totalEstimatedCost, int totalActualCost, int totalAvailiableEmployees, int totalAssignedEmployees, LocalDate endDate, boolean isComplete, Priority priority, int hoursAllocated) {
+    public Subproject(int projectID, String subprojectName, int subprojectId, LocalDate startDate, LocalDate endDate, int totalEstimatedCost, int totalActualCost, int totalAvailiableEmployees, int totalAssignedEmployees, boolean isComplete, Priority priority, int hoursAllocated) {
         this.projectID = projectID;
         this.subprojectName = subprojectName;
         this.subprojectId = subprojectId;
         this.startDate = startDate;
         this.estimatedCost = totalEstimatedCost;
-        this.actualCost = totalActualCost;
         this.availiableEmployees = totalAvailiableEmployees;
         this.assignedEmployees = totalAssignedEmployees;
         this.endDate = endDate;
