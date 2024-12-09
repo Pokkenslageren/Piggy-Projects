@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import java.util.*;
 
 @Repository
-public class SubprojectRepository extends ProjectRepository{
+public class SubprojectRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -19,7 +19,6 @@ public class SubprojectRepository extends ProjectRepository{
      * @param jdbcTemplate
      */
     public SubprojectRepository(JdbcTemplate jdbcTemplate) {
-        super(jdbcTemplate);
         this.jdbcTemplate = jdbcTemplate;
     }
 
