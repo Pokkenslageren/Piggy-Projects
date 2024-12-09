@@ -29,6 +29,16 @@ public class DynamicValues {
         return totalActualCost;
     }
 
+    public int calculateTotalAvailableEmployeesSubproject(List<Task> listOfTasks, Subproject subproject){
+        var iterator = listOfTasks.iterator();
+        int totalSubprojectEmployees = subproject.getTotalAssignedEmployees();
+        int totalEmployeesInUse = 0;
+        while(iterator.hasNext()){
+            totalEmployeesInUse = totalEmployeesInUse + iterator.next().getAssignedEmployees();
+        }
+        return totalSubprojectEmployees - totalEmployeesInUse;
+    }
+
     public int totalTaskHours(Task task){
 
         int numberOfEmployees = 10;

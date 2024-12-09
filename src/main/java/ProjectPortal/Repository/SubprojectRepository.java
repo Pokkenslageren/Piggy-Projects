@@ -1,7 +1,9 @@
 package ProjectPortal.Repository;
 
 
+import ProjectPortal.Model.Project;
 import ProjectPortal.Model.Subproject;
+import ProjectPortal.Model.Task;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.RowMapper;
@@ -71,5 +73,15 @@ public class SubprojectRepository extends ProjectRepository{
     public void deleteSubproject(int subprojectId) {
         String query = "DELETE FROM subprojects WHERE subprojectid = ?";
         jdbcTemplate.update(query, subprojectId);
+    }
+
+    public int calculateTotalAvailableEmployees(List<Task> listOfTasks, Subproject subproject){
+        var iterator = listOfTasks.iterator();
+        int totalSubprojectEmployees = subproject.getTotalAssignedEmployees();
+        int totalEmployeesInUse = 0;
+        while(iterator.hasNext()){
+            totalEmployeesInUse = totalEmployeesInUse + iterator.next().getAssignedEmployees();
+        }
+        return totalSubprojectEmployees - totalEmployeesInUse;
     }
 }
