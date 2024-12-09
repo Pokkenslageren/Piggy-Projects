@@ -6,6 +6,7 @@ import java.time.LocalDate;
 public class Project {
     private int companyId;
     private String projectName;
+    private int userId;
     private int projectId;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -16,15 +17,17 @@ public class Project {
     private boolean isComplete;
     private String projectDescription;
 
+
     List<Integer> taskEmployees;
     List<Integer> subprojectEmployees;
     List<Double> totalCostPerTask;
     List<Double> totalCostPerSubproject;
 
 
-    public Project(int companyId,String projectName, int projectId, LocalDate startDate, LocalDate endDate, double totalEstimatedCost, double actualCost, int availableEmployees, int assignedEmployees, boolean isComplete, String projectDescription) {
+    public Project(int companyId,String projectName, int userId, int projectId, LocalDate startDate, LocalDate endDate, double totalEstimatedCost, double actualCost, int availableEmployees, int assignedEmployees, boolean isComplete, String projectDescription) {
         this.companyId = companyId;
         this.projectName = projectName;
+        this.userId = userId;
         this.projectId = projectId;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -49,6 +52,10 @@ public class Project {
     }
     public int getProjectId() {
         return projectId;
+    }
+
+    public int getUserId(){
+        return userId;
     }
     public LocalDate getStartDate() {
         return startDate;
@@ -86,6 +93,10 @@ public class Project {
     }
     public void setProjectId(int projectId) {
         this.projectId = projectId;
+    }
+
+    public void setUserId(int userId){
+        this.userId = userId;
     }
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;

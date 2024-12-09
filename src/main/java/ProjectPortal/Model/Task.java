@@ -18,6 +18,7 @@ public class Task {
     private Priority priority;
 
     int hoursAllocated;
+    int totalTaskDays;
 
     public Task(int projectId, int subprojectId, int taskId, String taskName, int assignedEmployees, double estimatedCost, LocalDate startDate, LocalDate endDate, boolean isComplete, String taskDescription, Priority priority, int hoursAllocated) {
         this.projectId = projectId;
@@ -72,6 +73,9 @@ public class Task {
     public int getHoursAllocated(){
         return hoursAllocated;
     }
+
+    public int getTotalTaskDays() {return totalTaskDays;}
+
     public void setProjectId(int projectId) {
         this.projectId = projectId;
     }
@@ -103,10 +107,12 @@ public class Task {
         this.taskDescription = taskDescription;
     }
     public void setPriority(String priority){
-        this.priority =Priority.valueOf(priority);
+        this.priority = Priority.valueOf(priority);
     }
     public void setHoursAllocated(int hoursAllocated){
         this.hoursAllocated = hoursAllocated;
     }
+
+    public void setTotalTaskDays(int totalTaskDays) {this.totalTaskDays = totalTaskDays;}
 }
 

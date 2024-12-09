@@ -28,6 +28,7 @@ public class ProjectController {
     public String createProject(@PathVariable("user") int userId, Model model){
         User user = userService.readUserById(userId);
         Project project = new Project();
+        project.setUserId(userId);
         project.setCompanyId(user.getCompanyId());
         project.setComplete(false);
         model.addAttribute("project", project);
@@ -71,8 +72,6 @@ public class ProjectController {
         projectService.updateProject(project, projectid);
         return "redirect:/portfolio";
     }
-
-
 
     @GetMapping("/{user}/portfolio/{projectid}/delete")
     public String deleteProject(@PathVariable("projectid") int projectId){
