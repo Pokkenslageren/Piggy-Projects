@@ -40,14 +40,22 @@ public class DynamicValues {
         return totalSubprojectEmployees - totalEmployeesInUse;
     }
 
-    public int totalTaskHours(Task task){
-
-        int numberOfEmployees = 10;
+    public int totalActualTaskHours(Task task){
+        int numberOfEmployees = task.getAssignedEmployees();
         return (task.getEndDate().getDayOfYear() - task.getStartDate().getDayOfYear()) * numberOfEmployees * 8;
     }
 
+    public int totalActualSubprojectHours(List<Task> listOfTasks){
+        var iterator = listOfTasks.iterator();
+        int totalActualSubprojectHours = 0;
+        while(iterator.hasNext()){
+            totalActualSubprojectHours += totalActualTaskHours(iterator.next());
+        }
+        return totalActualSubprojectHours;
+    }
+
     public boolean sufficientHours(Task task){
-        int totalTaskHours = totalTaskHours(task);
+        int totalTaskHours = totalActualTaskHours(task);
         return (task.getHoursAllocated() > totalTaskHours );
     }
 

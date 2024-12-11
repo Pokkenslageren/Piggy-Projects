@@ -1,5 +1,6 @@
 package ProjectPortal.Service;
 
+import ProjectPortal.Model.Task;
 import ProjectPortal.Repository.SubprojectRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import ProjectPortal.Model.Subproject;
@@ -55,4 +56,7 @@ public class SubprojectService {
         subprojectRepository.deleteSubproject(subprojectId);
     }
 
+    public int totalActualSubprojectHours(List<Task> listOfTasks){
+        subprojectRepository.totalActualSubprojectHours(listOfTasks);
+    }
 }

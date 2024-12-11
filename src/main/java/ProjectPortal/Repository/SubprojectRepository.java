@@ -89,4 +89,18 @@ public class SubprojectRepository {
         }
         return totalSubprojectEmployees - totalEmployeesInUse;
     }
+
+    public int totalActualTaskHours(Task task){
+        int numberOfEmployees = task.getAssignedEmployees();
+        return (task.getEndDate().getDayOfYear() - task.getStartDate().getDayOfYear()) * numberOfEmployees * 8;
+    }
+
+    public int totalActualSubprojectHours(List<Task> listOfTasks){
+        var iterator = listOfTasks.iterator();
+        int totalActualSubprojectHours = 0;
+        while(iterator.hasNext()){
+            totalActualSubprojectHours += totalActualTaskHours(iterator.next());
+        }
+        return totalActualSubprojectHours;
+    }
 }
