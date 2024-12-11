@@ -61,7 +61,7 @@
                 <div class="project-metrics">
                     <div class="metric">
                         <i class="fas fa-money-bill"></i>
-                        <span>Estimated Cost: <span th:text="${project.totalEstimatedCost}"></span></span>
+                        <span>Estimated Cost: <span th:text="${project.totalEstimatedCost + '/' + project.actualCost}"></span></span>
                     </div>
                     <div class="metric">
                         <i class="fas fa-users"></i>

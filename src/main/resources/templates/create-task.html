@@ -15,7 +15,7 @@
     <div class="form-container">
         <div class="form-box">
             <h1>Create a new task</h1>
-            <form th:action="@{/{user}/home/createtask}" th:object="${task}" method="post">
+            <form th:action="@{/{userId}/home/createtask}" th:object="${task}" method="post">
                 <!-- hidden companyid-->
                 <div>
                     <label for="task-name">Task name:</label>

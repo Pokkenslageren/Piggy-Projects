@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-@RequestMapping
+@RequestMapping("")
 public class UserController {
 
     private final UserService userService;

@@ -1,6 +1,7 @@
 package ProjectPortal.Service;
 
 import ProjectPortal.Model.Project;
+import ProjectPortal.Model.Subproject;
 import ProjectPortal.Repository.ProjectRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,11 @@ public class ProjectService {
         projectRepository.deleteProject(projectId);
     }
 
+    public  int calculateTotalAvailableEmployees(List<Subproject> listOfSubprojects, Project project){
+        return projectRepository.calculateTotalAvailableEmployees(listOfSubprojects, project);
+    }
 
+    public double calculateTotalActualCost(List<Subproject> listOfSubprojects){
+        return projectRepository.calculateTotalActualCost(listOfSubprojects);
+    }
 }

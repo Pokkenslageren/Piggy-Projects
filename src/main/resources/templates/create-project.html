@@ -2,9 +2,8 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-<!--    <link rel="stylesheet" th:href="@{/main.css}">
-    <link rel="stylesheet" href="/formbox.css" th:href="@{/formbox.css}">-->
-
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link th:href="@{/css/sidebar.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -15,7 +14,7 @@
     <div class="form-container">
         <div class="form-box">
             <h1>Create New Project</h1>
-            <form th:action="@{/{user}/home/createproject}" th:object="${project}" method="post">
+            <form th:action="@{/{userId}/home/createproject}" th:object="${project}" method="post">
                 <!-- hidden companyid-->
                 <div>
                     <label for="project-name">Project name</label>

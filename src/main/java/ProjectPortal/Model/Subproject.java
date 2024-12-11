@@ -10,7 +10,8 @@ public class Subproject {
     private int subprojectId;
     private LocalDate startDate;
     private double estimatedCost;
-    private double actualCost;
+    private double totalActualCost;
+
     private int availiableEmployees;
     private int assignedEmployees;
     private LocalDate endDate;
@@ -26,6 +27,7 @@ public class Subproject {
         this.subprojectName = subprojectName;
         this.subprojectId = subprojectId;
         this.startDate = startDate;
+        this.totalActualCost = totalActualCost;
         this.estimatedCost = totalEstimatedCost;
         this.availiableEmployees = totalAvailiableEmployees;
         this.assignedEmployees = totalAssignedEmployees;
@@ -54,7 +56,7 @@ public class Subproject {
         return estimatedCost;
     }
     public double getTotalActualCost() {
-        return actualCost;
+        return totalActualCost;
     }
     public int getTotalAvailiableEmployees() {return availiableEmployees;}
     public int getTotalAssignedEmployees() {
@@ -92,7 +94,7 @@ public class Subproject {
         this.estimatedCost = totalEstimatedCost;
     }
     public void setTotalActualCost(double totalActualCost) {
-        this.actualCost = totalActualCost;
+        this.totalActualCost = totalActualCost;
     }
     public void setTotalAvailiableEmployees(int totalAvailiableEmployees) {
         this.availiableEmployees = totalAvailiableEmployees;
