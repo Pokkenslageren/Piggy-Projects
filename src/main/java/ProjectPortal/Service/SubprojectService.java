@@ -57,6 +57,10 @@ public class SubprojectService {
     }
 
     public int totalActualSubprojectHours(List<Task> listOfTasks){
-        subprojectRepository.totalActualSubprojectHours(listOfTasks);
+        return subprojectRepository.totalActualSubprojectHours(listOfTasks);
+    }
+
+    public int calculateTotalAvailableEmployees(List<Task> listOfTasks, Subproject subproject){
+        return subprojectRepository.calculateTotalAvailableEmployees(listOfTasks, subproject);
     }
 }

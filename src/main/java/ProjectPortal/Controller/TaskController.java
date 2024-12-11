@@ -25,9 +25,10 @@ public class TaskController {
     }
 
     @GetMapping("/{userId}/portfolio/{projectId}/{subprojectId}/createtask")
-    public String createTask(@PathVariable("userId") int userId, Model model) {
+    public String createTask(@PathVariable("userId") int userId,@PathVariable("projectId") int projectId, @PathVariable("subprojectId") int subprojectId, Model model) {
         User user = userService.readUserById(userId);
         Task task = new Task();
+        task.setSubprojectId(subprojectId);
         model.addAttribute("task", task);
         return "create-task";
     }

@@ -25,7 +25,7 @@ public class TaskRepository {
      * Get all tasks
      * @return
      */
-    public List<Task> getAllTasks(int projectId) {
+    public List<Task> readAllTasks(int projectId) {
         String query = "SELECT * FROM tasks WHERE project_id=?;";
         RowMapper rowMapper = new BeanPropertyRowMapper(Task.class);
         return jdbcTemplate.query(query, rowMapper, projectId);

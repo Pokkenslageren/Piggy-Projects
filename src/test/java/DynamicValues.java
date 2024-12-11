@@ -59,6 +59,14 @@ public class DynamicValues {
         return (task.getHoursAllocated() > totalTaskHours );
     }
 
+    public void setDynamicValuesSubproject(List<Subproject> listOfSubprojects){
+        var iterator = listOfSubprojects.iterator();
+        while(iterator.hasNext()){
+            List<Task> listOfTasks = //readAllTasks
+            iterator.next().setTotalAvailiableEmployees();
+        }
+    }
+
 
 
 }
