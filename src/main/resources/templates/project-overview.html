@@ -82,9 +82,18 @@
                         <div class="priority-badge" th:text="${subproject.priority}"></div>
                         <h3 th:text="${subproject.subprojectName}"></h3>
                         <div class="subproject-metrics">
+                            <div class="metric">
+                                <i class="fas fa-money-bill"></i>
                             <span class="cost" th:text="${subproject.estimatedCost}"></span>
+                            </div>
+                            <div class="metric">
+                                <i class="fas fa-users"></i>
                             <span class="employees" th:text="${subproject.assignedEmployees + '/' + subproject.availiableEmployees}"></span>
+                            </div>
+                            <div class="metric">
+                                <i class="fas fa-calendar"></i>
                             <span class="deadline" th:text="${#temporals.format(subproject.endDate, 'dd-MM-yyyy')}"></span>
+                            </div>
                         </div>
                         <i class="fas fa-chevron-down"></i>
                     </div>
