@@ -6,11 +6,12 @@ import ProjectPortal.Model.Task;
 import java.time.*;
 import java.util.List;
 
+
+
 public class DynamicValues {
 
-
-
     public int calculateTotalAvailableEmployees(List<Subproject> listOfSubprojects, Project project){
+        System.out.println(listOfSubprojects.size());
         var iterator = listOfSubprojects.iterator();
         int totalProjectEmployees = project.getAssignedEmployees();
         int totalEmployeesInUse = 0;
@@ -24,7 +25,7 @@ public class DynamicValues {
         var iterator = listOfSubprojects.iterator();
         double totalActualCost = 0.0;
         while(iterator.hasNext()){
-            totalActualCost = totalActualCost + iterator.next().getTotalActualCost();
+            totalActualCost += iterator.next().getTotalActualCost();
         }
         return totalActualCost;
     }
@@ -49,6 +50,7 @@ public class DynamicValues {
         int totalTaskHours = totalTaskHours(task);
         return (task.getHoursAllocated() > totalTaskHours );
     }
+
 
 
 }
