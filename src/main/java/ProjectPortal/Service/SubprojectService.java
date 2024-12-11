@@ -1,5 +1,6 @@
 package ProjectPortal.Service;
 
+import ProjectPortal.Model.Task;
 import ProjectPortal.Repository.SubprojectRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import ProjectPortal.Model.Subproject;
@@ -55,4 +56,11 @@ public class SubprojectService {
         subprojectRepository.deleteSubproject(subprojectId);
     }
 
+    public int totalActualSubprojectHours(List<Task> listOfTasks){
+        return subprojectRepository.totalActualSubprojectHours(listOfTasks);
+    }
+
+    public int calculateTotalAvailableEmployees(List<Task> listOfTasks, Subproject subproject){
+        return subprojectRepository.calculateTotalAvailableEmployees(listOfTasks, subproject);
+    }
 }

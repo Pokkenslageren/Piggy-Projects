@@ -2,8 +2,10 @@ package ProjectPortal.Controller;
 
 import ProjectPortal.Model.Project;
 import ProjectPortal.Model.Subproject;
+import ProjectPortal.Model.Task;
 import ProjectPortal.Model.User;
 import ProjectPortal.Service.ProjectService;
+import ProjectPortal.Service.TaskService;
 import ProjectPortal.Service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,10 +20,12 @@ public class ProjectController {
     private final ProjectService projectService;
     private final UserService userService;
     private final SubprojectService subprojectService;
-    public ProjectController(ProjectService projectService, UserService userService, SubprojectService subprojectService) {
+    private final TaskService taskService;
+    public ProjectController(ProjectService projectService, UserService userService, SubprojectService subprojectService, TaskService taskService) {
         this.projectService = projectService;
         this.userService = userService;
         this.subprojectService = subprojectService;
+        this.taskService = taskService;
     }
 
     @GetMapping("/{userId}/portfolio/createproject")
@@ -49,6 +53,7 @@ public class ProjectController {
     public String showProject(@PathVariable int userId, @PathVariable int projectId, Model model) {
         Project project = projectService.readProject(projectId);
         List<Subproject> subprojects = subprojectService.readAllSubprojectsByProjectId(projectId);
+        List<Task> tasks = taskService.readAllTasks(projectId);
         project.setAvailableEmployees(projectService.calculateTotalAvailableEmployees(subprojects, project));
         project.setActualCost(projectService.calculateTotalActualCost(subprojects));
         model.addAttribute("project", project);
