@@ -2,6 +2,7 @@ package ProjectPortal.Service;
 
 import ProjectPortal.Model.Task;
 import ProjectPortal.Repository.SubprojectRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import ProjectPortal.Model.Subproject;
 import org.springframework.stereotype.Service;
@@ -10,8 +11,12 @@ import java.util.List;
 
 @Service
 public class SubprojectService {
+    private final SubprojectRepository subprojectRepository;
 
-    private final SubprojectRepository subprojectRepository = new SubprojectRepository(new JdbcTemplate());
+    @Autowired
+    public SubprojectService(SubprojectRepository subprojectRepository) {
+        this.subprojectRepository = subprojectRepository;
+    }
 
     /**
      * create subproject

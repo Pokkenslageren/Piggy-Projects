@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public class UserRepository {
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
     public UserRepository(JdbcTemplate jdbcTemplate) {

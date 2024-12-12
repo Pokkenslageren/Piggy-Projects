@@ -3,6 +3,7 @@ package ProjectPortal.Service;
 import ProjectPortal.Model.Project;
 import ProjectPortal.Model.Subproject;
 import ProjectPortal.Repository.ProjectRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +11,12 @@ import java.util.*;
 
 @Service
 public class ProjectService {
+    private final ProjectRepository projectRepository;
 
-    public ProjectService(){}
-    private final ProjectRepository projectRepository = new ProjectRepository(new JdbcTemplate()); //maybe?
+    @Autowired
+    public ProjectService(ProjectRepository projectRepository) {
+        this.projectRepository = projectRepository;
+    }
 
     public void createProject(Project project){
         projectRepository.createProject(project);

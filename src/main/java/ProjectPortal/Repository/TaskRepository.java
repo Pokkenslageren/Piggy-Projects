@@ -47,7 +47,7 @@ public class TaskRepository {
      * @param task
      */
     public void saveTask(Task task) {
-        String query = "INSERT INTO tasks (get_task_name, get_task_id, get_assigned_employees, get_estimated_cost, get_start_date, get_end_date, get_is_complete, get_task_description)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO tasks (task_name, task_id, assigned_employees, estimated_cost, start_date, end_date, is_complete, task_description)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(query, task);
     }
 
@@ -72,7 +72,7 @@ public class TaskRepository {
      * @param description
      */
     public void updateTask(String taskName, int taskId, int assignedEmployees, int estimatedCost, LocalDate startDate, LocalDate endDate, boolean isComplete, String description){
-        String query = "UPDATE tasks" +
+        String query = "UPDATE tasks " +
                 "SET task_name = ?, " +
                 "task_id = ?, " +
                 "assigned_employees = ?, " +
@@ -82,7 +82,7 @@ public class TaskRepository {
                 "is_complete = ?, " +
                 "task_description = ? " +
                 "WHERE task_id = ?;";
-        jdbcTemplate.update(query, taskName, taskId, assignedEmployees, estimatedCost, startDate, endDate, isComplete, description);
+        jdbcTemplate.update(query, taskName, taskId, assignedEmployees, estimatedCost, startDate, endDate, isComplete, description, taskId);
     }
 
     /**
