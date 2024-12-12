@@ -6,8 +6,8 @@ use project_planner;
 CREATE TABLE if not exists `companies`(
                                           company_id int NOT NULL AUTO_INCREMENT,
                                           company_name varchar(255),
-                                          PRIMARY KEY (`company_id`)
-);
+    PRIMARY KEY (`company_id`)
+    );
 
 
 
@@ -15,10 +15,10 @@ CREATE TABLE if not exists `users`(
                                       user_id int NOT NULL AUTO_INCREMENT,
                                       company_id int,  -- DEFAULT NULL,
                                       user_name varchar(255),
-                                      user_password varchar(64) NOT NULL,
-                                      PRIMARY KEY (`user_id`),
-                                      FOREIGN KEY (`company_id`) REFERENCES `companies` (`company_id`)
-);
+    user_password varchar(64) NOT NULL,
+    PRIMARY KEY (`user_id`),
+    FOREIGN KEY (`company_id`) REFERENCES `companies` (`company_id`)
+    );
 
 CREATE TABLE if not exists `projects`(
                                          project_id int NOT NULL AUTO_INCREMENT,
@@ -35,6 +35,7 @@ CREATE TABLE if not exists `projects`(
                                          FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
 );
 
+
 CREATE TABLE if not exists `subprojects`(
                                             subproject_id int NOT NULL AUTO_INCREMENT,
                                             project_id int DEFAULT NULL,
@@ -46,9 +47,9 @@ CREATE TABLE if not exists `subprojects`(
                                             subproject_description text,
                                             hours_allocated int,
                                             priority varchar(10),
-                                            PRIMARY KEY (`subproject_id`),
-                                            FOREIGN KEY (`project_id`) REFERENCES `projects` (`project_id`)
-);
+    PRIMARY KEY (`subproject_id`),
+    FOREIGN KEY (`project_id`) REFERENCES `projects` (`project_id`)
+    );
 
 CREATE TABLE if not exists `tasks`(
                                       task_id int NOT NULL AUTO_INCREMENT,
@@ -65,3 +66,4 @@ CREATE TABLE if not exists `tasks`(
                                       PRIMARY KEY (`task_id`),
                                       FOREIGN KEY (`subproject_id`) REFERENCES `subprojects` (`subproject_id`)
 );
+

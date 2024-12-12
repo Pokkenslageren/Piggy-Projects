@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public class ProjectRepository implements Iterable<Double>  {
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
     public ProjectRepository(JdbcTemplate jdbcTemplate){
@@ -25,9 +25,22 @@ public class ProjectRepository implements Iterable<Double>  {
         return null;
     }
 
-    public void createProject(Project project){
-        String query = "INSERT INTO projects(company_id, project_name, user_id, start_date, end_date, total_estimated_cost, total_estimated_employees, is_complete, project_description) VALUES (?,?,?,?,?,?,?,?,?,?);";
-        jdbcTemplate.update(query, project.getProjectId(), project.getProjectName(), project.getUserId(), project.getStartDate(), project.getEndDate(), project.getTotalEstimatedCost(), project.getAssignedEmployees(), false, project.getProjectDescription());
+    public void createProject(Project project) {
+        String query = "INSERT INTO projects (company_id, user_id, project_name, start_date, " +
+                "end_date, total_estimated_cost, total_estimated_employees, is_complete, " +
+                "project_description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        jdbcTemplate.update(query,
+                project.getCompanyId(),
+                project.getUserId(),
+                project.getProjectName(),
+                project.getStartDate(),
+                project.getEndDate(),
+                project.getTotalEstimatedCost(),
+                project.getAvailableEmployees(),
+                false,
+                project.getProjectDescription()
+        );
     }
 
     public Project readProject(int projectId){

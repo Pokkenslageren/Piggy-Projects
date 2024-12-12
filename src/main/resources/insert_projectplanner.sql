@@ -7,6 +7,7 @@ INSERT INTO `users` (company_id, `user_name`, `user_password`) VALUES (1, 'CEO',
 INSERT INTO `projects` (company_id, user_id, project_name, start_date, end_date,
                         total_estimated_cost, total_assigned_employees, is_complete,
                         project_description)
+
                         VALUES (1,
                                 1,
                                 'payment processor',
