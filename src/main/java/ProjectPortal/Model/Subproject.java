@@ -2,6 +2,7 @@ package ProjectPortal.Model;
 
 import java.time.LocalDate;
 import ProjectPortal.Model.Priority;
+import java.util.*;
 
 public class Subproject {
 
@@ -21,6 +22,8 @@ public class Subproject {
     private int hoursAllocated;
     private boolean isComplete;
     private String subprojectDescription;
+
+    private List<Task> tasks;
 
     public Subproject(int projectID, String subprojectName, int subprojectId, LocalDate startDate, LocalDate endDate, int totalEstimatedCost, int totalActualCost, int totalAvailiableEmployees, int totalAssignedEmployees, boolean isComplete, Priority priority, int hoursAllocated) {
         this.projectID = projectID;
@@ -77,6 +80,7 @@ public class Subproject {
     public int getHoursAllocated(){
         return hoursAllocated;
     }
+    public List<Task> getTasks() { return tasks; }
 
     public void setParentProjectID(int projectID) {
         this.projectID = projectID;
@@ -118,4 +122,5 @@ public class Subproject {
     public void setSubprojectDescription(String subprojectDescription) {
         this.subprojectDescription = subprojectDescription;
     }
+    public void setTasks(List<Task> tasks) { this.tasks = tasks; }
 }

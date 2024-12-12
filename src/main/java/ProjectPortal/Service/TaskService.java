@@ -22,8 +22,8 @@ public class TaskService {
      * Find all tasks
      * @return
      */
-    public List<Task> readAllTasks(int projectId) {
-        return taskRepository.readAllTasks(projectId);
+    public List<Task> readTasksBySubprojectId(int subprojectId) {
+        return taskRepository.readTasksBySubprojectId(subprojectId);
     }
 
     /**

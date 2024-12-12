@@ -52,7 +52,10 @@ public class ProjectController {
     public String showProject(@PathVariable int userId, @PathVariable int projectId, Model model) {
         Project project = projectService.readProject(projectId);
         List<Subproject> subprojects = subprojectService.readAllSubprojectsByProjectId(projectId);
-        List<Task> tasks = taskService.readAllTasks(projectId);
+        for (Subproject subproject : subprojects) {
+            List<Task> tasks = taskService.readTasksBySubprojectId(subproject.getSubprojectId());
+            subproject.setTasks(tasks);
+        }
         project.setAvailableEmployees(projectService.calculateTotalAvailableEmployees(subprojects, project));
         project.setActualCost(projectService.calculateTotalActualCost(subprojects));
         model.addAttribute("project", project);
