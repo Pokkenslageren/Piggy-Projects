@@ -25,10 +25,10 @@ public class TaskRepository {
      * Get all tasks
      * @return
      */
-    public List<Task> readAllTasks(int projectId) {
-        String query = "SELECT * FROM tasks WHERE project_id=?;";
-        RowMapper rowMapper = new BeanPropertyRowMapper(Task.class);
-        return jdbcTemplate.query(query, rowMapper, projectId);
+    public List<Task> readTasksBySubprojectId(int subprojectId) {
+        String query = "SELECT * FROM tasks WHERE subproject_id = ?;";
+        RowMapper<Task> rowMapper = new BeanPropertyRowMapper<>(Task.class);
+        return jdbcTemplate.query(query, rowMapper, subprojectId);
     }
 
     /**
