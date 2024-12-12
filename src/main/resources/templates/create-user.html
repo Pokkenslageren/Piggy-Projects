@@ -2,6 +2,10 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link th:href="@{/css/sidebar.css}" rel="stylesheet">
+
     <title>Create User</title>
 </head>
 <body>
@@ -12,11 +16,11 @@
             <form th:action="@{/{user}/home/createUser}" th:object="${user}" method="post">
                 <div>
                     <label for="user-Name">Username:</label>
-                    <input type="text" id="user-Name" th:field="*{user.username}" placeholder="Indtast navn" required />
+                    <input type="text" id="user-Name" th:field="*{user.username}" placeholder="Type your name" required />
                 </div>
                 <div>
                     <label for="user-password">Password:</label>
-                    <input type="password" id="user-password" th:field="*{user.password}" placeholder="Indtast password" required />
+                    <input type="password" id="user-password" th:field="*{user.password}" placeholder="Type your password" required />
                 </div>
                 <div class="button-container">
                     <button type="submit">Create user</button>
