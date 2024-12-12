@@ -74,7 +74,7 @@
                 </div>
             </div>
 
-            <!-- Subprojects Section TODO: ADD DELETE / UPDATE BUTTONS -->
+            <!-- Subprojects Section TODO: ADD DELETE / UPDATE BUTTONS HOURALLOCATION -->
             <div class="subprojects-section">
                 <div th:each="subproject : ${subprojects}"
                      th:class="'subproject-card priority-' + ${subproject.priority.toString().toLowerCase()}">
@@ -98,7 +98,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </div>
 
-                    <!-- Tasks goes here TODO: ADD DELETE / UPDATE BUTTONS-->
+                    <!-- Tasks goes here TODO: ADD DELETE / UPDATE BUTTONS - HOURALLOCATION -->
                     <div th:id="'tasks-' + ${subproject.subprojectName}" class="tasks-container" style="display: none;">
                         <div th:each="task : ${tasks}"
                              th:class="'task-card priority-' + ${task.priority.toString().toLowerCase()}">
