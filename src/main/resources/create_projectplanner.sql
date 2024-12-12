@@ -28,7 +28,7 @@ CREATE TABLE if not exists `projects`(
                                          start_date date NOT NULL,
                                          end_date date,
                                          total_estimated_cost double,
-                                         total_estimated_employees int,
+                                         total_assigned_employees int,
                                          is_complete boolean,
                                          project_description text,
                                          PRIMARY KEY (`project_id`),
