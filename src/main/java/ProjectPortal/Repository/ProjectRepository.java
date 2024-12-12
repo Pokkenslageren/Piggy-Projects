@@ -31,7 +31,7 @@ public class ProjectRepository implements Iterable<Double>  {
     }
 
     public Project readProject(int projectId){
-        String query = "SELECT * FROM projects WHERE projectid = ?;";
+        String query = "SELECT * FROM projects WHERE project_id = ?;";
         RowMapper<Project> rowMapper = new BeanPropertyRowMapper<>(Project.class);
         return jdbcTemplate.queryForObject(query,rowMapper,projectId);
     }

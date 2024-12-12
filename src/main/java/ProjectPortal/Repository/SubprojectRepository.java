@@ -18,6 +18,7 @@ public class SubprojectRepository {
 
     /**
      * constructor passes JdbcTemplate to parent class
+     *
      * @param jdbcTemplate
      */
     public SubprojectRepository(JdbcTemplate jdbcTemplate) {
@@ -25,7 +26,8 @@ public class SubprojectRepository {
     }
 
     /**
-     *  Create new Subproject in subprojects table
+     * Create new Subproject in subprojects table
+     *
      * @param subproject
      */
     public void createSubproject(Subproject subproject) {
@@ -35,17 +37,19 @@ public class SubprojectRepository {
 
     /**
      * reads a single subproject by subprojectId
+     *
      * @param subprojectId
      * @return
      */
     public Subproject readSubproject(int subprojectId) {
-        String query = "SELECT * FROM subprojects WHERE subprojectid = ?";
+        String query = "SELECT * FROM subprojects WHERE subproject_id = ?";
         RowMapper<Subproject> rowMapper = new BeanPropertyRowMapper<>(Subproject.class);
         return jdbcTemplate.queryForObject(query, rowMapper, subprojectId);
     }
 
     /**
      * Reads all subprojects belonging to a single project by projectId
+     *
      * @param projectId
      * @return
      */
@@ -57,50 +61,68 @@ public class SubprojectRepository {
 
     /**
      * Updates an existing subproject
+     *
      * @param subprojectId
      * @param updatedSubproject
      */
     public void updateSubproject(int subprojectId, Subproject updatedSubproject) {
-        String query = "UPDATE subprojects SET name = ?, start_date = ?, end_date = ?, project_id = ? WHERE subprojectid = ?";
+        String query = "UPDATE subprojects SET name = ?, start_date = ?, end_date = ?, project_id = ? WHERE subproject_id = ?";
         jdbcTemplate.update(query, updatedSubproject.getSubprojectName(), updatedSubproject.getStartDate(), updatedSubproject.getEndDate(), updatedSubproject.getSubprojectId(), subprojectId);
     }
 
     /**
      * deletes subproject by subproject id
+     *
      * @param subprojectId
      */
     public void deleteSubproject(int subprojectId) {
-        String query = "DELETE FROM subprojects WHERE subprojectid = ?";
+        String query = "DELETE FROM subprojects WHERE subproject_id = ?";
         jdbcTemplate.update(query, subprojectId);
+    }
+
+    public List<Task> readAllTasksBySubproject(int subprojectId) {
+        String query = "SELECT * FROM tasks WHERE subprojectid = subproject_id = ?";
+        RowMapper<Task> rowMapper = new BeanPropertyRowMapper<>(Task.class);
+        return jdbcTemplate.query(query, rowMapper, subprojectId);
     }
 
     /**
      * Calculates number of available employees based on assigned employees in tasks
+     *
      * @param listOfTasks A list of all tasks associated with the subproject
-     * @param subproject The given subproject
+     * @param subproject  The given subproject
      * @return The number of employees not assigned to a task.
      */
-    public int calculateTotalAvailableEmployees(List<Task> listOfTasks, Subproject subproject){
+    public int calculateTotalAvailableEmployees(List<Task> listOfTasks, Subproject subproject) {
         var iterator = listOfTasks.iterator();
         int totalSubprojectEmployees = subproject.getTotalAssignedEmployees();
         int totalEmployeesInUse = 0;
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
             totalEmployeesInUse = totalEmployeesInUse + iterator.next().getAssignedEmployees();
         }
         return totalSubprojectEmployees - totalEmployeesInUse;
     }
 
-    public int totalActualTaskHours(Task task){
+    public int totalActualTaskHours(Task task) {
         int numberOfEmployees = task.getAssignedEmployees();
         return (task.getEndDate().getDayOfYear() - task.getStartDate().getDayOfYear()) * numberOfEmployees * 8;
     }
 
-    public int totalActualSubprojectHours(List<Task> listOfTasks){
+    public int totalActualSubprojectHours(List<Task> listOfTasks) {
         var iterator = listOfTasks.iterator();
         int totalActualSubprojectHours = 0;
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
             totalActualSubprojectHours += totalActualTaskHours(iterator.next());
         }
         return totalActualSubprojectHours;
+    }
+
+    public void setDynamicValuesSubproject(List<Subproject> listOfSubprojects) {
+        var iterator = listOfSubprojects.iterator();
+        while (iterator.hasNext()) {
+            List<Task> listOfTasks = readAllTasksBySubproject(iterator.next().getSubprojectId());
+            iterator.next().setTotalAvailiableEmployees(calculateTotalAvailableEmployees(listOfTasks, iterator.next()));
+
+        }
     }
 }
