@@ -13,7 +13,7 @@ CREATE TABLE if not exists `companies`(
 
 CREATE TABLE if not exists `users`(
                                       user_id int NOT NULL AUTO_INCREMENT,
-                                      company_id int DEFAULT NULL,
+                                      company_id int,  -- DEFAULT NULL,
                                       user_name varchar(255),
                                       user_password varchar(64) NOT NULL,
                                       PRIMARY KEY (`user_id`),
@@ -22,13 +22,13 @@ CREATE TABLE if not exists `users`(
 
 CREATE TABLE if not exists `projects`(
                                          project_id int NOT NULL AUTO_INCREMENT,
-                                         company_id int DEFAULT NULL,
+                                         company_id int,-- DEFAULT NULL,
                                          user_id int DEFAULT NULL,
                                          project_name varchar(255),
                                          start_date date NOT NULL,
                                          end_date date,
                                          total_estimated_cost double,
-                                         total_estimated_employees int,
+                                         total_assigned_employees int,
                                          is_complete boolean,
                                          project_description text,
                                          PRIMARY KEY (`project_id`),

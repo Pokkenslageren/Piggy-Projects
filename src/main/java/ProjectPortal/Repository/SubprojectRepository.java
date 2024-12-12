@@ -42,7 +42,7 @@ public class SubprojectRepository {
      * @return
      */
     public Subproject readSubproject(int subprojectId) {
-        String query = "SELECT * FROM subprojects WHERE subprojectid = ?";
+        String query = "SELECT * FROM subprojects WHERE subproject_id = ?";
         RowMapper<Subproject> rowMapper = new BeanPropertyRowMapper<>(Subproject.class);
         return jdbcTemplate.queryForObject(query, rowMapper, subprojectId);
     }
@@ -66,7 +66,7 @@ public class SubprojectRepository {
      * @param updatedSubproject
      */
     public void updateSubproject(int subprojectId, Subproject updatedSubproject) {
-        String query = "UPDATE subprojects SET name = ?, start_date = ?, end_date = ?, project_id = ? WHERE subprojectid = ?";
+        String query = "UPDATE subprojects SET name = ?, start_date = ?, end_date = ?, project_id = ? WHERE subproject_id = ?";
         jdbcTemplate.update(query, updatedSubproject.getSubprojectName(), updatedSubproject.getStartDate(), updatedSubproject.getEndDate(), updatedSubproject.getSubprojectId(), subprojectId);
     }
 
@@ -122,7 +122,7 @@ public class SubprojectRepository {
         while (iterator.hasNext()) {
             List<Task> listOfTasks = readAllTasksBySubproject(iterator.next().getSubprojectId());
             iterator.next().setTotalAvailiableEmployees(calculateTotalAvailableEmployees(listOfTasks, iterator.next()));
-            /*iterator.next().setTotalActualCost();*/
+
         }
     }
 }

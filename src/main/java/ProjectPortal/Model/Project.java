@@ -17,7 +17,6 @@ public class Project {
     private boolean isComplete;
     private String projectDescription;
 
-
     List<Integer> taskEmployees;
     List<Integer> subprojectEmployees;
     List<Double> totalCostPerTask;

@@ -23,9 +23,6 @@ class DynamicValuesTest {
     List<Subproject> subprojectList = Arrays.asList(subproject1,subproject2);
     List<Task> taskList = Arrays.asList(task1, task2);
 
-
-
-
     @Test
     void totalTaskHours() {
         assertEquals(800,dynamicValues.totalActualTaskHours(task1));
@@ -48,7 +45,6 @@ class DynamicValuesTest {
     void calculateTotalAvailableEmployeesSubproject(){
         assertEquals(0,dynamicValues.calculateTotalAvailableEmployeesSubproject(taskList, subproject1));
     }
-
     @Test
     void totalActualSubprojectHours(){
         assertEquals(1600, dynamicValues.totalActualSubprojectHours(taskList));
