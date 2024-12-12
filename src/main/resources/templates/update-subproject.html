@@ -23,7 +23,7 @@
 
                 <div>
                     <label>Name of subproject</label>
-                    <input type="text" th:field="*{subproject.name}" th:value="${projectName}">
+                    <input type="text" th:field="*{subproject.name}" th:value="${subprojectName}">
                 </div>
                 <br>
                 <div>
@@ -59,9 +59,9 @@
                 <div>
                     <label for="priority">Priority of subproject</label>
                     <select priority="priority-of-subproject" id="priority">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+                        <option value="1">low</option>
+                        <option value="2">medium</option>
+                        <option value="3">high</option>
                     </select>
                 </div>
                 <br>

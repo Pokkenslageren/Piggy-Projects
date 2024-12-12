@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Create new subproject</title>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link th:href="@{/css/main.css}" rel="stylesheet">
     <link th:href="@{/css/sidebar.css}" rel="stylesheet">
 
@@ -27,6 +28,10 @@
                     <input type="text" id="subproject-name" th:field="*{subprojectName}" placeholder="Enter subproject name" required />
                 </div>
                 <div>
+                    <label for="subproject-description">Enter subproject description:</label>
+                    <input type="text" id="subproject-description" th:field="*{subprojectDescription}" placeholder="Subproject description" required />
+                </div>
+                <div>
                     <label for="subproject-start-date">Subproject start date:</label>
                     <input type="date" th:field="${subproject.startDate}" id="subproject-start-date">
                 </div>
@@ -42,11 +47,19 @@
                     <label for="total-employees">Enter number of assigned employees:</label>
                     <input type="text" id="total-employees" th:field="*{totalAssignedEmployees}" placeholder="Assigned employees">
                 </div>
-                <!-- hidden isComplete-->
                 <div>
-                    <label for="subproject-description">Enter subproject description:</label>
-                    <input type="text" id="subproject-description" th:field="*{subprojectDescription}" placeholder="Subproject description" required />
+                    <label>Hours allocated</label>
+                    <input type="text" th:field="*{subproject.hoursAllocated}" th:value="${subprojectHoursAllocated}" placeholder="number of hours">
                 </div>
+                <div>
+                    <label for="priority">Priority of subproject</label>
+                    <select priority="priority-of-subproject" id="priority">
+                        <option value="1">low</option>
+                        <option value="2">medium</option>
+                        <option value="3">high</option>
+                    </select>
+                </div>
+                <!-- hidden isComplete-->
                 <div class="button-container">
                     <button type="submit">create subproject</button>
                 </div>
