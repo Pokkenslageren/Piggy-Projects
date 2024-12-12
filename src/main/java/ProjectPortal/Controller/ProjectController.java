@@ -48,7 +48,6 @@ public class ProjectController {
         return "portfolio";
     }
 
-
     @GetMapping("/{userId}/portfolio/{projectId}")
     public String showProject(@PathVariable int userId, @PathVariable int projectId, Model model) {
         Project project = projectService.readProject(projectId);
@@ -83,7 +82,6 @@ public class ProjectController {
 
     @GetMapping("/{userId}/portfolio/{projectid}/delete")
     public String deleteProject(@PathVariable("userId") int userId, @PathVariable("projectid") int projectId){
-
         projectService.deleteProject(projectId);
         return "redirect:/portfolio";
     }

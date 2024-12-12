@@ -61,7 +61,7 @@ public class ProjectRepository implements Iterable<Double>  {
     }
 
     public void deleteProject(int projectId){
-        String query = "DELETE FROM projects WHERE projectid = ?;";
+        String query = "DELETE FROM projects WHERE project_id = ?;";
         jdbcTemplate.update(query,projectId);
     }
 
