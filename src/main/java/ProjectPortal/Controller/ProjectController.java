@@ -81,8 +81,6 @@ public class ProjectController {
     }
 
 
-
-
     @GetMapping("/{userId}/portfolio/{projectid}/delete")
     public String deleteProject(@PathVariable("userId") int userId, @PathVariable("projectid") int projectId){
 
