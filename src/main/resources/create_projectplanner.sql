@@ -20,20 +20,22 @@ CREATE TABLE if not exists `users`(
                                       FOREIGN KEY (`company_id`) REFERENCES `companies` (`company_id`)
 );
 
-CREATE TABLE if not exists `projects`(
-                                         project_id int NOT NULL AUTO_INCREMENT,
-                                         company_id int DEFAULT NULL,
-                                         user_id int DEFAULT NULL,
-                                         project_name varchar(255),
-                                         start_date date NOT NULL,
-                                         end_date date,
-                                         total_estimated_cost double,
-                                         total_estimated_employees int,
-                                         is_complete boolean,
-                                         project_description text,
-                                         PRIMARY KEY (`project_id`),
-                                         FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-);
+CREATE TABLE if not exists `projects` (
+    project_id int NOT NULL AUTO_INCREMENT,
+    company_id int DEFAULT NULL,
+    user_id int DEFAULT NULL,
+    project_name varchar(255),
+    start_date date NOT NULL,
+    end_date date,
+    total_estimated_cost double,
+    total_actual_cost double,
+    total_available_employees int,
+    total_assigned_employees int,
+    is_complete boolean,
+    project_description text,
+    PRIMARY KEY (`project_id`),
+    FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+    );
 
 CREATE TABLE if not exists `subprojects`(
                                             subproject_id int NOT NULL AUTO_INCREMENT,

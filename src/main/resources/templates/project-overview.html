@@ -74,7 +74,7 @@
                 </div>
             </div>
 
-            <!-- Subprojects Section -->
+            <!-- Subprojects Section TODO: ADD DELETE / UPDATE BUTTONS -->
             <div class="subprojects-section">
                 <div th:each="subproject : ${subprojects}"
                      th:class="'subproject-card priority-' + ${subproject.priority.toString().toLowerCase()}">
@@ -98,9 +98,28 @@
                         <i class="fas fa-chevron-down"></i>
                     </div>
 
-                    <!-- Tasks goes here -->
-                    <div th:id="'tasks-' + ${subproject.subprojectId}" class="tasks-container" style="display: none;">
-                        <!-- Tasks -->
+                    <!-- Tasks goes here TODO: ADD DELETE / UPDATE BUTTONS-->
+                    <div th:id="'tasks-' + ${subproject.subprojectName}" class="tasks-container" style="display: none;">
+                        <div th:each="task : ${tasks}"
+                             th:class="'task-card priority-' + ${task.priority.toString().toLowerCase()}">
+                            <div class="task-header">
+                                <div class="priority-badge" th:text="${task.priority}"></div>
+                                <h3 th:text="${task.taskName}"></h3>
+                                <div class="task-metrics">
+                                    <div class="metric">
+                                        <i class="fas fa-money-bill"></i>
+                                        <span class="cost" th:text="${task.estimatedCost}"></span>
+                                    </div>
+                                    <div class="metric">
+                                        <i class="fas fa-users"></i>
+                                        <span class="employees" th:text="${task.assignedemployees}"></span>
+                                    </div>
+                                    <div class="metric">
+                                        <i class="fas fa-calendar"></i>
+                                        <span class="deadline" th:text="${#temporals.format(task.endDate, 'dd-MM-yyyy')}"></span>
+                                    </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
