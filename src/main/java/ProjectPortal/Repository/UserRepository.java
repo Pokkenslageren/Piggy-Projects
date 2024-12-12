@@ -35,8 +35,8 @@ public class UserRepository {
      */
     public User readUserById(int userId){
         String query = "SELECT * FROM users WHERE user_id = ?";
-        RowMapper rowMapper = new BeanPropertyRowMapper<>(User.class);
-        return (User) jdbcTemplate.query(query, rowMapper, userId);
+        RowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
+        return jdbcTemplate.queryForObject(query, rowMapper, userId);
     }
 
     /**
