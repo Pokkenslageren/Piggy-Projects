@@ -1,4 +1,5 @@
 package ProjectPortal.Model;
+import java.util.*;
 
 public class User {
     private int companyId;

@@ -25,15 +25,16 @@ CREATE TABLE if not exists `projects`(
                                          company_id int,-- DEFAULT NULL,
                                          user_id int DEFAULT NULL,
                                          project_name varchar(255),
-    start_date date NOT NULL,
-    end_date date,
-    total_estimated_cost double,
-    total_assigned_employees int,
-    is_complete boolean,
-    project_description text,
-    PRIMARY KEY (`project_id`),
-    FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-    );
+                                         start_date date NOT NULL,
+                                         end_date date,
+                                         total_estimated_cost double,
+                                         total_assigned_employees int,
+                                         is_complete boolean,
+                                         project_description text,
+                                         PRIMARY KEY (`project_id`),
+                                         FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+);
+
 
 CREATE TABLE if not exists `subprojects`(
                                             subproject_id int NOT NULL AUTO_INCREMENT,
@@ -54,14 +55,15 @@ CREATE TABLE if not exists `tasks`(
                                       task_id int NOT NULL AUTO_INCREMENT,
                                       subproject_id int DEFAULT NULL,
                                       task_name varchar(255),
-    start_date date,
-    end_date date,
-    estimated_cost double,
-    assigned_employees int,
-    is_complete boolean,
-    task_description text,
-    hours_allocated int,
-    priority varchar(10),
-    PRIMARY KEY (`task_id`),
-    FOREIGN KEY (`subproject_id`) REFERENCES `subprojects` (`subproject_id`)
-    );
+                                      start_date date,
+                                      end_date date,
+                                      estimated_cost double,
+                                      assigned_employees int,
+                                      is_complete boolean,
+                                      task_description text,
+                                      hours_allocated int,
+                                      priority varchar(10),
+                                      PRIMARY KEY (`task_id`),
+                                      FOREIGN KEY (`subproject_id`) REFERENCES `subprojects` (`subproject_id`)
+);
+

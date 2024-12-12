@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link th:href="@{/css/sidebar.css}" rel="stylesheet">
+    <title>Update Project</title>
+</head>
+<body>
+<div class="wrapper">
+    <div th:insert="~{fragments/topnav :: topnav}"></div>
+
+    <div class="form-container">
+        <div class="form-box">
+
+            <h1>Task to be updated</h1>
+
+            <form th:action="@{/users/{userId}/{taskid}}"
+                  th:object="${taskid}" method="post">
+
+                <input type="hidden" th:field="*{task.name}" th:value="${taskname}" />
+
+                <div>
+                    <label>Name of task</label>
+                    <input type="text" th:field="*{task.name}" th:value="${taskName}">
+                </div>
+                <br>
+                <div>
+                    <label>Description of task</label>
+                    <input type="text" th:field="*{task.description}" th:value="${taskDescription}">
+                </div>
+                <br>
+                <div>
+                    <label>The estimated cost of the task</label>
+                    <input type="text" th:field="*{task.estimatedCost}" th:value="${taskEstimatedCost}">
+                </div>
+                <br>
+                <div>
+                    <label>The actual cost of the task</label>
+                    <input type="text" th:field="*{task.actualCost}" th:value="${taskActualCost}">
+                </div>
+                <br>
+                <div>
+                    <label>Available employees</label>
+                    <input type="text" th:field="*{task.totalAvailableEmployees}" th:value="${taskAvailableEmployees}">
+                </div>
+                <br>
+                <div>
+                    <label>Assigned employees on the task</label>
+                    <input type="text" th:field="*{task.assignedEmployees}" th:value="${taskAssignedEmployees}">
+                </div>
+                <br>
+                <div>
+                    <label>Hours allocated</label>
+                    <input type="text" th:field="*{task.hoursAllocated}" th:value="${taskHoursAllocated}">
+                </div>
+                <br>
+                <div>
+                    <label>Total task days</label>
+                    <input type="text" th:field="*{task.totalTaskDays}" th:value="${totalTaskDays}">
+                </div>
+                <br>
+                <div>
+                    <label for="priority">Priority of task</label>
+                    <select priority="priority-of-task" id="priority">
+                        <option value="1">low</option>
+                        <option value="2">medium</option>
+                        <option value="3">high</option>
+                    </select>
+                </div>
+                <br>
+                <div class="metric">
+                    <i class="fas fa-calendar"></i>
+                    <span>Deadline: <span th:text="${#temporals.format(project.endDate, 'dd-MM-yyyy')}"></span></span>
+                </div>
+
+                <div class="button-container">
+                    <button type="submit" class="update">Update task</button>
+                    <a th:href="@{/users/{userId}/{project}/{subproject}/{task}(user=${user.username}, task=${taskname})}">
+                        <button type="button" class="back">Cancel</button>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div th:insert="~{fragments/footer :: footer}"></div>
+
+</div>
+</body>
+</html>

@@ -2,8 +2,10 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <!--    <link rel="stylesheet" th:href="@{/main.css}">
-        <link rel="stylesheet" href="/formbox.css" th:href="@{/formbox.css}">-->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link th:href="@{/css/sidebar.css}" rel="stylesheet">
 
 </head>
 
@@ -41,6 +43,22 @@
                 <div>
                     <label for="task-description">Enter task description:</label>
                     <input type="text" id="task-description" th:field="*{taskDescription}" placeholder="Task-description" required />
+                </div>
+                <div>
+                    <label>Hours allocated</label>
+                    <input type="text" th:field="*{task.hoursAllocated}" th:value="${taskHoursAllocated}" placeholder="number of hours">
+                </div>
+                <div>
+                    <label>Total task days</label>
+                    <input type="text" th:field="*{task.totalTaskDays}" th:value="${totalTaskDays}" placeholder="number of days">
+                </div>
+                <div>
+                    <label for="priority">Priority of task</label>
+                    <select priority="priority-of-task" id="priority">
+                        <option value="1">low</option>
+                        <option value="2">medium</option>
+                        <option value="3">high</option>
+                    </select>
                 </div>
                 <div class="button-container">
                     <button type="submit">Create task</button>
