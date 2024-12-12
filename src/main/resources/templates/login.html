@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link th:href="@{/css/sidebar.css}" rel="stylesheet">
+
+    <title>Project Portal - Login</title>
+</head>
+<body>
+<div class="wrapper">
+    <div th:insert="~{fragments/topnav :: topnav}"></div>
+
+    <div class="form-container">
+        <div class="form-box">
+            <h1>Login to Project Portal</h1>
+            <form th:action="@{/login}" th:object="${user}" method="post">
+                <div>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" th:field="*{user.username}" placeholder="Type your username" required />
+                </div>
+                <div>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" th:field="*{user.password}" placeholder="Type your password" required />
+                </div>
+                <div class="button-container">
+                    <button type="submit">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div th:insert="~{fragments/footer :: footer}"></div>
+
+</div>
+</body>
+</html>
