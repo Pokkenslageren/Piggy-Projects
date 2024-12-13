@@ -21,8 +21,55 @@
             chart.draw(data, options);
         }
     </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link th:href="@{/css/sidebar.css}" rel="stylesheet">
 </head>
 <body>
+<div class="wrapper">
+
+    <div class="section">
+        <div class="top_navbar">
+
+        </div>
+
+    </div>
+
+    <div class="sidebar">
+        <div class="logo">
+            <img th:src="@{/alpha_solutions_logo.png}" alt="Alpha Solutions"/>
+            <h3>Alpha Solutions</h3>
+            <p>Portfolio</p>
+        </div>
+
+        <ul>
+            <li>
+                <a href="#" class="active">
+                    <span class="icon"><i class="fas fa-home"></i></span>
+                    <span class="item">Portfolio</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="active">
+                    <span class="icon"><i class="fas fa-plus-circle"></i></span>
+                    <span class="item">New subproject</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="active">
+                    <span class="icon"><i class="fas fa-plus-circle"></i></span>
+                    <span class="item">New task</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="project-container">
+
     <div id="piechart" style="width: 900px; height: 500px;"></div>
+
+    </div>
+
+</div>
 </body>
 </html>
