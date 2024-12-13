@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class ProjectRepository implements Iterable<Double>  {
 
     public void createProject(Project project) {
         String query = "INSERT INTO projects (company_id, user_id, project_name, start_date, " +
-                "end_date, total_estimated_cost, total_estimated_employees, is_complete, " +
+                "end_date, total_estimated_cost, total_assigned_employees, is_complete, " +
                 "project_description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         jdbcTemplate.update(query,
@@ -56,7 +57,7 @@ public class ProjectRepository implements Iterable<Double>  {
     }
 
     public void updateProject(Project project, int projectId){
-        String query = "UPDATE projects SET company_id = ?, project_name = ?, start_date = ?, end_date = ?, total_estimated_cost = ?, total_available_employees = ?, is_complete = ?, project_description = ? WHERE project_id = ?;";
+        String query = "UPDATE projects SET company_id = ?, project_name = ?, start_date = ?, end_date = ?, total_estimated_cost = ?, total_assigned_employees = ?, is_complete = ?, project_description = ? WHERE project_id = ?;";
         jdbcTemplate.update(query, project.getCompanyId(), project.getProjectName(), project.getStartDate(), project.getEndDate(),  project.getTotalEstimatedCost(), project.getAssignedEmployees(), project.isComplete(), project.getProjectDescription());
     }
 

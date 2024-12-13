@@ -88,4 +88,17 @@ public class ProjectController {
         projectService.deleteProject(projectId);
         return "redirect:/portfolio";
     }
+
+    @GetMapping("/{userId}/portfolio/{projectid}/analytics")
+    public String displayAnalytics(@PathVariable("userId") int userId, @PathVariable("projectid") int projectId, Model model){
+        Project project = projectService.readProject(projectId);
+        List<List<Object>> taskData = List.of(
+                                                List.of("task1", 500),
+                                                List.of("task2", 750),
+                                                List.of("task3", 300));
+        model.addAttribute("project", project);
+        model.addAttribute("taskData", taskData );
+
+        return "analytics";
+    }
 }

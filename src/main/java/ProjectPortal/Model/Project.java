@@ -10,10 +10,10 @@ public class Project {
     private int projectId;
     private LocalDate startDate;
     private LocalDate endDate;
-    private double totalEstimatedCost;
-    private double totalActualCost;
-    private int totalAvailableEmployees;
-    private int totalAssignedEmployees;
+    public double totalEstimatedCost;
+    public double totalActualCost;
+    public int totalAvailableEmployees;
+    public int totalAssignedEmployees;
     private boolean isComplete;
     private String projectDescription;
 

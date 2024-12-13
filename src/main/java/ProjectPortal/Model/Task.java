@@ -8,8 +8,8 @@ public class Task {
     private int subprojectId;
     private int taskId;
     private String taskName;
-    private int assignedEmployees;
-    private double estimatedCost;
+    public int assignedEmployees;
+    public double estimatedCost;
     private LocalDate startDate;
     private LocalDate endDate;
     private boolean isComplete;

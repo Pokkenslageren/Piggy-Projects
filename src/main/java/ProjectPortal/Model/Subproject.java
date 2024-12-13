@@ -10,11 +10,11 @@ public class Subproject {
     private String subprojectName;
     private int subprojectId;
     private LocalDate startDate;
-    private double estimatedCost;
-    private double totalActualCost;
+    public double estimatedCost;
+    public double totalActualCost;
 
-    private int availiableEmployees;
-    private int assignedEmployees;
+    public int availiableEmployees;
+    public int assignedEmployees;
     private LocalDate endDate;
 
     private Priority priority;
