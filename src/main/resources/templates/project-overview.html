@@ -27,24 +27,25 @@
 
             <ul>
                 <li>
-                    <a href="#" class="active">
+                    <a th:href="@{/{userId}/portfolio(userId=${project.userId})}" class="active">
                         <span class="icon"><i class="fas fa-home"></i></span>
                         <span class="item">Portfolio</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="active">
+                    <a th:href="@{/{userId}/portfolio/{projectId}/createsubproject(userId=${project.userId},projectId=${project.projectId})}" class="active">
                         <span class="icon"><i class="fas fa-plus-circle"></i></span>
                         <span class="item">New subproject</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="active">
+                    <a th:href="@{/{userId}/portfolio/{projectId}/createtask(userId=${project.userId},projectId=${project.projectId})}" class="active">
                         <span class="icon"><i class="fas fa-plus-circle"></i></span>
                         <span class="item">New task</span>
                     </a>
                 </li>
             </ul>
+
         </div>
 
         <div class="top_navbar">
@@ -76,6 +77,10 @@
 
                 </div>
 
+                <div class="project-description">
+                    <p th:text="${project.projectDescription}"></p>
+                </div>
+
                 <div class="header-actions">
                     <button class="btn btn-primary" onclick="location.href='#'">
                         <i class="fas fa-chart-line"></i> Analytics
@@ -88,10 +93,17 @@
                 <div th:each="subproject : ${subprojects}"
                      th:class="'subproject-card priority-' + ${subproject.priority.toString().toLowerCase()}">
                     <div class="subproject-header" th:onclick="'toggleTasks(' + ${subproject.subprojectId} + ')'">
+
                         <div class="subproject-info">
                             <div class="priority-badge" th:text="${subproject.priority}"></div>
                             <h3 th:text="${subproject.subprojectName}"></h3>
+
+                            <div class="description">
+                                <p th:text="${subproject.subprojectDescription}"></p>
+                            </div>
+
                             <div class="subproject-metrics">
+
                                 <div class="metric">
                                     <i class="fas fa-money-bill"></i>
                                     <span th:text="${#numbers.formatDecimal(subproject.totalEstimatedCost, 0, 'COMMA', 2, 'POINT')} + ' DKK'"></span>
@@ -104,9 +116,14 @@
                                     <i class="fas fa-calendar"></i>
                                     <span th:text="${#temporals.format(subproject.endDate, 'dd-MM-yyyy')}"></span>
                                 </div>
+
                             </div>
                         </div>
+
                         <div class="subproject-actions">
+                            <button class="btn btn-primary" th:onclick="'location.href=\'/analytics/subproject/' + ${subproject.subprojectId} + '\''">
+                                <i class="fas fa-chart-line"></i>
+                            </button>
                             <button class="btn btn-success" th:onclick="'markComplete(' + ${subproject.subprojectId} + ')'">
                                 <i class="fas fa-check"></i>
                             </button>
@@ -126,10 +143,18 @@
                         <div class="tasks-grid">
                             <div th:each="task : ${subproject.tasks}"
                                  th:class="'task-card priority-' + ${task.priority.toString().toLowerCase()}">
+
                                 <div class="task-content">
+
                                     <div class="priority-badge" th:text="${task.priority}"></div>
                                     <h4 th:text="${task.taskName}"></h4>
+
+                                    <div class="description">
+                                        <p th:text="${task.taskDescription}"></p>
+                                    </div>
+
                                     <div class="task-metrics">
+
                                         <div class="metric">
                                             <i class="fas fa-money-bill"></i>
                                             <span th:text="${#numbers.formatDecimal(task.estimatedCost, 0, 'COMMA', 2, 'POINT')} + ' DKK'"></span>
@@ -142,7 +167,9 @@
                                             <i class="fas fa-calendar"></i>
                                             <span th:text="${#temporals.format(task.endDate, 'dd-MM-yyyy')}"></span>
                                         </div>
+
                                     </div>
+
                                     <div class="task-actions">
                                         <button class="btn btn-success btn-sm" th:onclick="'markTaskComplete(' + ${task.taskId} + ')'">
                                             <i class="fas fa-check"></i>
@@ -154,6 +181,7 @@
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
