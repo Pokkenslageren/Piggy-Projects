@@ -31,8 +31,19 @@ public class SubprojectRepository {
      * @param subproject
      */
     public void createSubproject(Subproject subproject) {
-        String query = "INSERT INTO subprojects (subproject_name, start_date, end_date, total_estimated_cost, total_available_employees, hours_allocated, priority ) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(query, subproject.getSubprojectName(), subproject.getStartDate(), subproject.getEndDate(), subproject.getTotalEstimatedCost(), subproject.getTotalAssignedEmployees(), subproject.getHoursAllocated(), subproject.getPriority());
+        String query = "INSERT INTO subprojects (project_id, subproject_name, start_date, end_date, total_estimated_cost, total_available_employees, hours_allocated, priority, is_complete, subproject_description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(query,
+                subproject.getParentProjectID(),
+                subproject.getSubprojectName(),
+                subproject.getStartDate(),
+                subproject.getEndDate(),
+                subproject.getTotalEstimatedCost(),
+                subproject.getTotalAssignedEmployees(),
+                subproject.getHoursAllocated(),
+                subproject.getPriority().toString(),
+                subproject.isComplete(),
+                subproject.getSubprojectDescription()
+        );
     }
 
     /**

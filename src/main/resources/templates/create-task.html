@@ -10,15 +10,19 @@
 </head>
 
 <body>
+
 <div class="wrapper">
 
-    <!--    <div th:insert="~{fragments/topnav :: topnav}"></div>-->
 
     <div class="form-container">
+
         <div class="form-box">
+
             <h1>Create a new task</h1>
+
             <form th:action="@{/{userId}/home/createtask}" th:object="${task}" method="post">
-                <!-- hidden companyid-->
+
+
                 <div>
                     <label for="task-name">Task name:</label>
                     <input type="text" id="task-name" th:field="*{taskName}" placeholder="Insert task-name" required />
@@ -39,7 +43,6 @@
                     <label for="total-employees">Enter number of employees assigned to the task</label>
                     <input type="text" id="total-employees" th:field="*{assignedEmployees}" placeholder="Total number of employees">
                 </div>
-                <!-- hidden isComplete-->
                 <div>
                     <label for="task-description">Enter task description:</label>
                     <input type="text" id="task-description" th:field="*{taskDescription}" placeholder="Task-description" required />
@@ -52,22 +55,27 @@
                     <label>Total task days</label>
                     <input type="text" th:field="*{task.totalTaskDays}" th:value="${totalTaskDays}" placeholder="number of days">
                 </div>
+
                 <div>
-                    <label for="priority">Priority of task</label>
-                    <select priority="priority-of-task" id="priority">
-                        <option value="1">low</option>
-                        <option value="2">medium</option>
-                        <option value="3">high</option>
+                    <label for="priority">Priority of subproject:</label>
+                    <select id="priority" th:field="*{priority}">
+                        <option value="LOW">Low</option>
+                        <option value="MEDIUM">Medium</option>
+                        <option value="HIGH">High</option>
                     </select>
                 </div>
-                <div class="button-container">
-                    <button type="submit">Create task</button>
+
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Create task
+                    </button>
                 </div>
+
             </form>
         </div>
     </div>
 
-    <!--    <div th:insert="~{fragments/footer :: footer}"></div>-->
 
 </div>
 </body>

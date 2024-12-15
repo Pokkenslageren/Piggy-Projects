@@ -54,7 +54,7 @@
                 <h1>Create New Project</h1>
 
                 <form th:action="@{/__${project.userId}__/portfolio/createproject}" th:object="${project}" method="post">
-                <!-- hidden companyid-->
+
                 <div>
                     <label for="projectName">Project name</label>
                     <input type="text" id="projectName" th:field="*{projectName}" required />
@@ -76,13 +76,17 @@
                     <label for="totalEmployees">Enter total number of employees assigned to the project</label>
                     <input type="text" id="totalEmployees" th:field="*{assignedEmployees}" required>
                 </div>
-                <!-- hidden isComplete-->
+
                 <div>
                     <label for="projectDescription">Enter project description:</label>
                     <textarea id="projectDescription" th:field="*{projectDescription}" rows="4"></textarea>
                 </div>
 
-                    <button type="submit" class="btn btn-primary">Create project</button>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Create project
+                        </button>
+                    </div>
 
             </form>
         </div>
