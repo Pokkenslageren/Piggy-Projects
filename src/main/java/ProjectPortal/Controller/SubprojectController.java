@@ -44,7 +44,7 @@ public class SubprojectController {
         public String createProject(@PathVariable("userId") int userId, @PathVariable("projectId") int projectId, @ModelAttribute Subproject subproject){
             subproject.setParentProjectID(projectId);
             subprojectService.createSubproject(subproject);
-            return "redirect:/{userId}/portfolio/{projectId}";
+            return "redirect:/" + userId + "/portfolio/" + projectId;
         }
 
     }

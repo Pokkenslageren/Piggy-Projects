@@ -41,7 +41,7 @@ public class TaskService {
      * @return
      */
     public Task createTask(Task task) {
-        taskRepository.saveTask(task);
+        taskRepository.createTask(task);
         return task;
     }
 
