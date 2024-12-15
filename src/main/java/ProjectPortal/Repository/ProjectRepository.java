@@ -27,7 +27,7 @@ public class ProjectRepository implements Iterable<Double>  {
 
     public void createProject(Project project) {
         String query = "INSERT INTO projects (company_id, user_id, project_name, start_date, " +
-                "end_date, total_estimated_cost, total_estimated_employees, is_complete, " +
+                "end_date, total_estimated_cost, total_assigned_employees, is_complete, " +
                 "project_description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         jdbcTemplate.update(query,

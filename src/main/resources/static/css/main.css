@@ -13,13 +13,11 @@ body {
     background: #dfe7f6;
 }
 
-/* Wrapper layout */
 .wrapper {
     display: flex;
     min-height: 100vh;
 }
 
-/* Sidebar styles */
 .wrapper .sidebar {
     background: rgb(50, 109, 246);
     position: fixed;
@@ -124,7 +122,6 @@ body {
 }
 
 
-/* Main content area */
 .project-container {
     flex: 1;
     margin-left: 225px;
@@ -153,7 +150,6 @@ body {
     z-index: 900;
 }
 
-/* Project content styling */
 .project-header {
     margin-top: 20px;
     padding: 20px;

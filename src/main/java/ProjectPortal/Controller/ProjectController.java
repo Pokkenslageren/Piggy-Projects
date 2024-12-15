@@ -36,6 +36,7 @@ public class ProjectController {
         project.setCompanyId(user.getCompanyId());
         project.setComplete(false);
         model.addAttribute("project", project);
+        model.addAttribute("user", user);
         return "create-project";
     }
 
@@ -66,7 +67,7 @@ public class ProjectController {
     @PostMapping("/{userId}/portfolio/createproject")
     public String createProject(@PathVariable("userId") int userId, @ModelAttribute Project project){
         projectService.createProject(project);
-        return "redirect:/portfolio";
+        return "redirect:/{userId}/portfolio";
     }
 
     @GetMapping("/{userId}/portfolio/{projectid}/update")
@@ -79,13 +80,13 @@ public class ProjectController {
     @PostMapping("/{userId}/portfolio/{projectid}/update")
     public String updateProject(@PathVariable("userId") int userId, @PathVariable("projectid")int projectid, @ModelAttribute Project project){
         projectService.updateProject(project, projectid);
-        return "redirect:/portfolio";
+        return "redirect:/{userId}/portfolio";
     }
 
 
     @GetMapping("/{userId}/portfolio/{projectid}/delete")
     public String deleteProject(@PathVariable("userId") int userId, @PathVariable("projectid") int projectId){
         projectService.deleteProject(projectId);
-        return "redirect:/portfolio";
+        return "redirect:/{userId}/portfolio";
     }
 }
