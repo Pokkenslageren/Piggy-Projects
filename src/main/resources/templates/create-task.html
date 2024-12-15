@@ -13,6 +13,40 @@
 
 <div class="wrapper">
 
+    <div class="sidebar">
+        <div class="logo">
+            <img th:src="@{/alpha_solutions_logo.png}" alt="Alpha Solutions"/>
+            <h3>Alpha Solutions</h3>
+            <p>Portfolio</p>
+        </div>
+
+        <ul>
+            <li>
+                <a th:href="@{/{userId}/portfolio(userId=${project.userId})}" class="active">
+                    <span class="icon"><i class="fas fa-home"></i></span>
+                    <span class="item">Portfolio</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/{userId}/portfolio/{projectId}/createsubproject(userId=${project.userId},projectId=${project.projectId})}" class="active">
+                    <span class="icon"><i class="fas fa-plus-circle"></i></span>
+                    <span class="item">New subproject</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/{userId}/portfolio/{projectId}/createtask(userId=${project.userId},projectId=${project.projectId})}" class="active">
+                    <span class="icon"><i class="fas fa-plus-circle"></i></span>
+                    <span class="item">New task</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="top_navbar">
+        <div class="portal-title">
+            <a href="/portfolio">Project Portal</a>
+        </div>
+    </div>
 
     <div class="form-container">
 
