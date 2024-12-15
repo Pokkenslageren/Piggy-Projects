@@ -62,12 +62,18 @@
                 <div class="project-metrics">
 
                     <div class="metric">
+                        <i class="fas fa-check-circle" th:style="${project.complete ? 'color: #28a745' : 'color: #gray'}"></i>
+                        <span th:text="${project.complete ? 'Complete' : 'In Progress'}"></span>
+                    </div>
+
+
+                    <div class="metric">
                         <i class="fas fa-money-bill"></i>
-                        <span>Estimated Cost: <span th:text="${project.actualCost + '/' + project.totalEstimatedCost + ' dkk'}"></span></span>
+                        <span>Estimated Cost: <span th:text="${project.totalActualCost + '/' + project.totalEstimatedCost + ' dkk'}"></span></span>
                     </div>
                     <div class="metric">
                         <i class="fas fa-users"></i>
-                        <span>Assigned Employees: <span th:text="${project.assignedEmployees + '/' + project.availableEmployees}"></span></span>
+                        <span th:text="${project.totalAssignedEmployees}"></span>
 
                     </div>
                     <div class="metric">
@@ -88,7 +94,6 @@
                 </div>
             </div>
 
-            <!-- Subprojects Section TODO: ADD DELETE / UPDATE BUTTONS HOURALLOCATION -->
             <div class="subprojects-section">
                 <div th:each="subproject : ${subprojects}"
                      th:class="'subproject-card priority-' + ${subproject.priority.toString().toLowerCase()}">
@@ -105,16 +110,36 @@
                             <div class="subproject-metrics">
 
                                 <div class="metric">
+                                    <i class="fas fa-check-circle" th:style="${subproject.complete ? 'color: #28a745' : 'color: #gray'}"></i>
+                                    <span th:text="${subproject.complete ? 'Complete' : 'In Progress'}"></span>
+                                </div>
+
+                                <div class="metric">
                                     <i class="fas fa-money-bill"></i>
                                     <span th:text="${#numbers.formatDecimal(subproject.totalEstimatedCost, 0, 'COMMA', 2, 'POINT')} + ' DKK'"></span>
                                 </div>
                                 <div class="metric">
                                     <i class="fas fa-users"></i>
-                                    <span th:text="${subproject.totalAssignedEmployees + '/' + subproject.totalAvailiableEmployees}"></span>
+                                    <span th:text="${subproject.totalAssignedEmployees}"></span>
                                 </div>
+
                                 <div class="metric">
                                     <i class="fas fa-calendar"></i>
+                                    <span>
+                                    <span th:text="${#temporals.format(subproject.startDate, 'dd-MM-yyyy')}"></span>
+                                        →
                                     <span th:text="${#temporals.format(subproject.endDate, 'dd-MM-yyyy')}"></span>
+                                </span>
+                                </div>
+
+                                <div class="metric">
+                                    <i class="fas fa-clock"></i>
+                                    <div class="hours-progress">
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" th:style="'width: ' + ${(subproject.hoursAllocated / 100) * 100} + '%'"></div>
+                                        </div>
+                                        <span th:text="${subproject.hoursAllocated + ' hours'}"></span>
+                                    </div>
                                 </div>
 
                             </div>
@@ -156,16 +181,34 @@
                                     <div class="task-metrics">
 
                                         <div class="metric">
+                                            <i class="fas fa-check-circle" th:style="${task.isComplete ? 'color: #28a745' : 'color: #gray'}"></i>
+                                            <span th:text="${task.isComplete ? 'Complete' : 'In Progress'}"></span>
+                                        </div>
+
+                                        <div class="metric">
                                             <i class="fas fa-money-bill"></i>
                                             <span th:text="${#numbers.formatDecimal(task.estimatedCost, 0, 'COMMA', 2, 'POINT')} + ' DKK'"></span>
                                         </div>
-                                        <div class="metric">
-                                            <i class="fas fa-users"></i>
-                                            <span th:text="${task.assignedEmployees}"></span>
-                                        </div>
-                                        <div class="metric">
-                                            <i class="fas fa-calendar"></i>
-                                            <span th:text="${#temporals.format(task.endDate, 'dd-MM-yyyy')}"></span>
+
+                                        <div class="task-metrics">
+                                            <div class="metric">
+                                                <i class="fas fa-calendar"></i>
+                                                <span>
+                                                <span th:text="${#temporals.format(task.startDate, 'dd-MM-yyyy')}"></span>
+                                                    →
+                                                <span th:text="${#temporals.format(task.endDate, 'dd-MM-yyyy')}"></span>
+                                                </span>
+                                            </div>
+
+                                            <div class="metric">
+                                                <i class="fas fa-clock"></i>
+                                                <span>
+                                                <span th:text="${task.hoursAllocated}"></span> hours |
+                                                <i class="fas fa-users"></i>
+                                                <span th:text="${task.assignedEmployees}"></span>
+                                                <span th:text="${task.assignedEmployees == 1 ? 'person' : 'people'}"></span>
+                                                </span>
+                                            </div>
                                         </div>
 
                                     </div>

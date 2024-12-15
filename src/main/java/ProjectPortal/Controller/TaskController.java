@@ -48,6 +48,14 @@ public class TaskController {
 
     @PostMapping("/{userId}/portfolio/{projectId}/createtask")
     public String createTask(@PathVariable("userId") int userId, @PathVariable("projectId") int projectId, @ModelAttribute Task task) {
+
+        Subproject subproject = subprojectService.readSubproject(task.getSubprojectId());
+
+        if (task.getAssignedEmployees() > subproject.getTotalAssignedEmployees()) {
+
+            task.setAssignedEmployees(subproject.getTotalAssignedEmployees());
+        }
+
         taskService.createTask(task);
         return "redirect:/" + userId + "/portfolio/" + projectId;
     }

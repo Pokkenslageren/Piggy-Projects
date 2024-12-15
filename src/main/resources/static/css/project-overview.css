@@ -123,7 +123,6 @@
     transform: translateY(-1px);
 }
 
-/* Action Buttons Container */
 .subproject-actions, .task-actions {
     display: flex;
     gap: 8px;
@@ -150,4 +149,39 @@
 .project-description p {
     color: #666;
     line-height: 1.4;
+}
+
+.hours-progress {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 150px;
+}
+
+.progress-bar {
+    background-color: #e9ecef;
+    border-radius: 4px;
+    height: 8px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    background-color: #326df6;
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.metric .hours-progress span {
+    font-size: 0.85em;
+    color: #666;
+}
+
+.progress-fill.overallocated {
+    background-color: #dc3545;
+}
+
+.hours-progress span {
+    font-size: 0.85em;
+    color: #666;
+    white-space: nowrap;
 }
