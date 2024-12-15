@@ -10,6 +10,8 @@ import ProjectPortal.Service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 import java.util.*;
 import ProjectPortal.Service.SubprojectService;
 
@@ -103,6 +105,9 @@ public class ProjectController {
         subprojectData.add(List.of("test",300));
         // timeline chart (gantt)
         List<List<Object>> subprojectGantt = new ArrayList<>();
+        LocalDate startDate = LocalDate.of(2024,10,10);
+        LocalDate endDate = LocalDate.of(2025,10,10);
+        subprojectGantt.add(List.of("Eat","Me",projectService.formatForJavaScript(startDate),projectService.formatForJavaScript(endDate)));
         //Pie estimated cost
         for(Subproject s : subprojects){
 

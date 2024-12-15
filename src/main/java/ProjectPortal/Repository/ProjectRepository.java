@@ -1,5 +1,6 @@
 package ProjectPortal.Repository;
 
+import java.time.LocalDate;
 import ProjectPortal.Model.Project;
 import ProjectPortal.Model.Subproject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,6 +94,13 @@ public class ProjectRepository implements Iterable<Double>  {
             totalActualCost = totalActualCost + iterator.next().getTotalActualCost();
         }
         return totalActualCost;
+    }
+
+    public String formatForJavaScript(LocalDate date) {
+        return String.format("new Date(%d, %d, %d)",
+                date.getYear(),
+                date.getMonthValue() - 1, // Zero-indexed month for JavaScript
+                date.getDayOfMonth());
     }
 
 

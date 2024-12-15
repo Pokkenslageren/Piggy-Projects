@@ -39,6 +39,7 @@ CREATE TABLE if not exists `projects`(
 CREATE TABLE if not exists `subprojects`(
                                             subproject_id int NOT NULL AUTO_INCREMENT,
                                             project_id int DEFAULT NULL,
+                                            subproject_name varchar(255),
                                             start_date date NOT NULL,
                                             end_date date,
                                             total_estimated_cost double,
