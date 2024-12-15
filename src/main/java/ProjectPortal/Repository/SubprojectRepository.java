@@ -117,6 +117,15 @@ public class SubprojectRepository {
         return totalActualSubprojectHours;
     }
 
+    public int calculateTotalActualCost(List<Task> listOfTasks){
+        var iterator = listOfTasks.iterator();
+        int totalActualCost = 0;
+        while(iterator.hasNext()){
+            totalActualCost += iterator.next().getEstimatedCost();
+        }
+        return totalActualCost;
+    }
+
     public void setDynamicValuesSubproject(List<Subproject> listOfSubprojects) {
         var iterator = listOfSubprojects.iterator();
         while (iterator.hasNext()) {

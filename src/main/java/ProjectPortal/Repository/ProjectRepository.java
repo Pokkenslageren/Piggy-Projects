@@ -90,9 +90,8 @@ public class ProjectRepository implements Iterable<Double>  {
         var iterator = listOfSubprojects.iterator();
         double totalActualCost = 0.0;
         while(iterator.hasNext()){
-            totalActualCost = totalActualCost + iterator.next().getTotalEstimatedCost();
+            totalActualCost = totalActualCost + iterator.next().getTotalActualCost();
         }
-
         return totalActualCost;
     }
 

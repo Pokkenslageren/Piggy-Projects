@@ -121,22 +121,31 @@ public class ProjectController {
 
     @GetMapping("/{userId}/portfolio/{projectid}/{subprojectid}/analytics")
     public String displayAnalyticsSubproject(@PathVariable("userId") int userId, @PathVariable("projectid") int projectId, @PathVariable("subprojectid") int subprojectId, Model model){
-        Project project = projectService.readProject(projectId);
-        List<Subproject> subprojects = subprojectService.readAllSubprojectsByProjectId(projectId);
+        Subproject subproject = subprojectService.readSubproject(subprojectId);
         List<List<Object>> taskData = new ArrayList<>();
-        List<Task> tasks = subprojectService.readAllTasksBySubproject(subprojects.get(0).getSubprojectId());
+        List<List<Object>> taskEstimatedCostPie = new ArrayList<>();
+        List<List<Object>> costBarChart = new ArrayList<>();
+        List<Task> tasks = subprojectService.readAllTasksBySubproject(subprojectId);
         for (Task t : tasks){
             taskData.add(List.of(t.getTaskName(),t.getHoursAllocated()));
         }
 
-        /*        for(Subproject s : subprojects){
-            taskData.add(List.of(subprojectService.readAllTasksBySubproject(s)))
-        }*/
+        for(Task t : tasks){
+            taskEstimatedCostPie.add(List.of(t.getTaskName(), t.getEstimatedCost()));
+        }
+
+        costBarChart.add(List.of("Estimated Subproject Cost", subproject.getTotalEstimatedCost()));
+        costBarChart.add(List.of("Actual Subproject Cost", subprojectService.calculateTotalActualCost(tasks)));
+
 
 /*        List<List<Object>> taskData = List.of(
                                                 List.of("task1", 500),
                                                 List.of("task2", 750),
                                                 List.of("task3", 300));*/
+
+        model.addAttribute("taskData", taskData);
+        model.addAttribute("taskEstimatedCostPie", taskEstimatedCostPie);
+        model.addAttribute("costBarChart", costBarChart);
 
         return "subproject-analytics";
     }

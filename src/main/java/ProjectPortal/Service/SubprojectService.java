@@ -72,4 +72,8 @@ public class SubprojectService {
     public List<Task> readAllTasksBySubproject(int subprojectId){
         return subprojectRepository.readAllTasksBySubproject(subprojectId);
     }
+
+    public int calculateTotalActualCost(List<Task> listOfTasks){
+        return subprojectRepository.calculateTotalActualCost(listOfTasks);
+    }
 }

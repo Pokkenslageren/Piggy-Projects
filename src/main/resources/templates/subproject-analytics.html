@@ -7,15 +7,17 @@
         //google.charts.load('current', {'packages':['gantt']});
         google.charts.load('current', {packages:['timeline']});
         google.charts.setOnLoadCallback(drawChartHoursAllocated);
-        google.charts.setOnLoadCallback(drawChartGantt); //crasher måske hele lortet!
         google.charts.setOnLoadCallback(drawChartEstimatedCost);
         google.charts.setOnLoadCallback(drawHistogram);
+/*        google.charts.setOnLoadCallback(drawChartGantt); //crasher måske hele lortet!
+
+        */
 
         function drawChartHoursAllocated() {
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Task');
             data.addColumn('number', 'Hours');
-            data.addRows([[${subprojectData}]]);
+            data.addRows([[${taskData}]]);
 
             var options = {
                 title: 'Hours Allocated To Each Task'
@@ -94,10 +96,10 @@
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Task');
             data.addColumn('number', 'cost');
-            data.addRows([[${subprojectEstimatedCostPie}]]);
+            data.addRows([[${taskEstimatedCostPie}]]);
 
             var options = {
-                title: 'Total Estimated Cost Per Subproject'
+                title: 'Total Estimated Cost Per Task'
             };
 
             var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
@@ -109,11 +111,11 @@
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'costType');
             data.addColumn('number', 'cost');
-            data.addRows([[${costHistogram}]]);
+            data.addRows([[${costBarChart}]]);
 
 
             var options = {
-                title: 'Estimated vs. Total Actual Cost For Project',
+                title: 'Estimated vs. Total Actual Cost For Subproject',
                 legend: { position: 'none' },
                 hAxis: {
                     title: 'Cost'
