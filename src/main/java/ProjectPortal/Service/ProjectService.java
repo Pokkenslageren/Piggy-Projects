@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -44,5 +45,9 @@ public class ProjectService {
 
     public double calculateTotalActualCost(List<Subproject> listOfSubprojects){
         return projectRepository.calculateTotalActualCost(listOfSubprojects);
+    }
+
+    public String formatForJavaScript(LocalDate date){
+        return projectRepository.formatForJavaScript(date);
     }
 }

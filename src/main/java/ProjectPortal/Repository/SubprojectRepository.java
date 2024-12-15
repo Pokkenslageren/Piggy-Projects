@@ -31,8 +31,8 @@ public class SubprojectRepository {
      * @param subproject
      */
     public void createSubproject(Subproject subproject) {
-        String query = "INSERT INTO subprojects (name, start_date, end_date, project_id) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(query, subproject.getSubprojectName(), subproject.getStartDate(), subproject.getEndDate(), subproject.getSubprojectId());
+        String query = "INSERT INTO subprojects (subproject_name, start_date, end_date, total_estimated_cost, total_available_employees, hours_allocated, priority ) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(query, subproject.getSubprojectName(), subproject.getStartDate(), subproject.getEndDate(), subproject.getTotalEstimatedCost(), subproject.getTotalAssignedEmployees(), subproject.getHoursAllocated(), subproject.getPriority());
     }
 
     /**
@@ -66,8 +66,8 @@ public class SubprojectRepository {
      * @param updatedSubproject
      */
     public void updateSubproject(int subprojectId, Subproject updatedSubproject) {
-        String query = "UPDATE subprojects SET name = ?, start_date = ?, end_date = ?, project_id = ? WHERE subproject_id = ?";
-        jdbcTemplate.update(query, updatedSubproject.getSubprojectName(), updatedSubproject.getStartDate(), updatedSubproject.getEndDate(), updatedSubproject.getSubprojectId(), subprojectId);
+        String query = "UPDATE subprojects SET subproject_id = ?, subproject_name = ?, start_date = ?, end_date = ?, total_estimated_cost = ?, total_available_employees = ?, hours_allocated = ?, priority = ?  WHERE subproject_id = ?";
+        jdbcTemplate.update(query, subprojectId, updatedSubproject.getSubprojectName(), updatedSubproject.getStartDate(), updatedSubproject.getEndDate(), updatedSubproject.getTotalEstimatedCost(), updatedSubproject.getTotalAssignedEmployees(), updatedSubproject.getHoursAllocated(), updatedSubproject.getPriority(), subprojectId);
     }
 
     /**
@@ -81,7 +81,7 @@ public class SubprojectRepository {
     }
 
     public List<Task> readAllTasksBySubproject(int subprojectId) {
-        String query = "SELECT * FROM tasks WHERE subprojectid = subproject_id = ?";
+        String query = "SELECT * FROM tasks WHERE subproject_id = ?";
         RowMapper<Task> rowMapper = new BeanPropertyRowMapper<>(Task.class);
         return jdbcTemplate.query(query, rowMapper, subprojectId);
     }
@@ -115,6 +115,15 @@ public class SubprojectRepository {
             totalActualSubprojectHours += totalActualTaskHours(iterator.next());
         }
         return totalActualSubprojectHours;
+    }
+
+    public int calculateTotalActualCost(List<Task> listOfTasks){
+        var iterator = listOfTasks.iterator();
+        int totalActualCost = 0;
+        while(iterator.hasNext()){
+            totalActualCost += iterator.next().getEstimatedCost();
+        }
+        return totalActualCost;
     }
 
     public void setDynamicValuesSubproject(List<Subproject> listOfSubprojects) {
