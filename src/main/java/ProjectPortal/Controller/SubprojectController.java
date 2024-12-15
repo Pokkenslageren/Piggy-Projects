@@ -31,7 +31,7 @@ public class SubprojectController {
             User user = userService.readUserById(userId);
             Project project = projectService.readProject(projectId);
             Subproject subproject = new Subproject();
-            subproject.setParentProjectID(projectId);
+            subproject.setProjectId(projectId);
             subproject.setComplete(false);
 
             model.addAttribute("subproject", subproject);
@@ -42,7 +42,7 @@ public class SubprojectController {
 
         @PostMapping("/{userId}/portfolio/{projectId}/createsubproject")
         public String createProject(@PathVariable("userId") int userId, @PathVariable("projectId") int projectId, @ModelAttribute Subproject subproject){
-            subproject.setParentProjectID(projectId);
+            subproject.setProjectId(projectId);
             subprojectService.createSubproject(subproject);
             return "redirect:/" + userId + "/portfolio/" + projectId;
         }

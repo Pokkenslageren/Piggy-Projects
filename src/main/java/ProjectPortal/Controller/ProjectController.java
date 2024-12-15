@@ -54,17 +54,27 @@ public class ProjectController {
     @GetMapping("/{userId}/portfolio/{projectId}")
     public String showProject(@PathVariable int userId, @PathVariable int projectId, Model model) {
         Project project = projectService.readProject(projectId);
+
         List<Subproject> subprojects = subprojectService.readAllSubprojectsByProjectId(projectId);
+
         for (Subproject subproject : subprojects) {
             List<Task> tasks = taskService.readTasksBySubprojectId(subproject.getSubprojectId());
             subproject.setTasks(tasks);
+            double subprojectActualCost = tasks.stream()
+                    .mapToDouble(Task::getEstimatedCost)
+                    .sum();
+            subproject.setTotalActualCost(subprojectActualCost);
+
         }
-        project.setAvailableEmployees(projectService.calculateTotalAvailableEmployees(subprojects, project));
-        project.setActualCost(projectService.calculateTotalActualCost(subprojects));
+
+        double calculatedActualCost = projectService.calculateTotalActualCost(subprojects);
+        project.setTotalActualCost(calculatedActualCost);
+
         model.addAttribute("project", project);
         model.addAttribute("subprojects", subprojects);
         return "project-overview";
     }
+
 
     @PostMapping("/{userId}/portfolio/createproject")
     public String createProject(@PathVariable("userId") int userId, @ModelAttribute Project project){
@@ -147,7 +157,7 @@ public class ProjectController {
 /*        List<List<Object>> taskData = List.of(
                                                 List.of("task1", 500),
                                                 List.of("task2", 750),
-                                                List.of("task3", 300));*/
+                                                List.of("task3", 300)); */
 
         model.addAttribute("taskData", taskData);
         model.addAttribute("taskEstimatedCostPie", taskEstimatedCostPie);

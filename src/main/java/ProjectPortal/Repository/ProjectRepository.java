@@ -14,16 +14,15 @@ import java.util.Iterator;
 import java.util.List;
 
 @Repository
-public class ProjectRepository implements Iterable<Double>  {
-
+public class ProjectRepository {
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public ProjectRepository(JdbcTemplate jdbcTemplate){
+    public ProjectRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public Iterator<Double> iterator(){
+    public Iterator<Double> iterator() {
         return null;
     }
 
@@ -39,59 +38,60 @@ public class ProjectRepository implements Iterable<Double>  {
                 project.getStartDate(),
                 project.getEndDate(),
                 project.getTotalEstimatedCost(),
-                project.getAvailableEmployees(),
-                false,
+                project.getTotalAssignedEmployees(),
+                project.isComplete(),
                 project.getProjectDescription()
         );
     }
 
-    public Project readProject(int projectId){
+    public Project readProject(int projectId) {
         String query = "SELECT * FROM projects WHERE project_id = ?;";
         RowMapper<Project> rowMapper = new BeanPropertyRowMapper<>(Project.class);
-        return jdbcTemplate.queryForObject(query,rowMapper,projectId);
+        return jdbcTemplate.queryForObject(query, rowMapper, projectId);
     }
 
-    public List<Project> readAllProjects(){
+    public List<Project> readAllProjects() {
         String query = "SELECT * FROM projects;";
-        RowMapper rowMapper = new BeanPropertyRowMapper(Project.class);
+        RowMapper<Project> rowMapper = new BeanPropertyRowMapper<>(Project.class);
         return jdbcTemplate.query(query, rowMapper);
     }
 
-    public void updateProject(Project project, int projectId){
-        String query = "UPDATE projects SET company_id = ?, project_name = ?, start_date = ?, end_date = ?, total_estimated_cost = ?, total_assigned_employees = ?, is_complete = ?, project_description = ? WHERE project_id = ?;";
-        jdbcTemplate.update(query, project.getCompanyId(), project.getProjectName(), project.getStartDate(), project.getEndDate(),  project.getTotalEstimatedCost(), project.getAssignedEmployees(), project.isComplete(), project.getProjectDescription());
+    public void updateProject(Project project, int projectId) {
+        String query = "UPDATE projects SET company_id = ?, project_name = ?, start_date = ?, " +
+                "end_date = ?, total_estimated_cost = ?, total_assigned_employees = ?, " +
+                "is_complete = ?, project_description = ? WHERE project_id = ?;";
+        jdbcTemplate.update(query,
+                project.getCompanyId(),
+                project.getProjectName(),
+                project.getStartDate(),
+                project.getEndDate(),
+                project.getTotalEstimatedCost(),
+                project.getTotalAssignedEmployees(),
+                project.isComplete(),
+                project.getProjectDescription(),
+                projectId
+        );
     }
 
-    public void deleteProject(int projectId){
+    public void deleteProject(int projectId) {
         String query = "DELETE FROM projects WHERE project_id = ?;";
-        jdbcTemplate.update(query,projectId);
+        jdbcTemplate.update(query, projectId);
     }
 
-    /**
-     * Calculates number of available employees based on assigned employees in subprojects
-     * @param listOfSubprojects A list of all subprojects associated with the project
-     * @param project The given project
-     * @return The number of employees not assigned to a subproject or task
-     */
-    public int calculateTotalAvailableEmployees(List<Subproject> listOfSubprojects, Project project){
-        var iterator = listOfSubprojects.iterator();
-        int totalProjectEmployees = project.getAssignedEmployees();
+    public int calculateTotalAvailableEmployees(List<Subproject> listOfSubprojects, Project project) {
+        int totalProjectEmployees = project.getTotalAssignedEmployees();
         int totalEmployeesInUse = 0;
-        while(iterator.hasNext()){
-            totalEmployeesInUse = totalProjectEmployees + iterator.next().getTotalAssignedEmployees();
+
+        for (Subproject sub : listOfSubprojects) {
+            totalEmployeesInUse += sub.getTotalAssignedEmployees();
         }
         return totalProjectEmployees - totalEmployeesInUse;
     }
 
-    /**
-     * Calculates the actual total project cost based on the sum of all subproject costs
-     * @return the actual total cost of the project
-     */
-    public double calculateTotalActualCost(List<Subproject> listOfSubprojects){
-        var iterator = listOfSubprojects.iterator();
+    public double calculateTotalActualCost(List<Subproject> listOfSubprojects) {
         double totalActualCost = 0.0;
-        while(iterator.hasNext()){
-            totalActualCost = totalActualCost + iterator.next().getTotalActualCost();
+        for (Subproject sub : listOfSubprojects) {
+            totalActualCost += sub.getTotalActualCost();
         }
         return totalActualCost;
     }
@@ -99,10 +99,7 @@ public class ProjectRepository implements Iterable<Double>  {
     public String formatForJavaScript(LocalDate date) {
         return String.format("new Date(%d, %d, %d)",
                 date.getYear(),
-                date.getMonthValue() - 1, // Zero-indexed month for JavaScript
+                date.getMonthValue() - 1,
                 date.getDayOfMonth());
     }
-
-
-
 }

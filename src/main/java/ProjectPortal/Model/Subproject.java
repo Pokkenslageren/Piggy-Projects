@@ -4,45 +4,40 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class Subproject {
-
     private int projectId;
     private String subprojectName;
     private int subprojectId;
     private LocalDate startDate;
-    public double estimatedCost;
-    public double totalActualCost;
-
-    public int availiableEmployees;
-    public int assignedEmployees;
     private LocalDate endDate;
-
-    private Priority priority;
-
-    private int hoursAllocated;
+    private double totalEstimatedCost;
+    private double totalActualCost;  // Added to match DB
+    private int totalAssignedEmployees;
     private boolean isComplete;
     private String subprojectDescription;
-
+    private int hoursAllocated;
+    private Priority priority;
     private List<Task> tasks;
 
-    public Subproject(int projectId, String subprojectName, int subprojectId, LocalDate startDate, LocalDate endDate, int totalEstimatedCost, int totalActualCost, int totalAvailiableEmployees, int totalAssignedEmployees, boolean isComplete, Priority priority, int hoursAllocated) {
+    public Subproject() {}
+
+    public Subproject(int projectId, String subprojectName, int subprojectId,
+                      LocalDate startDate, LocalDate endDate, double totalEstimatedCost,
+                      double totalActualCost, int totalAssignedEmployees, boolean isComplete,
+                      String subprojectDescription, int hoursAllocated, Priority priority) {
         this.projectId = projectId;
         this.subprojectName = subprojectName;
         this.subprojectId = subprojectId;
         this.startDate = startDate;
-        this.totalActualCost = totalActualCost;
-        this.estimatedCost = totalEstimatedCost;
-        this.availiableEmployees = totalAvailiableEmployees;
-        this.assignedEmployees = totalAssignedEmployees;
         this.endDate = endDate;
+        this.totalEstimatedCost = totalEstimatedCost;
+        this.totalActualCost = totalActualCost;
+        this.totalAssignedEmployees = totalAssignedEmployees;
         this.isComplete = isComplete;
-        this.subprojectDescription = "";
-        this.priority = priority;
+        this.subprojectDescription = subprojectDescription;
         this.hoursAllocated = hoursAllocated;
+        this.priority = priority;
     }
-
-    public Subproject() {}
-
-    public int getParentProjectID() {
+    public int getProjectId() {
         return projectId;
     }
     public String getSubprojectName() {
@@ -55,14 +50,13 @@ public class Subproject {
         return startDate;
     }
     public double getTotalEstimatedCost() {
-        return estimatedCost;
+        return totalEstimatedCost;
     }
     public double getTotalActualCost() {
         return totalActualCost;
     }
-    public int getTotalAvailiableEmployees() {return availiableEmployees;}
     public int getTotalAssignedEmployees() {
-        return assignedEmployees;
+        return totalAssignedEmployees;
     }
     public LocalDate getEndDate() {
         return endDate;
@@ -81,8 +75,8 @@ public class Subproject {
     }
     public List<Task> getTasks() { return tasks; }
 
-    public void setParentProjectID(int projectID) {
-        this.projectId = projectID;
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
     public void setSubprojectName(String subprojectName) {
         this.subprojectName = subprojectName;
@@ -94,14 +88,12 @@ public class Subproject {
         this.startDate = startDate;
     }
     public void setTotalEstimatedCost(double totalEstimatedCost) {
-        this.estimatedCost = totalEstimatedCost;
+        this.totalEstimatedCost = totalEstimatedCost;
     }
     public void setTotalActualCost(double totalActualCost) {
         this.totalActualCost = totalActualCost;
     }
-    public void setTotalAvailiableEmployees(int totalAvailiableEmployees) {
-        this.availiableEmployees = totalAvailiableEmployees;
-    }
+
     public void setPriority(String priority){
         this.priority =Priority.valueOf(priority);
     }
@@ -110,7 +102,7 @@ public class Subproject {
         this.hoursAllocated = hoursAllocated;
     }
     public void setTotalAssignedEmployees(int totalAssignedEmployees) {
-        this.assignedEmployees = totalAssignedEmployees;
+        this.totalAssignedEmployees = totalAssignedEmployees;
     }
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;

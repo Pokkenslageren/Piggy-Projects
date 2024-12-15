@@ -8,34 +8,34 @@ public class Task {
     private int subprojectId;
     private int taskId;
     private String taskName;
-    public int assignedEmployees;
-    public double estimatedCost;
     private LocalDate startDate;
     private LocalDate endDate;
+    private double estimatedCost;
+    private int assignedEmployees;
     private boolean isComplete;
     private String taskDescription;
-
+    private int hoursAllocated;
     private Priority priority;
 
-    int hoursAllocated;
-    int totalTaskDays;
+    public Task() {}
 
-    public Task(int projectId, int subprojectId, int taskId, String taskName, int assignedEmployees, double estimatedCost, LocalDate startDate, LocalDate endDate, boolean isComplete, String taskDescription, Priority priority, int hoursAllocated) {
+    public Task(int projectId, int subprojectId, int taskId, String taskName,
+                LocalDate startDate, LocalDate endDate, double estimatedCost,
+                int assignedEmployees, boolean isComplete, String taskDescription,
+                int hoursAllocated, Priority priority) {
         this.projectId = projectId;
         this.subprojectId = subprojectId;
         this.taskId = taskId;
         this.taskName = taskName;
-        this.assignedEmployees = assignedEmployees;
-        this.estimatedCost = estimatedCost;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.estimatedCost = estimatedCost;
+        this.assignedEmployees = assignedEmployees;
         this.isComplete = isComplete;
         this.taskDescription = taskDescription;
-        this.priority = priority;
         this.hoursAllocated = hoursAllocated;
+        this.priority = priority;
     }
-
-    public Task() {}
 
 
     public int getProjectId() {
@@ -75,8 +75,6 @@ public class Task {
         return hoursAllocated;
     }
 
-    public int getTotalTaskDays() {return totalTaskDays;}
-
     public void setProjectId(int projectId) {
         this.projectId = projectId;
     }
@@ -114,6 +112,5 @@ public class Task {
         this.hoursAllocated = hoursAllocated;
     }
 
-    public void setTotalTaskDays(int totalTaskDays) {this.totalTaskDays = totalTaskDays;}
 }
 
