@@ -100,7 +100,7 @@ public class ProjectController {
         List<List<Object>> costHistogram = new ArrayList<>();
         //Pie chart allocated hours
         for (Subproject s : subprojects){
-            subprojectData.add(List.of("Subproject number: " + s.getSubprojectId(),s.getHoursAllocated()));
+            subprojectData.add(List.of(s.getSubprojectName(),s.getHoursAllocated()));
         }
         subprojectData.add(List.of("test",300));
         // timeline chart (gantt)
@@ -111,7 +111,7 @@ public class ProjectController {
         //Pie estimated cost
         for(Subproject s : subprojects){
 
-            subprojectEstimatedCostPie.add(List.of("Subproject ID: ", s.getTotalEstimatedCost()));
+            subprojectEstimatedCostPie.add(List.of(s.getSubprojectName(), s.getTotalEstimatedCost()));
         }
         costHistogram.add(List.of("Estimated Project Cost",project.getTotalEstimatedCost()));
         costHistogram.add(List.of("Actual Project Cost", projectService.calculateTotalActualCost(subprojects)));
