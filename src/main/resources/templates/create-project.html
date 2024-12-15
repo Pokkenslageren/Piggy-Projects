@@ -3,54 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <link th:href="@{/css/main.css}" rel="stylesheet">
-    <link th:href="@{/css/sidebar.css}" rel="stylesheet">
+    <link th:href="@{/css/project-overview.css}" rel="stylesheet">
+    <link th:href="@{/css/formbox.css}" rel="stylesheet">
+
+    <title>Create Project</title>
+
 </head>
 
 <body>
+
 <div class="wrapper">
 
-<!--    <div th:insert="~{fragments/topnav :: topnav}"></div>-->
+    <div class="sidebar">
+        <div class="logo">
+            <img th:src="@{/alpha_solutions_logo.png}" alt="Alpha Solutions"/>
+            <h3>Alpha Solutions</h3>
+            <p>Portfolio</p>
+        </div>
 
-    <div class="form-container">
-        <div class="form-box">
-            <h1>Create New Project</h1>
-            <form th:action="@{/{userId}/home/createproject}" th:object="${project}" method="post">
+        <ul>
+            <li>
+                <a th:href="@{/{userId}/portfolio(userId=${user.userId})}" class="active">
+                    <span class="icon"><i class="fas fa-home"></i></span>
+                    <span class="item">Portfolio</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/{userId}/portfolio/createproject(userId=${user.userId})}" class="active">
+                    <span class="icon"><i class="fas fa-plus-circle"></i></span>
+                    <span class="item">New Project</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="top_navbar">
+        <div class="portal-title">
+            <a href="/portfolio">Project Portal</a>
+        </div>
+    </div>
+
+    <div class="project-container">
+
+        <div class="form-container">
+
+            <div class="form-box">
+
+                <h1>Create New Project</h1>
+
+                <form th:action="@{/__${project.userId}__/portfolio/createproject}" th:object="${project}" method="post">
                 <!-- hidden companyid-->
                 <div>
-                    <label for="project-name">Project name</label>
-                    <input type="text" id="project-name" th:field="*{projectName}" placeholder="Enter the project name" required />
+                    <label for="projectName">Project name</label>
+                    <input type="text" id="projectName" th:field="*{projectName}" required />
+                </div>
+
+                <div>
+                    <label for="startDate">Project start date</label>
+                    <input type="date" th:field="${project.startDate}" id="startDate" required>
                 </div>
                 <div>
-                    <label for="project-start-date">Project start date</label>
-                    <input type="date" th:field="${project.startDate}" id="project-start-date">
+                    <label for="endDate">Project end date</label>
+                    <input type="date" th:field="${project.endDate}" id="endDate" required>
                 </div>
                 <div>
-                    <label for="project-end-date">Project end date</label>
-                    <input type="date" th:field="${project.endDate}" id="project-end-date">
+                    <label for="totalEstimatedCost">Estimated total project cost</label>
+                    <input type="text" id="totalEstimatedCost" th:field="*{totalEstimatedCost}" required/>
                 </div>
                 <div>
-                    <label for="project-cost-estimate">Estimated total project cost</label>
-                    <input type="text" id="project-cost-estimate" th:field="*{totalEstimatedCost}" placeholder="Estimated total project cost"/>
-                </div>
-                <div>
-                    <label for="total-employees">Enter total number of employees assigned to the project</label>
-                    <input type="text" id="total-employees" th:field="*{assignedEmployees}" placeholder="Total number of employees">
+                    <label for="totalEmployees">Enter total number of employees assigned to the project</label>
+                    <input type="text" id="totalEmployees" th:field="*{assignedEmployees}" required>
                 </div>
                 <!-- hidden isComplete-->
                 <div>
-                    <label for="project-description">Enter project description:</label>
-                    <input type="text" id="project-description" th:field="*{projectDescription}" placeholder="Project description" required />
+                    <label for="projectDescription">Enter project description:</label>
+                    <textarea id="projectDescription" th:field="*{projectDescription}" rows="4"></textarea>
                 </div>
-                <div class="button-container">
-                    <button type="submit">Create project</button>
-                </div>
+
+                    <button type="submit" class="btn btn-primary">Create project</button>
+
             </form>
         </div>
     </div>
 
-<!--    <div th:insert="~{fragments/footer :: footer}"></div>-->
-
+    </div>
 </div>
 </body>
 </html>
