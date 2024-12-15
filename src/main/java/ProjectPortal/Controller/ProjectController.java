@@ -1,8 +1,8 @@
 package ProjectPortal.Controller;
 
 import ProjectPortal.Model.Project;
-import ProjectPortal.Model.Subproject;
 import ProjectPortal.Model.Task;
+import ProjectPortal.Model.Subproject;
 import ProjectPortal.Model.User;
 import ProjectPortal.Service.ProjectService;
 import ProjectPortal.Service.TaskService;
@@ -92,13 +92,52 @@ public class ProjectController {
     @GetMapping("/{userId}/portfolio/{projectid}/analytics")
     public String displayAnalytics(@PathVariable("userId") int userId, @PathVariable("projectid") int projectId, Model model){
         Project project = projectService.readProject(projectId);
-        List<List<Object>> taskData = List.of(
+        List<Subproject> subprojects = subprojectService.readAllSubprojectsByProjectId(projectId);
+        List<List<Object>> subprojectData = new ArrayList<>();
+        List<List<Object>> subprojectEstimatedCostPie = new ArrayList<>();
+        List<List<Object>> costHistogram = new ArrayList<>();
+        //Pie chart allocated hours
+        for (Subproject s : subprojects){
+            subprojectData.add(List.of("Subproject number: " + s.getSubprojectId(),s.getHoursAllocated()));
+        }
+        subprojectData.add(List.of("test",300));
+        // timeline chart (gantt)
+        List<List<Object>> subprojectGantt = new ArrayList<>();
+        //Pie estimated cost
+        for(Subproject s : subprojects){
+
+            subprojectEstimatedCostPie.add(List.of("Subproject ID: ", s.getTotalEstimatedCost()));
+        }
+        costHistogram.add(List.of("Estimated Project Cost",project.getTotalEstimatedCost()));
+        costHistogram.add(List.of("Actual Project Cost", projectService.calculateTotalActualCost(subprojects)));
+
+        model.addAttribute("project", project);
+        model.addAttribute("subprojectData", subprojectData );
+        model.addAttribute("subprojectGantt",subprojectGantt);
+        model.addAttribute("subprojectEstimatedCostPie", subprojectEstimatedCostPie);
+        model.addAttribute("costHistogram", costHistogram);
+        return "project-analytics";
+    }
+
+    @GetMapping("/{userId}/portfolio/{projectid}/{subprojectid}/analytics")
+    public String displayAnalyticsSubproject(@PathVariable("userId") int userId, @PathVariable("projectid") int projectId, @PathVariable("subprojectid") int subprojectId, Model model){
+        Project project = projectService.readProject(projectId);
+        List<Subproject> subprojects = subprojectService.readAllSubprojectsByProjectId(projectId);
+        List<List<Object>> taskData = new ArrayList<>();
+        List<Task> tasks = subprojectService.readAllTasksBySubproject(subprojects.get(0).getSubprojectId());
+        for (Task t : tasks){
+            taskData.add(List.of(t.getTaskName(),t.getHoursAllocated()));
+        }
+
+        /*        for(Subproject s : subprojects){
+            taskData.add(List.of(subprojectService.readAllTasksBySubproject(s)))
+        }*/
+
+/*        List<List<Object>> taskData = List.of(
                                                 List.of("task1", 500),
                                                 List.of("task2", 750),
-                                                List.of("task3", 300));
-        model.addAttribute("project", project);
-        model.addAttribute("taskData", taskData );
+                                                List.of("task3", 300));*/
 
-        return "analytics";
+        return "subproject-analytics";
     }
 }

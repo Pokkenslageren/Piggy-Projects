@@ -81,7 +81,7 @@ public class SubprojectRepository {
     }
 
     public List<Task> readAllTasksBySubproject(int subprojectId) {
-        String query = "SELECT * FROM tasks WHERE subprojectid = subproject_id = ?";
+        String query = "SELECT * FROM tasks WHERE subproject_id = ?";
         RowMapper<Task> rowMapper = new BeanPropertyRowMapper<>(Task.class);
         return jdbcTemplate.query(query, rowMapper, subprojectId);
     }

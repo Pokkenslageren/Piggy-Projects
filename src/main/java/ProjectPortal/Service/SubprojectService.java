@@ -68,4 +68,8 @@ public class SubprojectService {
     public int calculateTotalAvailableEmployees(List<Task> listOfTasks, Subproject subproject){
         return subprojectRepository.calculateTotalAvailableEmployees(listOfTasks, subproject);
     }
+
+    public List<Task> readAllTasksBySubproject(int subprojectId){
+        return subprojectRepository.readAllTasksBySubproject(subprojectId);
+    }
 }
