@@ -49,6 +49,10 @@
                         <h3 th:text="${project.projectName}"></h3>
                         <div class="subproject-metrics">
                             <div class="metric">
+                                <i class="fas fa-check-circle" th:style="${project.complete ? 'color: #28a745' : 'color: #gray'}"></i>
+                                <span th:text="${project.complete ? 'Complete' : 'In Progress'}"></span>
+                            </div>
+                            <div class="metric">
                                 <i class="fas fa-money-bill"></i>
                                 <span th:text="${project.actualCost + '/' + project.totalEstimatedCost + ' dkk'}"></span>
                             </div>
@@ -58,9 +62,15 @@
                             </div>
                             <div class="metric">
                                 <i class="fas fa-calendar"></i>
-                                <span th:text="${#temporals.format(project.endDate, 'dd-MM-yyyy')}"></span>
+                                <span>
+                                     <span th:text="${#temporals.format(project.startDate, 'dd-MM-yyyy')}"></span>
+                                    →
+                                    <span th:text="${#temporals.format(project.endDate, 'dd-MM-yyyy')}"></span>
+                                </span>
                             </div>
+
                         </div>
+
                         <div class="description">
                             <p th:text="${project.projectDescription}"></p>
                         </div>
