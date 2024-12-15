@@ -4,14 +4,53 @@
     <meta charset="UTF-8">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link th:href="@{/css/main.css}" rel="stylesheet">
 
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link th:href="@{/css/project-overview.css}" rel="stylesheet">
+    <link th:href="@{/css/formbox.css}" rel="stylesheet">
 
 </head>
 
 <body>
 
 <div class="wrapper">
+
+    <div class="sidebar">
+        <div class="logo">
+            <img th:src="@{/alpha_solutions_logo.png}" alt="Alpha Solutions"/>
+            <h3>Alpha Solutions</h3>
+            <p>Portfolio</p>
+        </div>
+
+        <ul>
+            <li>
+                <a th:href="@{/{userId}/portfolio(userId=${project.userId})}" class="active">
+                    <span class="icon"><i class="fas fa-home"></i></span>
+                    <span class="item">Portfolio</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/{userId}/portfolio/{projectId}/createsubproject(userId=${project.userId},projectId=${project.projectId})}" class="active">
+                    <span class="icon"><i class="fas fa-plus-circle"></i></span>
+                    <span class="item">New subproject</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/{userId}/portfolio/{projectId}/createtask(userId=${project.userId},projectId=${project.projectId})}" class="active">
+                    <span class="icon"><i class="fas fa-plus-circle"></i></span>
+                    <span class="item">New task</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="top_navbar">
+        <div class="portal-title">
+            <a th:href="@{/{userId}/portfolio(userId=${project.userId})}">Project Portal</a>
+        </div>
+    </div>
+
+    <div class="project-container">
 
 
     <div class="form-container">
@@ -20,44 +59,60 @@
 
             <h1>Create a new task</h1>
 
-            <form th:action="@{/{userId}/home/createtask}" th:object="${task}" method="post">
+            <form th:action="@{/__${project.userId}__/portfolio/__${project.projectId}__/createtask}" th:object="${task}" method="post">
 
+                <div>
+                    <label for="subproject">Select Subproject:</label>
+                    <select id="subproject" th:field="*{subprojectId}" required>
+                        <option th:each="subproject : ${subprojects}"
+                                th:value="${subproject.subprojectId}"
+                                th:text="${subproject.subprojectName}">
+                        </option>
+                    </select>
+                </div>
 
                 <div>
                     <label for="task-name">Task name:</label>
-                    <input type="text" id="task-name" th:field="*{taskName}" placeholder="Insert task-name" required />
-                </div>
-                <div>
-                    <label for="task-start-date">Task start date</label>
-                    <input type="date" th:field="${task.startDate}" id="task-start-date">
-                </div>
-                <div>
-                    <label for="task-end-date">Task end date</label>
-                    <input type="date" th:field="${task.endDate}" id="task-end-date">
-                </div>
-                <div>
-                    <label for="task-cost-estimate">Estimated total task cost</label>
-                    <input type="text" id="task-cost-estimate" th:field="*{estimatedCost}" placeholder="Budget in DKK"/>
-                </div>
-                <div>
-                    <label for="total-employees">Enter number of employees assigned to the task</label>
-                    <input type="text" id="total-employees" th:field="*{assignedEmployees}" placeholder="Total number of employees">
-                </div>
-                <div>
-                    <label for="task-description">Enter task description:</label>
-                    <input type="text" id="task-description" th:field="*{taskDescription}" placeholder="Task-description" required />
-                </div>
-                <div>
-                    <label>Hours allocated</label>
-                    <input type="text" th:field="*{task.hoursAllocated}" th:value="${taskHoursAllocated}" placeholder="number of hours">
-                </div>
-                <div>
-                    <label>Total task days</label>
-                    <input type="text" th:field="*{task.totalTaskDays}" th:value="${totalTaskDays}" placeholder="number of days">
+                    <input type="text" id="task-name" th:field="*{taskName}"  required />
                 </div>
 
                 <div>
-                    <label for="priority">Priority of subproject:</label>
+                    <label for="taskDescription">Description:</label>
+                    <textarea id="taskDescription" th:field="*{taskDescription}"  rows="4" required></textarea>
+                </div>
+
+                <div>
+                    <label for="taskStartDate">Start date</label>
+                    <input type="date" th:field="${task.startDate}" id="taskStartDate" required>
+                </div>
+
+                <div>
+                    <label for="taskEndDate">End date</label>
+                    <input type="date" th:field="${task.endDate}" id="taskEndDate" required>
+                </div>
+
+                <div>
+                    <label for="taskCostEstimate">Estimated cost</label>
+                    <input type="text" id="taskCostEstimate" th:field="*{estimatedCost}" required/>
+                </div>
+
+                <div>
+                    <label for="totalEmployees">Assigned employees</label>
+                    <input type="text" id="totalEmployees" th:field="*{assignedEmployees}" required/>
+                </div>
+
+                <div>
+                    <label for="hoursAllocated">Hours allocated:</label>
+                    <input type="number" id="hoursAllocated" th:field="*{hoursAllocated}" required/>
+                </div>
+
+                <div>
+                    <label for="totalTaskDays">Total task days:</label>
+                    <input type="number" id="totalTaskDays" th:field="*{totalTaskDays}"  required/>
+                </div>
+
+                <div>
+                    <label for="priority">Priority:</label>
                     <select id="priority" th:field="*{priority}">
                         <option value="LOW">Low</option>
                         <option value="MEDIUM">Medium</option>
@@ -76,7 +131,7 @@
         </div>
     </div>
 
-
+    </div>
 </div>
 </body>
 </html>

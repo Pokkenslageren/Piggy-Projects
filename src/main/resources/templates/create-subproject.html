@@ -49,7 +49,7 @@
 
     <div class="top_navbar">
         <div class="portal-title">
-            <a href="/portfolio">Project Portal</a>
+            <a th:href="@{/{userId}/portfolio(userId=${project.userId})}">Project Portal</a>
         </div>
     </div>
 
@@ -68,23 +68,23 @@
                     <input type="text" id="subprojectName" th:field="*{subprojectName}" required />
                 </div>
                 <div>
-                    <label for="subprojectDescription">Enter subproject description:</label>
+                    <label for="subprojectDescription">Description:</label>
                     <input type="text" id="subprojectDescription" th:field="*{subprojectDescription}" required />
                 </div>
                 <div>
-                    <label for="subprojectStartDate">Subproject start date:</label>
+                    <label for="subprojectStartDate">Start date:</label>
                     <input type="date" th:field="${subproject.startDate}" id="subprojectStartDate">
                 </div>
                 <div>
-                    <label for="subprojectEndDate">Subproject end date:</label>
+                    <label for="subprojectEndDate">End date:</label>
                     <input type="date" th:field="${subproject.endDate}" id="subprojectEndDate" required>
                 </div>
                 <div>
-                    <label for="subprojectCostEstimate">Estimated total subproject cost:</label>
+                    <label for="subprojectCostEstimate">Estimated cost:</label>
                     <input type="number" id="subprojectCostEstimate" th:field="*{totalEstimatedCost}" required/>
                 </div>
                 <div>
-                    <label for="totalEmployees">Enter number of assigned employees:</label>
+                    <label for="totalEmployees">Assigned employees:</label>
                     <input type="number" id="totalEmployees" th:field="*{totalAssignedEmployees}" required>
                 </div>
                 <div>
@@ -92,7 +92,7 @@
                     <input type="number" th:field="*{hoursAllocated}">
                 </div>
                 <div>
-                    <label for="priority">Priority of subproject:</label>
+                    <label for="priority">Priority:</label>
                     <select id="priority" th:field="*{priority}">
                         <option value="LOW">Low</option>
                         <option value="MEDIUM">Medium</option>

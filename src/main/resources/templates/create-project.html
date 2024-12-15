@@ -41,7 +41,7 @@
 
     <div class="top_navbar">
         <div class="portal-title">
-            <a href="/portfolio">Project Portal</a>
+            <a th:href="@{/{userId}/portfolio(userId=${project.userId})}">Project Portal</a>
         </div>
     </div>
 
@@ -60,27 +60,28 @@
                     <input type="text" id="projectName" th:field="*{projectName}" required />
                 </div>
 
+                    <div>
+                        <label for="projectDescription">Description:</label>
+                        <textarea id="projectDescription" th:field="*{projectDescription}" rows="4"></textarea>
+                    </div>
+
                 <div>
-                    <label for="startDate">Project start date</label>
+                    <label for="startDate">Start date</label>
                     <input type="date" th:field="${project.startDate}" id="startDate" required>
                 </div>
                 <div>
-                    <label for="endDate">Project end date</label>
+                    <label for="endDate">End date</label>
                     <input type="date" th:field="${project.endDate}" id="endDate" required>
                 </div>
                 <div>
-                    <label for="totalEstimatedCost">Estimated total project cost</label>
+                    <label for="totalEstimatedCost">Estimated cost</label>
                     <input type="text" id="totalEstimatedCost" th:field="*{totalEstimatedCost}" required/>
                 </div>
                 <div>
-                    <label for="totalEmployees">Enter total number of employees assigned to the project</label>
+                    <label for="totalEmployees">Assigned employees</label>
                     <input type="text" id="totalEmployees" th:field="*{assignedEmployees}" required>
                 </div>
 
-                <div>
-                    <label for="projectDescription">Enter project description:</label>
-                    <textarea id="projectDescription" th:field="*{projectDescription}" rows="4"></textarea>
-                </div>
 
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">
