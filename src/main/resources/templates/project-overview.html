@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link th:href="@{/css/main.css}" rel="stylesheet">
-    <link th:href="@{/css/sidebar.css}" rel="stylesheet">
+    <link th:href="@{/css/project-overview.css}" rel="stylesheet">
 
 
     <title>Project Overview</title>
@@ -17,13 +17,6 @@
 <body>
 
     <div class="wrapper">
-
-        <div class="section">
-            <div class="top_navbar">
-
-            </div>
-
-        </div>
 
         <div class="sidebar">
             <div class="logo">
@@ -54,23 +47,39 @@
             </ul>
         </div>
 
+        <div class="top_navbar">
+            <div class="portal-title">
+                <a href="/portfolio">Project Portal</a>
+            </div>
+        </div>
+
         <div class="project-container">
             <!-- Project Header -->
             <div class="project-header">
                 <h1 th:text="${project.projectName}"></h1>
+
                 <div class="project-metrics">
+
                     <div class="metric">
                         <i class="fas fa-money-bill"></i>
-                        <span>Estimated Cost: <span th:text="${project.totalEstimatedCost + '/' + project.actualCost}"></span></span>
+                        <span>Estimated Cost: <span th:text="${project.actualCost + '/' + project.totalEstimatedCost + ' dkk'}"></span></span>
                     </div>
                     <div class="metric">
                         <i class="fas fa-users"></i>
-                        <span>Employees: <span th:text="${project.totalAssignedEmployees + '/' + project.totalAvailableEmployees}"></span></span>
+                        <span>Assigned Employees: <span th:text="${project.assignedEmployees + '/' + project.availableEmployees}"></span></span>
+
                     </div>
                     <div class="metric">
                         <i class="fas fa-calendar"></i>
                         <span>Deadline: <span th:text="${#temporals.format(project.endDate, 'dd-MM-yyyy')}"></span></span>
                     </div>
+
+                </div>
+
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="location.href='#'">
+                        <i class="fas fa-chart-line"></i> Analytics
+                    </button>
                 </div>
             </div>
 
@@ -78,56 +87,111 @@
             <div class="subprojects-section">
                 <div th:each="subproject : ${subprojects}"
                      th:class="'subproject-card priority-' + ${subproject.priority.toString().toLowerCase()}">
-                    <div class="subproject-header" onclick="toggleTasks(${subproject.subprojectId})">
-                        <div class="priority-badge" th:text="${subproject.priority}"></div>
-                        <h3 th:text="${subproject.subprojectName}"></h3>
-                        <div class="subproject-metrics">
-                            <div class="metric">
-                                <i class="fas fa-money-bill"></i>
-                            <span class="cost" th:text="${subproject.estimatedCost}"></span>
-                            </div>
-                            <div class="metric">
-                                <i class="fas fa-users"></i>
-                            <span class="employees" th:text="${subproject.assignedEmployees + '/' + subproject.availiableEmployees}"></span>
-                            </div>
-                            <div class="metric">
-                                <i class="fas fa-calendar"></i>
-                            <span class="deadline" th:text="${#temporals.format(subproject.endDate, 'dd-MM-yyyy')}"></span>
+                    <div class="subproject-header" th:onclick="'toggleTasks(' + ${subproject.subprojectId} + ')'">
+                        <div class="subproject-info">
+                            <div class="priority-badge" th:text="${subproject.priority}"></div>
+                            <h3 th:text="${subproject.subprojectName}"></h3>
+                            <div class="subproject-metrics">
+                                <div class="metric">
+                                    <i class="fas fa-money-bill"></i>
+                                    <span th:text="${#numbers.formatDecimal(subproject.totalEstimatedCost, 0, 'COMMA', 2, 'POINT')} + ' DKK'"></span>
+                                </div>
+                                <div class="metric">
+                                    <i class="fas fa-users"></i>
+                                    <span th:text="${subproject.totalAssignedEmployees + '/' + subproject.totalAvailiableEmployees}"></span>
+                                </div>
+                                <div class="metric">
+                                    <i class="fas fa-calendar"></i>
+                                    <span th:text="${#temporals.format(subproject.endDate, 'dd-MM-yyyy')}"></span>
+                                </div>
                             </div>
                         </div>
-                        <i class="fas fa-chevron-down"></i>
+                        <div class="subproject-actions">
+                            <button class="btn btn-success" th:onclick="'markComplete(' + ${subproject.subprojectId} + ')'">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="btn btn-primary" th:onclick="'updateSubproject(' + ${subproject.subprojectId} + ')'">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger" th:onclick="'confirmDelete(' + ${subproject.subprojectId} + ')'">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
                     </div>
 
+
                     <!-- Tasks goes here TODO: ADD DELETE / UPDATE BUTTONS - HOURALLOCATION -->
-                    <div th:id="'tasks-' + ${subproject.subprojectName}" class="tasks-container" style="display: none;">
-                        <div th:each="task : ${tasks}"
-                             th:class="'task-card priority-' + ${task.priority.toString().toLowerCase()}">
-                            <div class="task-header">
-                                <div class="priority-badge" th:text="${task.priority}"></div>
-                                <h3 th:text="${task.taskName}"></h3>
-                                <div class="task-metrics">
-                                    <div class="metric">
-                                        <i class="fas fa-money-bill"></i>
-                                        <span class="cost" th:text="${task.estimatedCost}"></span>
+                    <div th:id="'tasks-' + ${subproject.subprojectId}" class="tasks-container" style="display: none;">
+                        <div class="tasks-grid">
+                            <div th:each="task : ${subproject.tasks}"
+                                 th:class="'task-card priority-' + ${task.priority.toString().toLowerCase()}">
+                                <div class="task-content">
+                                    <div class="priority-badge" th:text="${task.priority}"></div>
+                                    <h4 th:text="${task.taskName}"></h4>
+                                    <div class="task-metrics">
+                                        <div class="metric">
+                                            <i class="fas fa-money-bill"></i>
+                                            <span th:text="${#numbers.formatDecimal(task.estimatedCost, 0, 'COMMA', 2, 'POINT')} + ' DKK'"></span>
+                                        </div>
+                                        <div class="metric">
+                                            <i class="fas fa-users"></i>
+                                            <span th:text="${task.assignedEmployees}"></span>
+                                        </div>
+                                        <div class="metric">
+                                            <i class="fas fa-calendar"></i>
+                                            <span th:text="${#temporals.format(task.endDate, 'dd-MM-yyyy')}"></span>
+                                        </div>
                                     </div>
-                                    <div class="metric">
-                                        <i class="fas fa-users"></i>
-                                        <span class="employees" th:text="${task.assignedEmployees}"></span>
+                                    <div class="task-actions">
+                                        <button class="btn btn-success btn-sm" th:onclick="'markTaskComplete(' + ${task.taskId} + ')'">
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                        <button class="btn btn-primary btn-sm" th:onclick="'updateTask(' + ${task.taskId} + ')'">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" th:onclick="'confirmTaskDelete(' + ${task.taskId} + ')'">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
                                     </div>
-                                    <div class="metric">
-                                        <i class="fas fa-calendar"></i>
-                                        <span class="deadline" th:text="${#temporals.format(task.endDate, 'dd-MM-yyyy')}"></span>
-                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
 
         </div>
     </div>
+
+    <script>
+        function toggleTasks(subprojectId) {
+            const tasksContainer = document.getElementById('tasks-' + subprojectId);
+            const icon = event.target.closest('.subproject-header').querySelector('.toggle-icon');
+            if (tasksContainer) {
+                const isExpanded = tasksContainer.style.display !== 'none';
+                tasksContainer.style.display = isExpanded ? 'none' : 'block';
+                icon.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
+            }
+            event.stopPropagation();
+        }
+
+        function confirmDelete(subprojectId) {
+            if (confirm('Are you sure you want to delete this subproject?')) {
+                window.location.href = `/subproject/delete/${subprojectId}`;
+            }
+            event.stopPropagation();
+        }
+
+        function confirmTaskDelete(taskId) {
+            if (confirm('Are you sure you want to delete this task?')) {
+                window.location.href = `/task/delete/${taskId}`;
+            }
+            event.stopPropagation();
+        }
+    </script>
+
 
 </body>
 
