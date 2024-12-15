@@ -103,11 +103,21 @@ public class SubprojectRepository {
         return totalSubprojectEmployees - totalEmployeesInUse;
     }
 
+    /**
+     * Calculates actual task hours based on start and end date and number of employees
+     * @param task
+     * @return
+     */
     public int totalActualTaskHours(Task task) {
         int numberOfEmployees = task.getAssignedEmployees();
         return (task.getEndDate().getDayOfYear() - task.getStartDate().getDayOfYear()) * numberOfEmployees * 8;
     }
 
+    /**
+     * Calculates actual subproject hours
+     * @param listOfTasks
+     * @return
+     */
     public int totalActualSubprojectHours(List<Task> listOfTasks) {
         var iterator = listOfTasks.iterator();
         int totalActualSubprojectHours = 0;
@@ -117,6 +127,10 @@ public class SubprojectRepository {
         return totalActualSubprojectHours;
     }
 
+    /**
+     *
+     * @param listOfSubprojects
+     */
     public void setDynamicValuesSubproject(List<Subproject> listOfSubprojects) {
         var iterator = listOfSubprojects.iterator();
         while (iterator.hasNext()) {

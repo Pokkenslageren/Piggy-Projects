@@ -24,6 +24,14 @@ public class TaskController {
         this.userService = userService;
     }
 
+    /**
+     * Create a task from the user profile
+     * @param userId
+     * @param projectId
+     * @param subprojectId
+     * @param model
+     * @return
+     */
     @GetMapping("/{userId}/portfolio/{projectId}/{subprojectId}/createtask")
     public String createTask(@PathVariable("userId") int userId,@PathVariable("projectId") int projectId, @PathVariable("subprojectId") int subprojectId, Model model) {
         User user = userService.readUserById(userId);
@@ -33,6 +41,12 @@ public class TaskController {
         return "create-task";
     }
 
+    /**
+     * Post the created task to the server
+     * @param userId
+     * @param task
+     * @return
+     */
     @PostMapping("/{userId}/portfolio/createtask")
     public String createTask(@PathVariable("userId") int userId, @ModelAttribute Task task){
         taskService.createTask(task);

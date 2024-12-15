@@ -28,6 +28,12 @@ public class ProjectController {
         this.taskService = taskService;
     }
 
+    /**
+     * Create project by using userId to assign a user to the project
+     * @param userId
+     * @param model
+     * @return
+     */
     @GetMapping("/{userId}/portfolio/createproject")
     public String createProject(@PathVariable("userId") int userId, Model model){
         User user = userService.readUserById(userId);
@@ -39,6 +45,12 @@ public class ProjectController {
         return "create-project";
     }
 
+    /**
+     * Show Portfolio from the user
+     * @param userId
+     * @param model
+     * @return
+     */
     @GetMapping("/{userId}/portfolio")
     public String showPortfolio(@PathVariable("userId") int userId, Model model){
         User user = userService.readUserById(userId);
@@ -48,6 +60,13 @@ public class ProjectController {
         return "portfolio";
     }
 
+    /**
+     * Show projects from the user profile
+     * @param userId
+     * @param projectId
+     * @param model
+     * @return
+     */
     @GetMapping("/{userId}/portfolio/{projectId}")
     public String showProject(@PathVariable int userId, @PathVariable int projectId, Model model) {
         Project project = projectService.readProject(projectId);
@@ -63,12 +82,25 @@ public class ProjectController {
         return "project-overview";
     }
 
+    /**
+     * Posts the created project to the server data
+     * @param userId
+     * @param project
+     * @return
+     */
     @PostMapping("/{userId}/portfolio/createproject")
     public String createProject(@PathVariable("userId") int userId, @ModelAttribute Project project){
         projectService.createProject(project);
         return "redirect:/portfolio";
     }
 
+    /**
+     * Update the project from the user profile
+     * @param userId
+     * @param projectId
+     * @param model
+     * @return
+     */
     @GetMapping("/{userId}/portfolio/{projectid}/update")
     public String updateProject(@PathVariable("userId") int userId, @PathVariable("projectid") int projectId, Model model){
         Project project = projectService.readProject(projectId);
@@ -76,13 +108,25 @@ public class ProjectController {
         return "update-project";
     }
 
+    /**
+     * Posts the updated project to the server
+     * @param userId
+     * @param projectid
+     * @param project
+     * @return
+     */
     @PostMapping("/{userId}/portfolio/{projectid}/update")
     public String updateProject(@PathVariable("userId") int userId, @PathVariable("projectid")int projectid, @ModelAttribute Project project){
         projectService.updateProject(project, projectid);
         return "redirect:/portfolio";
     }
 
-
+    /**
+     * Delete project from the user
+     * @param userId
+     * @param projectId
+     * @return
+     */
     @GetMapping("/{userId}/portfolio/{projectid}/delete")
     public String deleteProject(@PathVariable("userId") int userId, @PathVariable("projectid") int projectId){
         projectService.deleteProject(projectId);
