@@ -30,8 +30,19 @@ public class TaskController {
         this.subprojectService = subprojectService;
     }
 
+
+    /**
+     * Create a task from the user profile
+     * @param userId
+     * @param projectId
+     * @param subprojectId
+     * @param model
+     * @return
+     */
+
     @GetMapping("/{userId}/portfolio/{projectId}/createtask")
     public String createTask(@PathVariable("userId") int userId, @PathVariable("projectId") int projectId, Model model) {
+
         User user = userService.readUserById(userId);
         Project project = projectService.readProject(projectId);
         List<Subproject> subprojects = subprojectService.readAllSubprojectsByProjectId(projectId);
@@ -46,6 +57,14 @@ public class TaskController {
         return "create-task";
     }
 
+
+    /**
+     * Post the created task to the server
+     * @param userId
+     * @param task
+     * @return
+     */
+
     @PostMapping("/{userId}/portfolio/{projectId}/createtask")
     public String createTask(@PathVariable("userId") int userId, @PathVariable("projectId") int projectId, @ModelAttribute Task task) {
 
@@ -55,6 +74,7 @@ public class TaskController {
 
             task.setAssignedEmployees(subproject.getTotalAssignedEmployees());
         }
+
 
         taskService.createTask(task);
         return "redirect:/" + userId + "/portfolio/" + projectId;
