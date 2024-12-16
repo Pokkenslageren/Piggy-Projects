@@ -1,4 +1,4 @@
-USE project_planner
+USE project_planner;
 
 DROP TABLE IF EXISTS tasks;
 DROP TABLE IF EXISTS subprojects;
@@ -43,7 +43,7 @@ CREATE TABLE subprojects (
                              start_date date NOT NULL,
                              end_date date,
                              total_estimated_cost double,
-                             total_assigned_employees int,
+                             total_assigned_employees int NOT NULL DEFAULT 0,
                              total_actual_cost double,
                              is_complete boolean,
                              subproject_description text,
