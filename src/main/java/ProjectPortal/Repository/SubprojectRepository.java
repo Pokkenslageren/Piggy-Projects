@@ -90,15 +90,9 @@ public class SubprojectRepository {
         for (Task task : listOfTasks) {
             totalActualCost += task.getEstimatedCost();
         }
-
         return totalActualCost;
     }
 
-    /**
-     * Calculates actual subproject hours
-     * @param listOfTasks
-     * @return
-     */
     public int totalActualSubprojectHours(List<Task> listOfTasks) {
         int totalActualHours = 0;
         for (Task task : listOfTasks) {
@@ -108,11 +102,9 @@ public class SubprojectRepository {
         return totalActualHours;
     }
 
-
     public int calculateTotalAvailableEmployees(List<Task> listOfTasks, Subproject subproject) {
         int totalSubprojectEmployees = subproject.getTotalAssignedEmployees();
         int totalEmployeesInUse = 0;
-
 
         for (Task task : listOfTasks) {
             totalEmployeesInUse += task.getAssignedEmployees();

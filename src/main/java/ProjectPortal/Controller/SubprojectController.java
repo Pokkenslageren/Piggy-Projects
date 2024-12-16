@@ -25,13 +25,6 @@ public class SubprojectController {
             this.projectService = projectService;
         }
 
-    /**
-     * Create project from the user profile
-     * @param userId
-     * @param projectId
-     * @param model
-     * @return
-     */
         //todo fix user
         @GetMapping("/{userId}/portfolio/{projectId}/createsubproject")
         public String createProject(@PathVariable("userId") int userId, @PathVariable("projectId") int projectId, Model model){
@@ -47,13 +40,6 @@ public class SubprojectController {
             return "create-subproject";
         }
 
-    /**
-     * Post the created project to the server
-     * @param userId
-     * @param projectId
-     * @param subproject
-     * @return
-     */
         @PostMapping("/{userId}/portfolio/{projectId}/createsubproject")
         public String createProject(@PathVariable("userId") int userId, @PathVariable("projectId") int projectId, @ModelAttribute Subproject subproject){
             subproject.setProjectId(projectId);
