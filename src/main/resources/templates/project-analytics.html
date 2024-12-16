@@ -25,44 +25,11 @@
 
             chart.draw(data, options);
         }
-/*
-        function  drawChartGantt(){
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Task ID');
-            data.addColumn('string', 'Task Name');
-            data.addColumn('string', 'Resource');
-            data.addColumn('date', 'Start Date');
-            data.addColumn('date', 'End Date');
-            data.addColumn('number', 'Duration');
-            data.addColumn('number', 'Percent Complete');
-            data.addColumn('string', 'Dependencies');
 
-            data.addRows([
-               ['2014Spring', 'Spring 2014', 'spring',
-                    new Date(2014, 2, 22), new Date(2014, 5, 20), null, 100, null],
-                ['2014Summer', 'Summer 2014', 'summer',
-                    new Date(2014, 5, 21), new Date(2014, 8, 20), null, 100, null],
-                ['2014Autumn', 'Autumn 2014', 'autumn',
-                    new Date(2014, 8, 21), new Date(2014, 11, 20), null, 100, null],
-                ['2014Winter', 'Winter 2014', 'winter',
-                    new Date(2014, 11, 21), new Date(2015, 2, 21), null, 100, null],
-                ['2015Spring', 'Spring 2015', 'spring',
-                    new Date(2015, 2, 22), new Date(2015, 5, 20), null, 50, null]*!/
-                [${subprojectGantt}]
-            ]);
 
-            var options = {
-                title: 'Gantt chart tracking tasks',
-                height: 400,
-                gantt: {
-                    trackHeight: 30
-                }
-            };
 
-            var chart = new google.visualization.Gantt(document.getElementById('ganttchart'));
 
-            chart.draw(data, options);
-   */
+
 
         function drawChartGantt() {
             var container = document.getElementById('timeline-chart');
@@ -73,15 +40,9 @@
             dataTable.addColumn({ type: 'string', id: 'Subproject Name' });
             dataTable.addColumn({ type: 'date', id: 'StartDate' });
             dataTable.addColumn({ type: 'date', id: 'EndDate' });
-            dataTable.addRows([
-               [ 'Briefing Meeting', 'Baseline', new Date(2020, 3, 6), new Date(2021, 2, 10) ],
-                [ 'Briefing Meeting', 'Forecast', new Date(2020, 2, 7), new Date(2021, 2, 11) ],
-                [ 'Briefing Meeting', 'Actual', new Date(2020, 2, 6), new Date(2021, 2, 13) ],
-                [ 'Concept Design', 'Baseline', new Date(2020, 2, 6), new Date(2021, 2, 10) ],
-                [ 'Concept Design', 'Forecast', new Date(2020, 2, 7), new Date(2021, 2, 11) ],
-                [ 'Concept Design', 'Actual', new Date(2020, 2, 6), new Date(2021, 2, 13) ],
-               // [${subprojectGantt}]
-            ]);
+            //dataTable.addRows(subprojectGantt);
+
+            dataTable.addRows( [[${subprojectGantt}]]);
 
             var options = {
                 timeline: {  },
