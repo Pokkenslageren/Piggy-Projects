@@ -117,7 +117,10 @@ public class ProjectController {
         List<List<Object>> subprojectGantt = new ArrayList<>();
         LocalDate startDate = LocalDate.of(2024,10,10);
         LocalDate endDate = LocalDate.of(2025,10,10);
-        subprojectGantt.add(List.of("Eat","Me",projectService.formatForJavaScript(startDate),projectService.formatForJavaScript(endDate)));
+        subprojectGantt.add(Arrays.asList("Eat","Me",projectService.formatForJavaScript(startDate),projectService.formatForJavaScript(endDate)));
+        subprojectGantt.add(Arrays.asList("Drink","Me",projectService.formatForJavaScript(startDate),projectService.formatForJavaScript(endDate)));
+
+        System.out.println(subprojectGantt);
         //Pie estimated cost
         for(Subproject s : subprojects){
 
