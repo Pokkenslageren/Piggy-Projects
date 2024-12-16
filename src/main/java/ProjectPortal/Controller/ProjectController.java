@@ -151,7 +151,10 @@ public class ProjectController {
         List<List<Object>> taskData = new ArrayList<>();
         List<List<Object>> taskEstimatedCostPie = new ArrayList<>();
         List<List<Object>> costBarChart = new ArrayList<>();
+        List<List<Object>> ganttChartTasks = new ArrayList<>();
         List<Task> tasks = subprojectService.readAllTasksBySubproject(subprojectId);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
         for (Task t : tasks){
             taskData.add(List.of(t.getTaskName(),t.getHoursAllocated()));
         }
@@ -163,15 +166,16 @@ public class ProjectController {
         costBarChart.add(List.of("Estimated Subproject Cost", subproject.getTotalEstimatedCost()));
         costBarChart.add(List.of("Actual Subproject Cost", subprojectService.calculateTotalActualCost(tasks)));
 
+        for(Task t : tasks){
+            ganttChartTasks.add(List.of("Task ID: " + t.getTaskId(), t.getTaskName(), t.getStartDate().format(dateTimeFormatter), t.getEndDate().format(dateTimeFormatter)));
+        }
 
-/*        List<List<Object>> taskData = List.of(
-                                                List.of("task1", 500),
-                                                List.of("task2", 750),
-                                                List.of("task3", 300)); */
+
 
         model.addAttribute("taskData", taskData);
         model.addAttribute("taskEstimatedCostPie", taskEstimatedCostPie);
         model.addAttribute("costBarChart", costBarChart);
+        model.addAttribute("ganttChartTasks", ganttChartTasks);
 
         return "subproject-analytics";
     }

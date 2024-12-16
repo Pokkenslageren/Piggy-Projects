@@ -9,9 +9,8 @@
         google.charts.setOnLoadCallback(drawChartHoursAllocated);
         google.charts.setOnLoadCallback(drawChartEstimatedCost);
         google.charts.setOnLoadCallback(drawHistogram);
-/*        google.charts.setOnLoadCallback(drawChartGantt); //crasher måske hele lortet!
+        google.charts.setOnLoadCallback(drawChartGantt); //crasher måske hele lortet!
 
-        */
 
         function drawChartHoursAllocated() {
             var data = new google.visualization.DataTable();
@@ -67,29 +66,28 @@
            */
 
         function drawChartGantt() {
-            var container = document.getElementById('timeline-chart');
+            var container = document.getElementById('timeline');
             var chart = new google.visualization.Timeline(container);
             var dataTable = new google.visualization.DataTable();
 
-            dataTable.addColumn({ type: 'string', id: 'Subproject ID' });
-            dataTable.addColumn({ type: 'string', id: 'Subproject Name' });
-            dataTable.addColumn({ type: 'date', id: 'StartDate' });
-            dataTable.addColumn({ type: 'date', id: 'EndDate' });
-            dataTable.addRows([
-                [ 'Briefing Meeting', 'Baseline', new Date(2020, 3, 6), new Date(2021, 2, 10) ],
-                [ 'Briefing Meeting', 'Forecast', new Date(2020, 2, 7), new Date(2021, 2, 11) ],
-                [ 'Briefing Meeting', 'Actual', new Date(2020, 2, 6), new Date(2021, 2, 13) ],
-                [ 'Concept Design', 'Baseline', new Date(2020, 2, 6), new Date(2021, 2, 10) ],
-                [ 'Concept Design', 'Forecast', new Date(2020, 2, 7), new Date(2021, 2, 11) ],
-                [ 'Concept Design', 'Actual', new Date(2020, 2, 6), new Date(2021, 2, 13) ],
-                // [${subprojectGantt}]
-            ]);
+            dataTable.addColumn({ type: 'string', id: 'Project' });
+            dataTable.addColumn({ type: 'string', id: 'Task' });
+            dataTable.addColumn({ type: 'date', id: 'Start' });
+            dataTable.addColumn({ type: 'date', id: 'End' });
 
-            var options = {
-                timeline: {  },
-                height:1000,
-            };
-            chart.draw(dataTable, options);
+            // Thymeleaf iteration over the data
+            var ganttData = /*[[${ganttChartTasks}]]*/ '[]';
+
+            dataTable.addRows(
+                ganttData.map(entry => [
+                    entry[0],
+                    entry[1],
+                    new Date(entry[2]),
+                    new Date(entry[3])
+                ])
+            );
+
+            chart.draw(dataTable);
         }
 
         function drawChartEstimatedCost() {
@@ -178,8 +176,7 @@
     <div class="project-container">
 
         <div id="piechart" style="width: 500px; height: 375px; position: absolute; top: 455px; left: 225px"></div>
-        <!--  <div id="ganttchart" style="width: 1300px; height: 500px; position: absolute; left: 225px"></div> -->
-        <div id="timeline-chart" style="width: 1300px; height: 500px; position: absolute; left: 225px" ></div>
+        <div id="timeline" style="width: 1455px; height: 700px; position: absolute; top: 200px; left: 225px" ></div>
         <div id="donutchart" style="width: 500px; height: 375px; position: absolute; top: 455px; left: 726px"></div>
         <div id="histogram" style="width: 455px; height: 375px; position: absolute; top: 455px; left: 1226px"></div>
     </div>
