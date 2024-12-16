@@ -51,10 +51,10 @@ public class TaskController {
 
         Subproject subproject = subprojectService.readSubproject(task.getSubprojectId());
 
-        if (task.getAssignedEmployees() > subproject.getTotalAssignedEmployees()) {
+        /* if (task.getAssignedEmployees() > subproject.getTotalAssignedEmployees()) {
 
             task.setAssignedEmployees(subproject.getTotalAssignedEmployees());
-        }
+        } */
 
         taskService.createTask(task);
         return "redirect:/" + userId + "/portfolio/" + projectId;

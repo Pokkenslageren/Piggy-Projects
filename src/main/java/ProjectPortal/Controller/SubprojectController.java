@@ -33,6 +33,7 @@ public class SubprojectController {
             Subproject subproject = new Subproject();
             subproject.setProjectId(projectId);
             subproject.setComplete(false);
+            subproject.setTotalAssignedEmployees(0);
 
             model.addAttribute("subproject", subproject);
             model.addAttribute("project" , project);
@@ -43,6 +44,7 @@ public class SubprojectController {
         @PostMapping("/{userId}/portfolio/{projectId}/createsubproject")
         public String createProject(@PathVariable("userId") int userId, @PathVariable("projectId") int projectId, @ModelAttribute Subproject subproject){
             subproject.setProjectId(projectId);
+            subproject.setTotalAssignedEmployees(0);
             subprojectService.createSubproject(subproject);
             return "redirect:/" + userId + "/portfolio/" + projectId;
         }
