@@ -1,6 +1,7 @@
 package ProjectPortal.Service;
 
 import ProjectPortal.Model.Task;
+import ProjectPortal.Service.TaskService;
 import ProjectPortal.Repository.SubprojectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,10 +13,12 @@ import java.util.List;
 @Service
 public class SubprojectService {
     private final SubprojectRepository subprojectRepository;
+    private final TaskService taskService;
 
     @Autowired
-    public SubprojectService(SubprojectRepository subprojectRepository) {
+    public SubprojectService(SubprojectRepository subprojectRepository, TaskService taskService) {
         this.subprojectRepository = subprojectRepository;
+        this.taskService = taskService;
     }
 
     /**
@@ -23,34 +26,15 @@ public class SubprojectService {
      * @param subproject
      */
     public void createSubproject(Subproject subproject) {
+        subproject.setTotalAssignedEmployees(0);
         subprojectRepository.createSubproject(subproject);
     }
 
-    /**
-     * read a single subproject by id
-     * @param subprojectId
-     * @return
-     */
+
     public Subproject readSubproject(int subprojectId) {
-        return subprojectRepository.readSubproject(subprojectId);
-    }
-
-    /**
-     * reads all subproject belonging to a single projectId
-     * @param projectId
-     * @return
-     */
-    public List<Subproject> readAllSubprojectsByProjectId(int projectId) {
-        return  subprojectRepository.readAllSubprojectsByProjectId(projectId);
-    }
-
-    /**
-     * updates subproject
-     * @param subprojectId
-     * @param subproject
-     */
-    public void updateSubproject(int subprojectId, Subproject subproject) {
-        subprojectRepository.updateSubproject(subprojectId, subproject);
+        Subproject subproject = subprojectRepository.readSubproject(subprojectId);
+        updateSubprojectCalculations(subproject);
+        return subproject;
     }
 
     /**
@@ -59,6 +43,31 @@ public class SubprojectService {
      */
     public void deleteSubproject(int subprojectId) {
         subprojectRepository.deleteSubproject(subprojectId);
+    }
+
+    public List<Subproject> readAllSubprojectsByProjectId(int projectId) {
+        List<Subproject> subprojects = subprojectRepository.readAllSubprojectsByProjectId(projectId);
+        for (Subproject subproject : subprojects) {
+            updateSubprojectCalculations(subproject);
+        }
+        return subprojects;
+    }
+
+    public void updateSubprojectCalculations(Subproject subproject) {
+        List<Task> tasks = taskService.readTasksBySubprojectId(subproject.getSubprojectId());
+        int totalEmployees = calculateTotalEmployees(tasks);
+        subproject.setTotalAssignedEmployees(totalEmployees);
+
+        double totalActualCost = tasks.stream()
+                .mapToDouble(Task::getEstimatedCost)
+                .sum();
+        subproject.setTotalActualCost(totalActualCost);
+    }
+
+    private int calculateTotalEmployees(List<Task> tasks) {
+        return tasks.stream()
+                .mapToInt(Task::getAssignedEmployees)
+                .sum();
     }
 
     public int totalActualSubprojectHours(List<Task> listOfTasks){

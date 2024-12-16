@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="metric">
                                     <i class="fas fa-users"></i>
-                                    <span th:text="${subproject.totalAssignedEmployees}"></span>
+                                    <span th:text="${subproject.totalAssignedEmployees + ' assigned employees'}"></span>
                                 </div>
 
                                 <div class="metric">
@@ -135,9 +135,6 @@
                                 <div class="metric">
                                     <i class="fas fa-clock"></i>
                                     <div class="hours-progress">
-                                        <div class="progress-bar">
-                                            <div class="progress-fill" th:style="'width: ' + ${(subproject.hoursAllocated / 100) * 100} + '%'"></div>
-                                        </div>
                                         <span th:text="${subproject.hoursAllocated + ' hours'}"></span>
                                     </div>
                                 </div>

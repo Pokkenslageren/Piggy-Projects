@@ -78,22 +78,37 @@ public class ProjectRepository {
         jdbcTemplate.update(query, projectId);
     }
 
-    public int calculateTotalAvailableEmployees(List<Subproject> listOfSubprojects, Project project) {
-        int totalProjectEmployees = project.getTotalAssignedEmployees();
-        int totalEmployeesInUse = 0;
+    public double calculateTotalActualCost(List<Subproject> subprojects) {
+        double totalActualCost = 0.0;
 
-        for (Subproject sub : listOfSubprojects) {
-            totalEmployeesInUse += sub.getTotalAssignedEmployees();
+        for (Subproject subproject : subprojects) {
+            String query = "SELECT SUM(estimated_cost) FROM tasks WHERE subproject_id = ?";
+            Double subprojectCost = jdbcTemplate.queryForObject(query, Double.class, subproject.getSubprojectId());
+
+            if (subprojectCost != null) {
+                totalActualCost += subprojectCost;
+            }
         }
-        return totalProjectEmployees - totalEmployeesInUse;
+
+        return totalActualCost;
     }
 
-    public double calculateTotalActualCost(List<Subproject> listOfSubprojects) {
-        double totalActualCost = 0.0;
-        for (Subproject sub : listOfSubprojects) {
-            totalActualCost += sub.getTotalActualCost();
+    public int calculateTotalProjectEmployees(int projectId) {
+        String subprojectQuery = "SELECT subproject_id FROM subprojects WHERE project_id = ?";
+        List<Integer> subprojectIds = jdbcTemplate.queryForList(subprojectQuery, Integer.class, projectId);
+
+        int totalEmployees = 0;
+
+        for (Integer subprojectId : subprojectIds) {
+            String taskQuery = "SELECT SUM(assigned_employees) FROM tasks WHERE subproject_id = ?";
+            Integer subprojectEmployees = jdbcTemplate.queryForObject(taskQuery, Integer.class, subprojectId);
+
+            if (subprojectEmployees != null) {
+                totalEmployees += subprojectEmployees;
+            }
         }
-        return totalActualCost;
+
+        return totalEmployees;
     }
 
     public String formatForJavaScript(LocalDate date) {

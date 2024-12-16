@@ -45,6 +45,7 @@ public class Project {
         this.subprojectEmployees = new ArrayList<>();
         this.totalCostPerTask = new ArrayList<>();
         this.totalCostPerSubproject = new ArrayList<>();
+        this.totalActualCost = 0;
     }
 
     public int getCompanyId() {

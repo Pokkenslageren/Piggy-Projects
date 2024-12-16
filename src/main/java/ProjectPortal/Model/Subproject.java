@@ -17,6 +17,7 @@ public class Subproject {
     private int hoursAllocated;
     private Priority priority;
     private List<Task> tasks;
+    private int totalActualHours;
 
     public Subproject() {}
 
@@ -74,6 +75,9 @@ public class Subproject {
         return hoursAllocated;
     }
     public List<Task> getTasks() { return tasks; }
+    public int getTotalActualHours() {
+        return totalActualHours;
+    }
 
     public void setProjectId(int projectId) {
         this.projectId = projectId;
@@ -114,4 +118,12 @@ public class Subproject {
         this.subprojectDescription = subprojectDescription;
     }
     public void setTasks(List<Task> tasks) { this.tasks = tasks; }
+    public void setTotalActualHours(int totalActualHours) {
+        this.totalActualHours = totalActualHours;
+    }
+
+    public double getProgressPercentage() {
+        if (hoursAllocated == 0) return 0;
+        return (double) totalActualHours / hoursAllocated * 100;
+    }
 }
