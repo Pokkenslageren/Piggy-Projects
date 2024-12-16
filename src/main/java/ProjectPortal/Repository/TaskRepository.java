@@ -42,13 +42,25 @@ public class TaskRepository {
         return jdbcTemplate.queryForObject(query, rowMapper, id);
     }
 
-    /**
-     * Save a task
-     * @param task
-     */
-    public void saveTask(Task task) {
-        String query = "INSERT INTO tasks (task_name, task_id, assigned_employees, estimated_cost, start_date, end_date, is_complete, task_description)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(query, task);
+
+    public void createTask(Task task) {
+        String query = "INSERT INTO tasks (subproject_id, task_name, start_date, end_date, " +
+                "estimated_cost, assigned_employees, is_complete, task_description, " +
+                "hours_allocated, priority) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        jdbcTemplate.update(query,
+                task.getSubprojectId(),
+                task.getTaskName(),
+                task.getStartDate(),
+                task.getEndDate(),
+                task.getEstimatedCost(),
+                task.getAssignedEmployees(),
+                task.getIsComplete(),
+                task.getTaskDescription(),
+                task.getHoursAllocated(),
+                task.getPriority().toString()
+        );
     }
 
     /**

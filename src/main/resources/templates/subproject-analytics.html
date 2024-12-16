@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" th:inline="javascript">
+        google.charts.load('current', {packages:['corechart']});
+        //google.charts.load('current', {'packages':['gantt']});
+        google.charts.load('current', {packages:['timeline']});
+        google.charts.setOnLoadCallback(drawChartHoursAllocated);
+        google.charts.setOnLoadCallback(drawChartEstimatedCost);
+        google.charts.setOnLoadCallback(drawHistogram);
+/*        google.charts.setOnLoadCallback(drawChartGantt); //crasher måske hele lortet!
+
+        */
+
+        function drawChartHoursAllocated() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Task');
+            data.addColumn('number', 'Hours');
+            data.addRows([[${taskData}]]);
+
+            var options = {
+                title: 'Hours Allocated To Each Task'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+            chart.draw(data, options);
+        }
+        /*
+                function  drawChartGantt(){
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Task ID');
+                    data.addColumn('string', 'Task Name');
+                    data.addColumn('string', 'Resource');
+                    data.addColumn('date', 'Start Date');
+                    data.addColumn('date', 'End Date');
+                    data.addColumn('number', 'Duration');
+                    data.addColumn('number', 'Percent Complete');
+                    data.addColumn('string', 'Dependencies');
+
+                    data.addRows([
+                       ['2014Spring', 'Spring 2014', 'spring',
+                            new Date(2014, 2, 22), new Date(2014, 5, 20), null, 100, null],
+                        ['2014Summer', 'Summer 2014', 'summer',
+                            new Date(2014, 5, 21), new Date(2014, 8, 20), null, 100, null],
+                        ['2014Autumn', 'Autumn 2014', 'autumn',
+                            new Date(2014, 8, 21), new Date(2014, 11, 20), null, 100, null],
+                        ['2014Winter', 'Winter 2014', 'winter',
+                            new Date(2014, 11, 21), new Date(2015, 2, 21), null, 100, null],
+                        ['2015Spring', 'Spring 2015', 'spring',
+                            new Date(2015, 2, 22), new Date(2015, 5, 20), null, 50, null]*!/
+                        [${subprojectGantt}]
+                    ]);
+
+                    var options = {
+                        title: 'Gantt chart tracking tasks',
+                        height: 400,
+                        gantt: {
+                            trackHeight: 30
+                        }
+                    };
+
+                    var chart = new google.visualization.Gantt(document.getElementById('ganttchart'));
+
+                    chart.draw(data, options);
+           */
+
+        function drawChartGantt() {
+            var container = document.getElementById('timeline-chart');
+            var chart = new google.visualization.Timeline(container);
+            var dataTable = new google.visualization.DataTable();
+
+            dataTable.addColumn({ type: 'string', id: 'Subproject ID' });
+            dataTable.addColumn({ type: 'string', id: 'Subproject Name' });
+            dataTable.addColumn({ type: 'date', id: 'StartDate' });
+            dataTable.addColumn({ type: 'date', id: 'EndDate' });
+            dataTable.addRows([
+                [ 'Briefing Meeting', 'Baseline', new Date(2020, 3, 6), new Date(2021, 2, 10) ],
+                [ 'Briefing Meeting', 'Forecast', new Date(2020, 2, 7), new Date(2021, 2, 11) ],
+                [ 'Briefing Meeting', 'Actual', new Date(2020, 2, 6), new Date(2021, 2, 13) ],
+                [ 'Concept Design', 'Baseline', new Date(2020, 2, 6), new Date(2021, 2, 10) ],
+                [ 'Concept Design', 'Forecast', new Date(2020, 2, 7), new Date(2021, 2, 11) ],
+                [ 'Concept Design', 'Actual', new Date(2020, 2, 6), new Date(2021, 2, 13) ],
+                // [${subprojectGantt}]
+            ]);
+
+            var options = {
+                timeline: {  },
+                height:1000,
+            };
+            chart.draw(dataTable, options);
+        }
+
+        function drawChartEstimatedCost() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Task');
+            data.addColumn('number', 'cost');
+            data.addRows([[${taskEstimatedCostPie}]]);
+
+            var options = {
+                title: 'Total Estimated Cost Per Task'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+
+            chart.draw(data, options);
+        }
+
+        function drawHistogram(){
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'costType');
+            data.addColumn('number', 'cost');
+            data.addRows([[${costBarChart}]]);
+
+
+            var options = {
+                title: 'Estimated vs. Total Actual Cost For Subproject',
+                legend: { position: 'none' },
+                hAxis: {
+                    title: 'Cost'
+                },
+                vAxis: {
+                    title: 'Cost Type'
+                },
+                colors: ['#ff5733', '#33c1ff', '#a833ff', '#0f9527', '#ff9933']
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('histogram'));
+            chart.draw(data, options);
+
+        }
+
+    </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link th:href="@{/css/sidebar.css}" rel="stylesheet">
+</head>
+<body>
+<div class="wrapper">
+
+    <div class="section">
+        <div class="top_navbar">
+
+        </div>
+
+    </div>
+
+    <div class="sidebar">
+        <div class="logo">
+            <img th:src="@{/alpha_solutions_logo.png}" alt="Alpha Solutions"/>
+            <h3>Alpha Solutions</h3>
+            <p>Portfolio</p>
+        </div>
+
+        <ul>
+            <li>
+                <a href="#" class="active">
+                    <span class="icon"><i class="fas fa-home"></i></span>
+                    <span class="item">Portfolio</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="active">
+                    <span class="icon"><i class="fas fa-plus-circle"></i></span>
+                    <span class="item">New subproject</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="active">
+                    <span class="icon"><i class="fas fa-plus-circle"></i></span>
+                    <span class="item">New task</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="project-container">
+
+        <div id="piechart" style="width: 500px; height: 375px; position: absolute; top: 455px; left: 225px"></div>
+        <!--  <div id="ganttchart" style="width: 1300px; height: 500px; position: absolute; left: 225px"></div> -->
+        <div id="timeline-chart" style="width: 1300px; height: 500px; position: absolute; left: 225px" ></div>
+        <div id="donutchart" style="width: 500px; height: 375px; position: absolute; top: 455px; left: 726px"></div>
+        <div id="histogram" style="width: 455px; height: 375px; position: absolute; top: 455px; left: 1226px"></div>
+    </div>
+
+
+</div>
+</body>
+</html>

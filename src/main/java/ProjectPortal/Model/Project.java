@@ -11,8 +11,7 @@ public class Project {
     private LocalDate startDate;
     private LocalDate endDate;
     private double totalEstimatedCost;
-    private double totalActualCost;
-    private int totalAvailableEmployees;
+    private double totalActualCost;  // Calculated from subprojects
     private int totalAssignedEmployees;
     private boolean isComplete;
     private String projectDescription;
@@ -22,8 +21,16 @@ public class Project {
     List<Double> totalCostPerTask;
     List<Double> totalCostPerSubproject;
 
+    public Project() {
+        this.taskEmployees = new ArrayList<>();
+        this.subprojectEmployees = new ArrayList<>();
+        this.totalCostPerTask = new ArrayList<>();
+        this.totalCostPerSubproject = new ArrayList<>();
+    }
 
-    public Project(int companyId,String projectName, int userId, int projectId, LocalDate startDate, LocalDate endDate, double totalEstimatedCost, double actualCost, int availableEmployees, int assignedEmployees, boolean isComplete, String projectDescription) {
+    public Project(int companyId, String projectName, int userId, int projectId,
+                   LocalDate startDate, LocalDate endDate, double totalEstimatedCost,
+                   int totalAssignedEmployees, boolean isComplete, String projectDescription) {
         this.companyId = companyId;
         this.projectName = projectName;
         this.userId = userId;
@@ -31,18 +38,16 @@ public class Project {
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalEstimatedCost = totalEstimatedCost;
-        this.totalActualCost = actualCost;
-        this.totalAvailableEmployees = availableEmployees;
-        this.totalAssignedEmployees = assignedEmployees;
-        this.isComplete = false;
+        this.totalAssignedEmployees = totalAssignedEmployees;
+        this.isComplete = isComplete;
         this.projectDescription = projectDescription;
         this.taskEmployees = new ArrayList<>();
         this.subprojectEmployees = new ArrayList<>();
         this.totalCostPerTask = new ArrayList<>();
         this.totalCostPerSubproject = new ArrayList<>();
+        this.totalActualCost = 0;
     }
 
-    public Project(){}
     public int getCompanyId() {
         return companyId;
     }
@@ -65,13 +70,10 @@ public class Project {
     public double getTotalEstimatedCost() {
         return totalEstimatedCost;
     }
-    public double getActualCost() {
+    public double getTotalActualCost() {
         return totalActualCost;
     }
-    public int getAvailableEmployees() {
-        return totalAvailableEmployees;
-    }
-    public int getAssignedEmployees() {
+    public int getTotalAssignedEmployees() {
         return totalAssignedEmployees;
     }
     public boolean isComplete() {
@@ -106,13 +108,10 @@ public class Project {
     public void setTotalEstimatedCost(double totalEstimatedCost) {
         this.totalEstimatedCost = totalEstimatedCost;
     }
-    public void setActualCost(double actualCost) {
+    public void setTotalActualCost(double actualCost) {
         this.totalActualCost = actualCost;
     }
-    public void setAvailableEmployees(int availableEmployees) {
-        this.totalAvailableEmployees = availableEmployees;
-    }
-    public void setAssignedEmployees(int assignedEmployees) {
+    public void setTotalAssignedEmployees(int assignedEmployees) {
         this.totalAssignedEmployees = assignedEmployees;
     }
     public void setProjectDescription(String projectDescription) {

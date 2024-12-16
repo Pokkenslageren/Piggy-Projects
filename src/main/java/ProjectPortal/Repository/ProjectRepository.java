@@ -1,5 +1,6 @@
 package ProjectPortal.Repository;
 
+import java.time.LocalDate;
 import ProjectPortal.Model.Project;
 import ProjectPortal.Model.Subproject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,26 +9,26 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+
 import java.util.Iterator;
 import java.util.List;
 
 @Repository
-public class ProjectRepository implements Iterable<Double>  {
-
+public class ProjectRepository {
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public ProjectRepository(JdbcTemplate jdbcTemplate){
+    public ProjectRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public Iterator<Double> iterator(){
+    public Iterator<Double> iterator() {
         return null;
     }
 
     public void createProject(Project project) {
         String query = "INSERT INTO projects (company_id, user_id, project_name, start_date, " +
-                "end_date, total_estimated_cost, total_estimated_employees, is_complete, " +
+                "end_date, total_estimated_cost, total_assigned_employees, is_complete, " +
                 "project_description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         jdbcTemplate.update(query,
@@ -37,64 +38,83 @@ public class ProjectRepository implements Iterable<Double>  {
                 project.getStartDate(),
                 project.getEndDate(),
                 project.getTotalEstimatedCost(),
-                project.getAvailableEmployees(),
-                false,
+                project.getTotalAssignedEmployees(),
+                project.isComplete(),
                 project.getProjectDescription()
         );
     }
 
-    public Project readProject(int projectId){
+    public Project readProject(int projectId) {
         String query = "SELECT * FROM projects WHERE project_id = ?;";
         RowMapper<Project> rowMapper = new BeanPropertyRowMapper<>(Project.class);
-        return jdbcTemplate.queryForObject(query,rowMapper,projectId);
+        return jdbcTemplate.queryForObject(query, rowMapper, projectId);
     }
 
-    public List<Project> readAllProjects(){
+    public List<Project> readAllProjects() {
         String query = "SELECT * FROM projects;";
-        RowMapper rowMapper = new BeanPropertyRowMapper(Project.class);
+        RowMapper<Project> rowMapper = new BeanPropertyRowMapper<>(Project.class);
         return jdbcTemplate.query(query, rowMapper);
     }
 
-    public void updateProject(Project project, int projectId){
-        String query = "UPDATE projects SET company_id = ?, project_name = ?, start_date = ?, end_date = ?, total_estimated_cost = ?, total_available_employees = ?, is_complete = ?, project_description = ? WHERE project_id = ?;";
-        jdbcTemplate.update(query, project.getCompanyId(), project.getProjectName(), project.getStartDate(), project.getEndDate(),  project.getTotalEstimatedCost(), project.getAssignedEmployees(), project.isComplete(), project.getProjectDescription());
+    public void updateProject(Project project, int projectId) {
+        String query = "UPDATE projects SET company_id = ?, project_name = ?, start_date = ?, " +
+                "end_date = ?, total_estimated_cost = ?, total_assigned_employees = ?, " +
+                "is_complete = ?, project_description = ? WHERE project_id = ?;";
+        jdbcTemplate.update(query,
+                project.getCompanyId(),
+                project.getProjectName(),
+                project.getStartDate(),
+                project.getEndDate(),
+                project.getTotalEstimatedCost(),
+                project.getTotalAssignedEmployees(),
+                project.isComplete(),
+                project.getProjectDescription(),
+                projectId
+        );
     }
 
-    public void deleteProject(int projectId){
+    public void deleteProject(int projectId) {
         String query = "DELETE FROM projects WHERE project_id = ?;";
-        jdbcTemplate.update(query,projectId);
+        jdbcTemplate.update(query, projectId);
     }
 
-    /**
-     * Calculates number of available employees based on assigned employees in subprojects
-     * @param listOfSubprojects A list of all subprojects associated with the project
-     * @param project The given project
-     * @return The number of employees not assigned to a subproject or task
-     */
-    public int calculateTotalAvailableEmployees(List<Subproject> listOfSubprojects, Project project){
-        var iterator = listOfSubprojects.iterator();
-        int totalProjectEmployees = project.getAssignedEmployees();
-        int totalEmployeesInUse = 0;
-        while(iterator.hasNext()){
-            totalEmployeesInUse = totalProjectEmployees + iterator.next().getTotalAssignedEmployees();
-        }
-        return totalProjectEmployees - totalEmployeesInUse;
-    }
-
-    /**
-     * Calculates the actual total project cost based on the sum of all subproject costs
-     * @return the actual total cost of the project
-     */
-    public double calculateTotalActualCost(List<Subproject> listOfSubprojects){
-        var iterator = listOfSubprojects.iterator();
+    public double calculateTotalActualCost(List<Subproject> subprojects) {
         double totalActualCost = 0.0;
-        while(iterator.hasNext()){
-            totalActualCost = totalActualCost + iterator.next().getTotalActualCost();
+
+        for (Subproject subproject : subprojects) {
+            String query = "SELECT SUM(estimated_cost) FROM tasks WHERE subproject_id = ?";
+            Double subprojectCost = jdbcTemplate.queryForObject(query, Double.class, subproject.getSubprojectId());
+
+            if (subprojectCost != null) {
+                totalActualCost += subprojectCost;
+            }
         }
 
         return totalActualCost;
     }
 
+    public int calculateTotalProjectEmployees(int projectId) {
+        String subprojectQuery = "SELECT subproject_id FROM subprojects WHERE project_id = ?";
+        List<Integer> subprojectIds = jdbcTemplate.queryForList(subprojectQuery, Integer.class, projectId);
 
+        int totalEmployees = 0;
 
+        for (Integer subprojectId : subprojectIds) {
+            String taskQuery = "SELECT SUM(assigned_employees) FROM tasks WHERE subproject_id = ?";
+            Integer subprojectEmployees = jdbcTemplate.queryForObject(taskQuery, Integer.class, subprojectId);
+
+            if (subprojectEmployees != null) {
+                totalEmployees += subprojectEmployees;
+            }
+        }
+
+        return totalEmployees;
+    }
+
+    public String formatForJavaScript(LocalDate date) {
+        return String.format("new Date(%d, %d, %d)",
+                date.getYear(),
+                date.getMonthValue() - 1,
+                date.getDayOfMonth());
+    }
 }

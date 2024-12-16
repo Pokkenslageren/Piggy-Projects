@@ -1,50 +1,109 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Project Portfolio</title>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link th:href="@{/css/main.css}" rel="stylesheet">
-    <link th:href="@{/css/sidebar.css}" rel="stylesheet">
-
-    <title>Company Portfolio</title>
+    <link th:href="@{/css/project-overview.css}" rel="stylesheet">
+    <title>Portfolio</title>
 </head>
+
 <body>
-    <div class="wrapper">
-
-        <div class="section">
-            <div class="top_navbar">
-
-            </div>
-
+<div class="wrapper">
+    <div class="sidebar">
+        <div class="logo">
+            <img th:src="@{/alpha_solutions_logo.png}" alt="Alpha Solutions"/>
+            <h3>Alpha Solutions</h3>
+            <p>Portfolio</p>
         </div>
 
-        <div class="sidebar">
-            <div class="logo">
-                <img th:src="@{/alpha_solutions_logo.png}" alt="Alpha Solutions"/>
-                <h3>Alpha Solutions</h3>
-               <!--  <p>Portfolio</p> -->
-            </div>
+        <ul>
+            <li>
+                <a th:href="@{/{userId}/portfolio(userId=${user.userId})}" class="active">
+                    <span class="icon"><i class="fas fa-home"></i></span>
+                    <span class="item">Portfolio</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/{userId}/portfolio/createproject(userId=${user.userId})}" class="active">
+                    <span class="icon"><i class="fas fa-plus-circle"></i></span>
+                    <span class="item">New Project</span>
+                </a>
+            </li>
+        </ul>
+    </div>
 
-            <ul>
-                <li>
-                    <a href="#" class="active">
-                        <span class="icon"><i class="fas fa-plus-circle"></i></span>
-                        <span class="item">New Project</span>
-                    </a>
-                </li>
-
-            </ul>
-        </div>
-
-        <div class="project-container">
-            <div th:each="projects : ${projects}" th:class=""
-
-
-
+    <div class="top_navbar">
+        <div class="portal-title">
+            <a th:href="@{/{userId}/portfolio(userId=${user.userId})}">Project Portal</a>
         </div>
     </div>
 
+    <div class="project-container">
+        <div class="projects-section">
+            <div th:each="project : ${projects}" class="subproject-card">
+
+                <div class="subproject-header"
+                     th:onclick="'window.location.href=\'' + @{/{userId}/portfolio/{projectId}(userId=${user.userId},projectId=${project.projectId})} + '\''">
+                    <div class="subproject-info">
+                        <h3 th:text="${project.projectName}"></h3>
+
+                        <div class="subproject-metrics">
+
+                            <div class="metric">
+
+                                <i class="fas fa-check-circle" th:style="${project.complete ? 'color: #28a745' : 'color: #gray'}"></i>
+                                <span th:text="${project.complete ? 'Complete' : 'In Progress'}"></span>
+                            </div>
+                            <div class="metric">
+                                <i class="fas fa-money-bill"></i>
+                                <span th:text="${project.totalActualCost != null ? #numbers.formatDecimal(project.totalActualCost, 1, 2) : '0.00'} + '/' + ${#numbers.formatDecimal(project.totalEstimatedCost, 1, 2)} + ' dkk'"></span>
+                            </div>
+                            <div class="metric">
+                                <i class="fas fa-users"></i>
+                                <span th:text="${project.totalAssignedEmployees}"></span>
+                            </div>
+                            <div class="metric">
+                                <i class="fas fa-calendar"></i>
+                                <span>
+                                     <span th:text="${#temporals.format(project.startDate, 'dd-MM-yyyy')}"></span>
+                                    →
+                                    <span th:text="${#temporals.format(project.endDate, 'dd-MM-yyyy')}"></span>
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <div class="description">
+                            <p th:text="${project.projectDescription}"></p>
+                        </div>
+                    </div>
+                    <div class="project-actions">
+                        <button class="btn btn-success" th:onclick="'markComplete(' + ${project.projectId} + ')'">
+                            <i class="fas fa-check"></i>
+                        </button>
+                        <button class="btn btn-primary"
+                                th:onclick="'window.location.href=\'' + @{/{userId}/portfolio/{projectId}/update(userId=${user.userId},projectId=${project.projectId})} + '\''">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger" th:onclick="'confirmDelete(' + ${project.projectId} + ')'">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmDelete(projectId) {
+        if (confirm('Are you sure you want to delete this project?')) {
+            window.location.href = `/${userId}/portfolio/${projectId}/delete`;
+        }
+        event.stopPropagation();
+    }
+</script>
 </body>
 </html>
