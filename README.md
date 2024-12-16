@@ -15,7 +15,7 @@ Project Portal is a tool built for Alpha Solutions, with the purpose to maintain
 * Kasper: KasperM2000
 * Magnus: MagnusHannibal
 
-## [Contributing](github.com/Pokkenslageren/Project-Portal/blob/main/CONTRIBUTING.md)
+## [Contributing](https://github.com/Pokkenslageren/Project-Portal/blob/c9c226bfbd3e6422e16576990c4d0ecfb590e86f/CONTRIBUTING.md)
 Contributing file with information regarding the project for future contributers. 
 
 ## First time you acces the site
