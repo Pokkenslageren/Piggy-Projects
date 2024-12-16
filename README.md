@@ -1,6 +1,5 @@
 
 <div align=center> <img width="711" alt="Screenshot 2024-11-29 at 10 30 12" src="https://github.com/user-attachments/assets/3fbb84d2-3132-4b13-ab84-5f74c34ae802"> </div>
-Eksamensprojekt på andet semester udarbejdet af Julius, Kalle, Magnus og Kasper. 
 
 # Project Portal - Streamline your project management
 
@@ -19,8 +18,14 @@ Project Portal is a tool built for Alpha Solutions, with the purpose to maintain
 ## [Contributing](github.com/Pokkenslageren/Project-Portal/blob/main/CONTRIBUTING.md)
 Contributing file with information regarding the project for future contributers. 
 
-## Vulnerability disclosure
-A user is not necessarily bulletproof from cyberattacks on Project Portal - do not leave sensitive personal data on the site. 
+## First time you acces the site
+Remember to create a new user when it is your first time on the site. This is required to create and save your projects. 
+You do this by pressing the "login" button, and then create user. 
+
+## Run the program locally or online
+Azure link for going to the site online.
+<div>
+If you want to access the site locally on your machine (with port 8080), download the two SQL files (create- and insert_projectplanner.sql) and run them first. 
 
 ## Acknowledgements
 Project Portal might be too limited for some potentiel new customers. We have put our focus on what we found the most important, which is budget, time and employees working on the project. With the period of time we had, this was the product we could deliver.
