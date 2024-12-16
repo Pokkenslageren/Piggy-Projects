@@ -31,4 +31,4 @@ If you want to access the site locally on your machine (with port 8080), downloa
 Project Portal might be too limited for some potentiel new customers. We have put our focus on what we found the most important, which is budget, time and employees working on the project. With the period of time we had, this was the product we could deliver.
 
 ## Licenses
-Project Portal is licensed under the [MIT LICENSE](github.com/Pokkenslageren/Project-Portal/blob/main/LICENSE)
+Project Portal is licensed under the [MIT LICENSE](https://github.com/Pokkenslageren/Project-Portal/blob/af368015d034cb22638c9c3b1e937cb1b44cf8e8/LICENSE)
