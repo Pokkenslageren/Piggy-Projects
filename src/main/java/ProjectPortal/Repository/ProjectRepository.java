@@ -88,11 +88,18 @@ public class ProjectRepository {
         return totalProjectEmployees - totalEmployeesInUse;
     }
 
-    public double calculateTotalActualCost(List<Subproject> listOfSubprojects) {
+    public double calculateTotalActualCost(List<Subproject> subprojects) {
         double totalActualCost = 0.0;
-        for (Subproject sub : listOfSubprojects) {
-            totalActualCost += sub.getTotalActualCost();
+
+        for (Subproject subproject : subprojects) {
+            String query = "SELECT SUM(estimated_cost) FROM tasks WHERE subproject_id = ?";
+            Double subprojectCost = jdbcTemplate.queryForObject(query, Double.class, subproject.getSubprojectId());
+
+            if (subprojectCost != null) {
+                totalActualCost += subprojectCost;
+            }
         }
+
         return totalActualCost;
     }
 

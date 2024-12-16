@@ -43,9 +43,18 @@ public class ProjectController {
     }
 
     @GetMapping("/{userId}/portfolio")
-    public String showPortfolio(@PathVariable("userId") int userId, Model model){
+    public String showPortfolio(@PathVariable("userId") int userId, Model model) {
         User user = userService.readUserById(userId);
         List<Project> projects = projectService.readAllProjects();
+
+        for (Project project : projects) {
+            List<Subproject> subprojects = subprojectService.readAllSubprojectsByProjectId(project.getProjectId());
+            double calculatedActualCost = projectService.calculateTotalActualCost(subprojects);
+            System.out.println("Project: " + project.getProjectName() +
+                    " Actual Cost: " + calculatedActualCost);  // Debug print
+            project.setTotalActualCost(calculatedActualCost);
+        }
+
         model.addAttribute("projects", projects);
         model.addAttribute("user", user);
         return "portfolio";
