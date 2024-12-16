@@ -21,9 +21,9 @@ public class SubprojectRepository {
 
     public void createSubproject(Subproject subproject) {
         String query = "INSERT INTO subprojects (project_id, subproject_name, start_date, " +
-                "end_date, total_estimated_cost, total_assigned_employees, total_actual_cost, " +
+                "end_date, total_estimated_cost, total_actual_cost, " +
                 "is_complete, subproject_description, hours_allocated, priority) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         jdbcTemplate.update(query,
                 subproject.getProjectId(),
@@ -31,8 +31,7 @@ public class SubprojectRepository {
                 subproject.getStartDate(),
                 subproject.getEndDate(),
                 subproject.getTotalEstimatedCost(),
-                subproject.getTotalAssignedEmployees(),
-                subproject.getTotalActualCost(),
+                0.0, // initial actual cost
                 subproject.isComplete(),
                 subproject.getSubprojectDescription(),
                 subproject.getHoursAllocated(),

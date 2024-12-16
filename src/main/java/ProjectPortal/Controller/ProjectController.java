@@ -45,24 +45,19 @@ public class ProjectController {
     @GetMapping("/{userId}/portfolio")
     public String showPortfolio(@PathVariable("userId") int userId, Model model) {
         User user = userService.readUserById(userId);
-        List<Project> projects = projectService.readAllProjects();
-
-        for (Project project : projects) {
-            List<Subproject> subprojects = subprojectService.readAllSubprojectsByProjectId(project.getProjectId());
-            double calculatedActualCost = projectService.calculateTotalActualCost(subprojects);
-            System.out.println("Project: " + project.getProjectName() +
-                    " Actual Cost: " + calculatedActualCost);  // Debug print
-            project.setTotalActualCost(calculatedActualCost);
-        }
+        List<Project> projects = projectService.readAllProjects(); // Now includes all calculations
 
         model.addAttribute("projects", projects);
         model.addAttribute("user", user);
         return "portfolio";
     }
 
+
     @GetMapping("/{userId}/portfolio/{projectId}")
     public String showProject(@PathVariable int userId, @PathVariable int projectId, Model model) {
         Project project = projectService.readProject(projectId);
+
+        projectService.updateProjectCalculations(project);
 
         List<Subproject> subprojects = subprojectService.readAllSubprojectsByProjectId(projectId);
 
@@ -73,17 +68,12 @@ public class ProjectController {
                     .mapToDouble(Task::getEstimatedCost)
                     .sum();
             subproject.setTotalActualCost(subprojectActualCost);
-
         }
-
-        double calculatedActualCost = projectService.calculateTotalActualCost(subprojects);
-        project.setTotalActualCost(calculatedActualCost);
 
         model.addAttribute("project", project);
         model.addAttribute("subprojects", subprojects);
         return "project-overview";
     }
-
 
     @PostMapping("/{userId}/portfolio/createproject")
     public String createProject(@PathVariable("userId") int userId, @ModelAttribute Project project){

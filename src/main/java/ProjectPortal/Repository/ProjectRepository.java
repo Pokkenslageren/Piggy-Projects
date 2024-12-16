@@ -78,16 +78,6 @@ public class ProjectRepository {
         jdbcTemplate.update(query, projectId);
     }
 
-    public int calculateTotalAvailableEmployees(List<Subproject> listOfSubprojects, Project project) {
-        int totalProjectEmployees = project.getTotalAssignedEmployees();
-        int totalEmployeesInUse = 0;
-
-        for (Subproject sub : listOfSubprojects) {
-            totalEmployeesInUse += sub.getTotalAssignedEmployees();
-        }
-        return totalProjectEmployees - totalEmployeesInUse;
-    }
-
     public double calculateTotalActualCost(List<Subproject> subprojects) {
         double totalActualCost = 0.0;
 
@@ -101,6 +91,24 @@ public class ProjectRepository {
         }
 
         return totalActualCost;
+    }
+
+    public int calculateTotalProjectEmployees(int projectId) {
+        String subprojectQuery = "SELECT subproject_id FROM subprojects WHERE project_id = ?";
+        List<Integer> subprojectIds = jdbcTemplate.queryForList(subprojectQuery, Integer.class, projectId);
+
+        int totalEmployees = 0;
+
+        for (Integer subprojectId : subprojectIds) {
+            String taskQuery = "SELECT SUM(assigned_employees) FROM tasks WHERE subproject_id = ?";
+            Integer subprojectEmployees = jdbcTemplate.queryForObject(taskQuery, Integer.class, subprojectId);
+
+            if (subprojectEmployees != null) {
+                totalEmployees += subprojectEmployees;
+            }
+        }
+
+        return totalEmployees;
     }
 
     public String formatForJavaScript(LocalDate date) {
