@@ -113,17 +113,17 @@ public class ProjectController {
         for (Subproject s : subprojects){
             subprojectData.add(List.of(s.getSubprojectName(),s.getHoursAllocated()));
         }
-        subprojectData.add(List.of("test",300));
+        //subprojectData.add(List.of("test",300));
         // timeline chart (gantt)
         List<List<Object>> subprojectGantt = new ArrayList<>();
         LocalDate startDate = LocalDate.of(2024,10,10);
         LocalDate endDate = LocalDate.of(2025,10,10);
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        //subprojectGantt.add(List.of("Test", "input", startDate.format(dateTimeFormatter), endDate.format(dateTimeFormatter)));
-
         for (Subproject s : subprojects){
             subprojectGantt.add(List.of("Subproject ID: " + s.getSubprojectId(), s.getSubprojectName(), s.getStartDate().format(dateTimeFormatter),s.getEndDate().format(dateTimeFormatter)));
         }
+        //subprojectGantt.add(List.of("Subproject ID: 3", "input", startDate.format(dateTimeFormatter), endDate.format(dateTimeFormatter)));
+
 
        // subprojectGantt.add(Arrays.asList("Eat","Me",projectService.formatForJavaScript(startDate),projectService.formatForJavaScript(endDate)));
         //subprojectGantt.add(Arrays.asList("Drink","Me",projectService.formatForJavaScript(startDate),projectService.formatForJavaScript(endDate)));
