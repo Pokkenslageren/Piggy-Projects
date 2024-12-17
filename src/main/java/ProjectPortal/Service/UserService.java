@@ -12,10 +12,15 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+
     @Autowired
     private UserService(UserRepository userRepository) {
 
         this.userRepository = userRepository;
+    }
+
+    public User authenticate(String username, String password) {
+        return userRepository.authenticate(username, password);
     }
 
     public List<User> readUsers(String username, int companyId, int userId) {

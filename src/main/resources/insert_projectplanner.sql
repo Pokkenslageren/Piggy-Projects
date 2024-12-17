@@ -27,7 +27,7 @@ INSERT INTO tasks (subproject_id, task_name, start_date, end_date,
                    hours_allocated, priority)
 VALUES
     (1, 'Login Page', '2024-12-12', '2025-01-12',
-     50000.0, 2, false, 'Implement secure login page', 300, 'HIGH'),
+     50000.0, 2, false, 'Implement secure runLogin page', 300, 'HIGH'),
     (1, 'Dashboard', '2025-01-13', '2025-03-12',
      100000.0, 3, false, 'Create main dashboard', 500, 'MEDIUM');
 

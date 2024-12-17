@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+
 import java.util.List;
 
 @Repository
@@ -16,6 +17,21 @@ public class UserRepository {
     @Autowired
     public UserRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        //
+    }
+
+    public User authenticate(String username, String password) {
+        String query = "SELECT user_id as userId, company_id as companyId, user_name as userName, user_password as password FROM users WHERE user_name = ?";
+        try {
+            User user = jdbcTemplate.queryForObject(query,
+                    new BeanPropertyRowMapper<>(User.class), username);
+            if (user != null && user.getPassword().equals(password)) {
+                return user;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+        return null;
     }
 
     /**
