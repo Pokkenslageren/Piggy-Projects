@@ -88,7 +88,8 @@
                 </div>
 
                 <div class="header-actions">
-                    <button class="btn btn-primary" onclick="location.href='#'">
+                    <button class="btn btn-primary"
+                            th:onclick="|location.href='@{/{userId}/portfolio/{projectId}/analytics(userId=${userId}, projectId=${projectId})}'|">
                         <i class="fas fa-chart-line"></i> Analytics
                     </button>
                 </div>
@@ -143,7 +144,7 @@
                         </div>
 
                         <div class="subproject-actions">
-                            <button class="btn btn-primary" th:onclick="'location.href=\'/analytics/subproject/' + ${subproject.subprojectId} + '\''">
+                            <button class="btn btn-primary" th:onclick="|location.href='@{/{userId}/portfolio/{projectId}/{subprojectId}/analytics(userId=${userId}, projectId=${projectId}, subprojectId=${subproject.subprojectId})}'|">
                                 <i class="fas fa-chart-line"></i>
                             </button>
                             <button class="btn btn-success" th:onclick="'markComplete(' + ${subproject.subprojectId} + ')'">
