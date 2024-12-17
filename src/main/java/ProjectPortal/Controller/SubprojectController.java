@@ -62,5 +62,13 @@ public class SubprojectController {
         }
     }
 
+    @GetMapping("/{userId}/portfolio/{projectId}/{subprojectId}/deletesubproject")
+    public String deleteSubproject(@PathVariable("userId") int userId,
+                                   @PathVariable("projectId") int projectId,
+                                   @PathVariable("subprojectId") int subprojectId) {
+        subprojectService.deleteSubproject(subprojectId);
+        return "redirect:/" + userId + "/portfolio/" + projectId;
+    }
+
     }
 

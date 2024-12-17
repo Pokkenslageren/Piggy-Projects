@@ -2,72 +2,97 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link th:href="@{/css/project-overview.css}" rel="stylesheet">
+    <link th:href="@{/css/formbox.css}" rel="stylesheet">
 
     <title>Update Project</title>
+
 </head>
 <body>
 <div class="wrapper">
-    <div th:insert="~{fragments/topnav :: topnav}"></div>
+
+    <div class="sidebar">
+        <div class="logo">
+            <img th:src="@{/alpha_solutions_logo.png}" alt="Alpha Solutions"/>
+            <h3>Alpha Solutions</h3>
+            <p>Portfolio</p>
+        </div>
+
+        <ul>
+            <li>
+                <a th:href="@{/{userId}/portfolio(userId=${user.userId})}" class="active">
+                    <span class="icon"><i class="fas fa-home"></i></span>
+                    <span class="item">Portfolio</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/{userId}/portfolio/createproject(userId=${user.userId})}" class="active">
+                    <span class="icon"><i class="fas fa-plus-circle"></i></span>
+                    <span class="item">New Project</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="top_navbar">
+        <div class="portal-title">
+            <a th:href="@{/{userId}/portfolio(userId=${project.userId})}">Project Portal</a>
+        </div>
+    </div>
+
+    <div class="project-container">
 
     <div class="form-container">
+
         <div class="form-box">
 
-            <h1>Project to be updated</h1>
+            <h1>Update Project</h1>
 
-            <form th:action="@{/users/{userId}/{projectid}}"
-                  th:object="${projectid}" method="post">
-
-                <input type="hidden" th:field="*{project.name}" th:value="${projectname}" />
+            <form th:action="@{/{userId}/portfolio/{projectId}/update(userId=${user.userId},projectId=${project.projectId})}"
+                  th:object="${project}" method="post">
 
                 <div>
-                    <label>Name of project</label>
-                    <input type="text" th:field="*{project.name}" th:value="${projectName}">
-                </div>
-                <br>
-                <div>
-                    <label>Description of project</label>
-                    <input type="text" th:field="*{project.description}" th:value="${projectDescription}">
-                </div>
-                <br>
-                <div>
-                    <label>The estimated cost of the project</label>
-                    <input type="text" th:field="*{project.estimatedCost}" th:value="${projectEstimatedCost}">
-                </div>
-                <br>
-                <div>
-                    <label>The actual cost of the project</label>
-                    <input type="text" th:field="*{project.actualCost}" th:value="${projectActualCost}">
-                </div>
-                <br>
-                <div>
-                    <label>Available employees</label>
-                    <input type="text" th:field="*{project.totalAvailableEmployees}" th:value="${projectAvailableEmployees}">
-                </div>
-                <br>
-                <div>
-                    <label>Assigned employees on the project</label>
-                    <input type="text" th:field="*{project.assignedEmployees}" th:value="${projectAssignedEmployees}">
-                </div>
-                <br>
-                <div class="metric">
-                    <i class="fas fa-calendar"></i>
-                    <span>Deadline: <span th:text="${#temporals.format(project.endDate, 'dd-MM-yyyy')}"></span></span>
+                    <label>Project Name</label>
+                    <input type="text" th:field="*{projectName}" th:value="${project.projectName}" required>
                 </div>
 
-                <div class="button-container">
-                    <button type="submit" class="update">Update project</button>
-                    <a th:href="@{/users/{userId}/{project}(user=${user.username}, project=${projectname})}">
-                        <button type="button" class="back">Cancel</button>
-                    </a>
+                <div>
+                    <label>Description</label>
+                    <textarea th:field="*{projectDescription}" th:text="${project.projectDescription}" required></textarea>
+                </div>
+
+                <div>
+                    <label>Start Date</label>
+                    <input type="date" th:field="*{startDate}" th:value="${project.startDate}" required>
+                </div>
+
+                <div>
+                    <label>End Date</label>
+                    <input type="date" th:field="*{endDate}" th:value="${project.endDate}" required>
+                </div>
+
+                <div>
+                    <label>Estimated Cost</label>
+                    <input type="number" th:field="*{totalEstimatedCost}" th:value="${project.totalEstimatedCost}" required>
+                </div>
+
+                <div>
+                    <label>Assigned Employees</label>
+                    <input type="number" th:field="*{totalAssignedEmployees}" th:value="${project.totalAssignedEmployees}" required>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Update project
+                    </button>
                 </div>
             </form>
         </div>
     </div>
-
-    <div th:insert="~{fragments/footer :: footer}"></div>
-
+</div>
 </div>
 </body>
 </html>

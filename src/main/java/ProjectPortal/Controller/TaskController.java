@@ -71,4 +71,12 @@ public class TaskController {
         }
     }
 
+    @GetMapping("/{userId}/portfolio/{projectId}/{taskId}/deletetask")
+    public String deleteTask(@PathVariable("userId") int userId,
+                             @PathVariable("projectId") int projectId,
+                             @PathVariable("taskId") int taskId) {
+        taskService.deleteTask(taskId);
+        return "redirect:/" + userId + "/portfolio/" + projectId;
+    }
+
 }
