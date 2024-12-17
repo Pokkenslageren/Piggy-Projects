@@ -2,6 +2,7 @@ package ProjectPortal.Repository;
 
 import ProjectPortal.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -28,7 +29,7 @@ public class UserRepository {
             if (user != null && user.getPassword().equals(password)) {
                 return user;
             }
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             return null;
         }
         return null;
@@ -50,17 +51,25 @@ public class UserRepository {
      * @return
      */
     public User readUserById(int userId){
-        String query = "SELECT * FROM users WHERE user_id = ?";
-        RowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
-        return jdbcTemplate.queryForObject(query, rowMapper, userId);
+        try {
+            String query = "SELECT * FROM users WHERE user_id = ?";
+            RowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
+            return jdbcTemplate.queryForObject(query, rowMapper, userId);
+        } catch (DataAccessException e) {
+            return null;
+        }
     }
 
     /**
      * Create a user
      */
     public void createUser(User user) {
-        String query = "INSERT INTO users (user_name, user_password, company_Id) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(query, user.getUserName(), user.getPassword(), user.getCompanyId());
+        try {
+            String query = "INSERT INTO users (user_name, user_password, company_Id) VALUES (?, ?, ?, ?)";
+            jdbcTemplate.update(query, user.getUserName(), user.getPassword(), user.getCompanyId());
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Cannot create user", e);
+        }
     }
 
     /**
@@ -68,12 +77,13 @@ public class UserRepository {
      * @param userId
      */
     public void updateUser(User user, int userId) {
-        String query = "UPDATE Users " +
-                "SET user_name = ?, " +
-                "user_password = ?, " +
-                "company_Id = ?, " +
-                "WHERE id = ?";
-        jdbcTemplate.update(query, userId);
+
+        try {
+            String query = "UPDATE Users " + "SET user_name = ?, " + "user_password = ?, " + "company_Id = ?, " + "WHERE id = ?";
+            jdbcTemplate.update(query, userId);
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Could not update user", e);
+        }
     }
 
 
@@ -82,7 +92,11 @@ public class UserRepository {
      * @param userId
      */
     public void deleteUser(int userId) {
+      try {
         String query = "DELETE FROM users WHERE id = ?";
         jdbcTemplate.update(query, userId);
+    } catch (DataAccessException e) {
+        throw new RuntimeException("Could not delete user", e);
+    }
     }
 }
