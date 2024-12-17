@@ -49,7 +49,7 @@ public class TaskController {
 
         model.addAttribute("task", task);
         model.addAttribute("project", project);
-        model.addAttribute("subprojects", subprojects);  // Add this line
+        model.addAttribute("subprojects", subprojects);
         return "create-task";
     }
 

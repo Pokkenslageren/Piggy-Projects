@@ -58,7 +58,7 @@ public class ProjectController {
     @GetMapping("/{userId}/portfolio")
     public String showPortfolio(@PathVariable("userId") int userId, Model model) {
         User user = userService.readUserById(userId);
-        List<Project> projects = projectService.readAllProjects(); // Now includes all calculations
+        List<Project> projects = projectService.readAllProjects();
 
         model.addAttribute("projects", projects);
         model.addAttribute("user", user);
@@ -91,7 +91,7 @@ public class ProjectController {
             subproject.setTotalActualCost(subprojectActualCost);
         }
 
-        model.addAttribute("user", user);  // Add this line
+        model.addAttribute("user", user);
         model.addAttribute("project", project);
         model.addAttribute("subprojects", subprojects);
         return "project-overview";
