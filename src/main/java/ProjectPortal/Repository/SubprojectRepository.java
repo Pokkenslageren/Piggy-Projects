@@ -4,6 +4,7 @@ package ProjectPortal.Repository;
 import ProjectPortal.Model.Project;
 import ProjectPortal.Model.Subproject;
 import ProjectPortal.Model.Task;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.RowMapper;
@@ -27,23 +28,27 @@ public class SubprojectRepository {
      *                   completion status, description, hours allocated, and priority.
      */
     public void createSubproject(Subproject subproject) {
-        String query = "INSERT INTO subprojects (project_id, subproject_name, start_date, " +
-                "end_date, total_estimated_cost, total_actual_cost, " +
-                "is_complete, subproject_description, hours_allocated, priority) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            String query = "INSERT INTO subprojects (project_id, subproject_name, start_date, " +
+                    "end_date, total_estimated_cost, total_actual_cost, " +
+                    "is_complete, subproject_description, hours_allocated, priority) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        jdbcTemplate.update(query,
-                subproject.getProjectId(),
-                subproject.getSubprojectName(),
-                subproject.getStartDate(),
-                subproject.getEndDate(),
-                subproject.getTotalEstimatedCost(),
-                0.0, // initial actual cost
-                subproject.isComplete(),
-                subproject.getSubprojectDescription(),
-                subproject.getHoursAllocated(),
-                subproject.getPriority().toString()
-        );
+            jdbcTemplate.update(query,
+                    subproject.getProjectId(),
+                    subproject.getSubprojectName(),
+                    subproject.getStartDate(),
+                    subproject.getEndDate(),
+                    subproject.getTotalEstimatedCost(),
+                    0.0, // initial actual cost
+                    subproject.isComplete(),
+                    subproject.getSubprojectDescription(),
+                    subproject.getHoursAllocated(),
+                    subproject.getPriority().toString()
+            );
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Cannot create subproject", e);
+        }
     }
 
     /**
@@ -52,9 +57,13 @@ public class SubprojectRepository {
      * @return the Subproject object containing the details of the subproject
      */
     public Subproject readSubproject(int subprojectId) {
-        String query = "SELECT * FROM subprojects WHERE subproject_id = ?";
-        RowMapper<Subproject> rowMapper = new BeanPropertyRowMapper<>(Subproject.class);
-        return jdbcTemplate.queryForObject(query, rowMapper, subprojectId);
+        try {
+            String query = "SELECT * FROM subprojects WHERE subproject_id = ?";
+            RowMapper<Subproject> rowMapper = new BeanPropertyRowMapper<>(Subproject.class);
+            return jdbcTemplate.queryForObject(query, rowMapper, subprojectId);
+        } catch (DataAccessException e) {
+            return null;
+        }
     }
 
     /**
@@ -63,26 +72,30 @@ public class SubprojectRepository {
      * @return a list of subprojects belonging to the specified project ID
      */
     public List<Subproject> readAllSubprojectsByProjectId(int projectId) {
-        String query = "SELECT * FROM subprojects WHERE project_id = ?";
-        return jdbcTemplate.query(query, (rs, rowNum) -> {
-            Subproject s = new Subproject();
-            boolean completeValue = rs.getBoolean("is_complete");
-            s.setSubprojectId(rs.getInt("subproject_id"));
-            s.setProjectId(rs.getInt("project_id"));
-            s.setSubprojectName(rs.getString("subproject_name"));
-            s.setStartDate(rs.getDate("start_date").toLocalDate());
-            s.setEndDate(rs.getDate("end_date").toLocalDate());
-            s.setTotalEstimatedCost(rs.getDouble("total_estimated_cost"));
-            s.setTotalActualCost(rs.getDouble("total_actual_cost"));
-            s.setTotalAssignedEmployees(rs.getInt("total_assigned_employees"));
-            s.setComplete(completeValue);
-            s.setSubprojectDescription(rs.getString("subproject_description"));
-            s.setHoursAllocated(rs.getInt("hours_allocated"));
-            if (rs.getString("priority") != null) {
-                s.setPriority(rs.getString("priority"));
-            }
-            return s;
-        }, projectId);
+        try {
+            String query = "SELECT * FROM subprojects WHERE project_id = ?";
+            return jdbcTemplate.query(query, (rs, rowNum) -> {
+                Subproject s = new Subproject();
+                boolean completeValue = rs.getBoolean("is_complete");
+                s.setSubprojectId(rs.getInt("subproject_id"));
+                s.setProjectId(rs.getInt("project_id"));
+                s.setSubprojectName(rs.getString("subproject_name"));
+                s.setStartDate(rs.getDate("start_date").toLocalDate());
+                s.setEndDate(rs.getDate("end_date").toLocalDate());
+                s.setTotalEstimatedCost(rs.getDouble("total_estimated_cost"));
+                s.setTotalActualCost(rs.getDouble("total_actual_cost"));
+                s.setTotalAssignedEmployees(rs.getInt("total_assigned_employees"));
+                s.setComplete(completeValue);
+                s.setSubprojectDescription(rs.getString("subproject_description"));
+                s.setHoursAllocated(rs.getInt("hours_allocated"));
+                if (rs.getString("priority") != null) {
+                    s.setPriority(rs.getString("priority"));
+                }
+                return s;
+            }, projectId);
+        } catch (DataAccessException e) {
+            return Collections.emptyList();
+        }
     }
 
     /**
@@ -95,26 +108,30 @@ public class SubprojectRepository {
      *                     and subproject description
      */
     public void updateSubproject(int subprojectId, Subproject subproject) {
-        String query = "UPDATE subprojects SET project_id = ?, subproject_name = ?, " +
-                "start_date = ?, end_date = ?, total_estimated_cost = ?, " +
-                "total_assigned_employees = ?, total_actual_cost = ?, hours_allocated = ?, " +
-                "priority = ?, is_complete = ?, subproject_description = ? " +
-                "WHERE subproject_id = ?";
+        try {
+            String query = "UPDATE subprojects SET project_id = ?, subproject_name = ?, " +
+                    "start_date = ?, end_date = ?, total_estimated_cost = ?, " +
+                    "total_assigned_employees = ?, total_actual_cost = ?, hours_allocated = ?, " +
+                    "priority = ?, is_complete = ?, subproject_description = ? " +
+                    "WHERE subproject_id = ?";
 
-        jdbcTemplate.update(query,
-                subproject.getProjectId(),
-                subproject.getSubprojectName(),
-                subproject.getStartDate(),
-                subproject.getEndDate(),
-                subproject.getTotalEstimatedCost(),
-                subproject.getTotalAssignedEmployees(),
-                subproject.getTotalActualCost(),
-                subproject.getHoursAllocated(),
-                subproject.getPriority().toString(),
-                subproject.isComplete(),
-                subproject.getSubprojectDescription(),
-                subprojectId
-        );
+            jdbcTemplate.update(query,
+                    subproject.getProjectId(),
+                    subproject.getSubprojectName(),
+                    subproject.getStartDate(),
+                    subproject.getEndDate(),
+                    subproject.getTotalEstimatedCost(),
+                    subproject.getTotalAssignedEmployees(),
+                    subproject.getTotalActualCost(),
+                    subproject.getHoursAllocated(),
+                    subproject.getPriority().toString(),
+                    subproject.isComplete(),
+                    subproject.getSubprojectDescription(),
+                    subprojectId
+            );
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Cannot update subproject", e);
+        }
     }
 
     /**
@@ -122,8 +139,12 @@ public class SubprojectRepository {
      * @param subprojectId the unique identifier of the subproject to be deleted
      */
     public void deleteSubproject(int subprojectId) {
-        String query = "DELETE FROM subprojects WHERE subproject_id = ?";
-        jdbcTemplate.update(query, subprojectId);
+        try {
+            String query = "DELETE FROM subprojects WHERE subproject_id = ?";
+            jdbcTemplate.update(query, subprojectId);
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Cannot delete subproject", e);
+        }
     }
 
     /**
@@ -132,9 +153,13 @@ public class SubprojectRepository {
      * @return a list of tasks belonging to the specified subproject.
      */
     public List<Task> readAllTasksBySubproject(int subprojectId) {
-        String query = "SELECT * FROM tasks WHERE subproject_id = ?";
-        RowMapper<Task> rowMapper = new BeanPropertyRowMapper<>(Task.class);
-        return jdbcTemplate.query(query, rowMapper, subprojectId);
+        try {
+            String query = "SELECT * FROM tasks WHERE subproject_id = ?";
+            RowMapper<Task> rowMapper = new BeanPropertyRowMapper<>(Task.class);
+            return jdbcTemplate.query(query, rowMapper, subprojectId);
+        } catch (DataAccessException e) {
+            return Collections.emptyList();
+        }
     }
 
     /**
@@ -191,7 +216,11 @@ public class SubprojectRepository {
      * @param subprojectId The ID of the subproject to be marked as complete.
      */
     public void markComplete(int subprojectId) {
-        String sql = "UPDATE subprojects SET is_complete = true WHERE subproject_id = ?";
-        jdbcTemplate.update(sql, subprojectId);
+        try {
+            String sql = "UPDATE subprojects SET is_complete = true WHERE subproject_id = ?";
+            jdbcTemplate.update(sql, subprojectId);
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Cannot update subproject", e);
+        }
     }
 }

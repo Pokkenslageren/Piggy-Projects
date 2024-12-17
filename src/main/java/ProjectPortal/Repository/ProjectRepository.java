@@ -4,12 +4,14 @@ import java.time.LocalDate;
 import ProjectPortal.Model.Project;
 import ProjectPortal.Model.Subproject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -33,21 +35,26 @@ public class ProjectRepository {
      *                total assigned employees, completion status, and project description.
      */
     public void createProject(Project project) {
-        String query = "INSERT INTO projects (company_id, user_id, project_name, start_date, " +
-                "end_date, total_estimated_cost, total_assigned_employees, is_complete, " +
-                "project_description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        jdbcTemplate.update(query,
-                project.getCompanyId(),
-                project.getUserId(),
-                project.getProjectName(),
-                project.getStartDate(),
-                project.getEndDate(),
-                project.getTotalEstimatedCost(),
-                project.getTotalAssignedEmployees(),
-                project.isComplete(),
-                project.getProjectDescription()
-        );
+        try {
+            String query = "INSERT INTO projects (company_id, user_id, project_name, start_date, " +
+                    "end_date, total_estimated_cost, total_assigned_employees, is_complete, " +
+                    "project_description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            jdbcTemplate.update(query,
+                    project.getCompanyId(),
+                    project.getUserId(),
+                    project.getProjectName(),
+                    project.getStartDate(),
+                    project.getEndDate(),
+                    project.getTotalEstimatedCost(),
+                    project.getTotalAssignedEmployees(),
+                    project.isComplete(),
+                    project.getProjectDescription()
+            );
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Cannot create project", e);
+        }
     }
 
     /**
@@ -57,9 +64,13 @@ public class ProjectRepository {
      *         or throws an exception if no project is found
      */
     public Project readProject(int projectId) {
-        String query = "SELECT * FROM projects WHERE project_id = ?;";
-        RowMapper<Project> rowMapper = new BeanPropertyRowMapper<>(Project.class);
-        return jdbcTemplate.queryForObject(query, rowMapper, projectId);
+        try {
+            String query = "SELECT * FROM projects WHERE project_id = ?;";
+            RowMapper<Project> rowMapper = new BeanPropertyRowMapper<>(Project.class);
+            return jdbcTemplate.queryForObject(query, rowMapper, projectId);
+        } catch (DataAccessException e) {
+            return null;
+        }
     }
 
     /**
@@ -67,9 +78,13 @@ public class ProjectRepository {
      * @return a list of {@link Project} objects representing all projects stored in the database.
      */
     public List<Project> readAllProjects() {
-        String query = "SELECT * FROM projects;";
-        RowMapper<Project> rowMapper = new BeanPropertyRowMapper<>(Project.class);
-        return jdbcTemplate.query(query, rowMapper);
+        try {
+            String query = "SELECT * FROM projects;";
+            RowMapper<Project> rowMapper = new BeanPropertyRowMapper<>(Project.class);
+            return jdbcTemplate.query(query, rowMapper);
+        } catch (DataAccessException e) {
+            return Collections.emptyList();
+        }
     }
 
     /**
@@ -78,20 +93,24 @@ public class ProjectRepository {
      * @param projectId  The unique identifier of the project to be updated.
      */
     public void updateProject(Project project, int projectId) {
-        String query = "UPDATE projects SET company_id = ?, project_name = ?, start_date = ?, " +
-                "end_date = ?, total_estimated_cost = ?, total_assigned_employees = ?, " +
-                "is_complete = ?, project_description = ? WHERE project_id = ?;";
-        jdbcTemplate.update(query,
-                project.getCompanyId(),
-                project.getProjectName(),
-                project.getStartDate(),
-                project.getEndDate(),
-                project.getTotalEstimatedCost(),
-                project.getTotalAssignedEmployees(),
-                project.isComplete(),
-                project.getProjectDescription(),
-                projectId
-        );
+        try {
+            String query = "UPDATE projects SET company_id = ?, project_name = ?, start_date = ?, " +
+                    "end_date = ?, total_estimated_cost = ?, total_assigned_employees = ?, " +
+                    "is_complete = ?, project_description = ? WHERE project_id = ?;";
+            jdbcTemplate.update(query,
+                    project.getCompanyId(),
+                    project.getProjectName(),
+                    project.getStartDate(),
+                    project.getEndDate(),
+                    project.getTotalEstimatedCost(),
+                    project.getTotalAssignedEmployees(),
+                    project.isComplete(),
+                    project.getProjectDescription(),
+                    projectId
+            );
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Cannot update project", e);
+        }
     }
 
     /**
@@ -99,8 +118,12 @@ public class ProjectRepository {
      * @param projectId the unique identifier of the project to be deleted
      */
     public void deleteProject(int projectId) {
-        String query = "DELETE FROM projects WHERE project_id = ?;";
-        jdbcTemplate.update(query, projectId);
+        try {
+            String query = "DELETE FROM projects WHERE project_id = ?;";
+            jdbcTemplate.update(query, projectId);
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Cannot delete project", e);
+        }
     }
 
     /**

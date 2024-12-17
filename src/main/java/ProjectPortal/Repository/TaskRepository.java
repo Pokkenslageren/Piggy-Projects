@@ -2,6 +2,7 @@ package ProjectPortal.Repository;
 
 import ProjectPortal.Model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 
 import java.sql.*;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -27,9 +29,13 @@ public class TaskRepository {
      * @return a list of {@code Task} objects associated with the given subproject ID
      */
     public List<Task> readTasksBySubprojectId(int subprojectId) {
-        String query = "SELECT * FROM tasks WHERE subproject_id = ?;";
-        RowMapper<Task> rowMapper = new BeanPropertyRowMapper<>(Task.class);
-        return jdbcTemplate.query(query, rowMapper, subprojectId);
+        try {
+            String query = "SELECT * FROM tasks WHERE subproject_id = ?;";
+            RowMapper<Task> rowMapper = new BeanPropertyRowMapper<>(Task.class);
+            return jdbcTemplate.query(query, rowMapper, subprojectId);
+        } catch (DataAccessException e) {
+            return Collections.emptyList();
+        }
     }
 
     /**
@@ -39,9 +45,13 @@ public class TaskRepository {
      *         or throws an exception if no task is found
      */
     public Task getTaskById(int id) {
-        String query = "SELECT * FROM tasks WHERE task_id = ?;";
-        RowMapper<Task> rowMapper = new BeanPropertyRowMapper<>(Task.class);
-        return jdbcTemplate.queryForObject(query, rowMapper, id);
+        try {
+            String query = "SELECT * FROM tasks WHERE task_id = ?;";
+            RowMapper<Task> rowMapper = new BeanPropertyRowMapper<>(Task.class);
+            return jdbcTemplate.queryForObject(query, rowMapper, id);
+        } catch (DataAccessException e) {
+            return null;
+        }
     }
 
     /**
@@ -51,23 +61,27 @@ public class TaskRepository {
      *             completion status, task description, hours allocated, and priority.
      */
     public void createTask(Task task) {
-        String query = "INSERT INTO tasks (subproject_id, task_name, start_date, end_date, " +
-                "estimated_cost, assigned_employees, is_complete, task_description, " +
-                "hours_allocated, priority) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            String query = "INSERT INTO tasks (subproject_id, task_name, start_date, end_date, " +
+                    "estimated_cost, assigned_employees, is_complete, task_description, " +
+                    "hours_allocated, priority) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        jdbcTemplate.update(query,
-                task.getSubprojectId(),
-                task.getTaskName(),
-                task.getStartDate(),
-                task.getEndDate(),
-                task.getEstimatedCost(),
-                task.getAssignedEmployees(),
-                task.getIsComplete(),
-                task.getTaskDescription(),
-                task.getHoursAllocated(),
-                task.getPriority().toString()
-        );
+            jdbcTemplate.update(query,
+                    task.getSubprojectId(),
+                    task.getTaskName(),
+                    task.getStartDate(),
+                    task.getEndDate(),
+                    task.getEstimatedCost(),
+                    task.getAssignedEmployees(),
+                    task.getIsComplete(),
+                    task.getTaskDescription(),
+                    task.getHoursAllocated(),
+                    task.getPriority().toString()
+            );
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Cannot create task", e);
+        }
     }
 
     /**
@@ -75,8 +89,12 @@ public class TaskRepository {
      * @param taskId the unique identifier of the task to be deleted
      */
     public void deleteTaskById(int taskId) {
-        String query = "DELETE FROM tasks WHERE task_id = ?;";
-        jdbcTemplate.update(query, taskId);
+        try {
+            String query = "DELETE FROM tasks WHERE task_id = ?;";
+            jdbcTemplate.update(query, taskId);
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Cannot delete task", e);
+        }
     }
 
     /**
@@ -91,17 +109,21 @@ public class TaskRepository {
      * @param description       A description of the task.
      */
     public void updateTask(String taskName, int taskId, int assignedEmployees, int estimatedCost, LocalDate startDate, LocalDate endDate, boolean isComplete, String description){
-        String query = "UPDATE tasks " +
-                "SET task_name = ?, " +
-                "task_id = ?, " +
-                "assigned_employees = ?, " +
-                "estimated_cost = ?, " +
-                "start_date = ?, " +
-                "end_date = ?, " +
-                "is_complete = ?, " +
-                "task_description = ? " +
-                "WHERE task_id = ?;";
-        jdbcTemplate.update(query, taskName, taskId, assignedEmployees, estimatedCost, startDate, endDate, isComplete, description, taskId);
+        try {
+            String query = "UPDATE tasks " +
+                    "SET task_name = ?, " +
+                    "task_id = ?, " +
+                    "assigned_employees = ?, " +
+                    "estimated_cost = ?, " +
+                    "start_date = ?, " +
+                    "end_date = ?, " +
+                    "is_complete = ?, " +
+                    "task_description = ? " +
+                    "WHERE task_id = ?;";
+            jdbcTemplate.update(query, taskName, taskId, assignedEmployees, estimatedCost, startDate, endDate, isComplete, description, taskId);
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Cannot update task", e);
+        }
     }
 
     /**
@@ -116,6 +138,7 @@ public class TaskRepository {
         return taskDays * task.getAssignedEmployees() * 8;
     }
 
+
     /**
      * Determines if the task has sufficient allocated hours compared to the total required hours.
      * @param task the task whose hours allocation is being checked
@@ -126,14 +149,19 @@ public class TaskRepository {
         return (task.getHoursAllocated() > totalTaskHours );
     }
 
+
     /**
      * Marks a task as complete in the database by setting the `is_complete`
      * field to true for the task with the specified task ID.
      * @param taskId the ID of the task to mark as complete
      */
     public void markComplete(int taskId) {
-        String sql = "UPDATE tasks SET is_complete = true WHERE task_id = ?";
-        jdbcTemplate.update(sql, taskId);
+        try {
+            String sql = "UPDATE tasks SET is_complete = true WHERE task_id = ?";
+            jdbcTemplate.update(sql, taskId);
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Cannot update task", e);
+        }
     }
 
 }
