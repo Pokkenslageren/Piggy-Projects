@@ -19,41 +19,48 @@ public class TaskService {
     }
 
     /**
-     * Find all tasks
-     * @return
+     * Retrieves a list of tasks associated with a specific subproject.
+     * @param subprojectId the ID of the subproject whose tasks are to be retrieved
+     * @return a list of Task objects associated with the given subproject ID
      */
     public List<Task> readTasksBySubprojectId(int subprojectId) {
         return taskRepository.readTasksBySubprojectId(subprojectId);
     }
 
     /**
-     * Find task by ID
-     * @param taskId
-     * @return
+     * Retrieves a task by its ID.
+     * @param taskId the ID of the task to retrieve, represented as a String
+     * @return an Optional containing the Task if found, or an empty Optional if no task with the given ID exists
      */
     public Optional<Task> getTaskById(String taskId) {
         return Optional.ofNullable(taskRepository.getTaskById(Integer.parseInt(taskId)));
     }
 
     /**
-     * Save a new task
-     * @param task
-     * @return
+     * Creates a new task by delegating to the task repository.
+     *
+     * @param task the task to be created, containing all necessary task details
+     * @return the created task after successfully persisting it in the repository
      */
     public Task createTask(Task task) {
         taskRepository.createTask(task);
         return task;
     }
 
+    /**
+     * Marks a task as complete based on the provided task ID by updating its status in the repository.
+     * @param taskId the ID of the task to be marked as complete
+     */
     public void markComplete(int taskId) {
         taskRepository.markComplete(taskId);
     }
 
 
     /**
-     * Updates a task
-     * @param taskId
-     * @param updatedTask
+     * Updates an existing task with the provided updated details.
+     * @param taskId the ID of the task to be updated
+     * @param updatedTask the updated Task object containing the new task information
+     * @throws IllegalArgumentException if the task with the given ID does not exist
      */
     public void updateTask(int taskId, Task updatedTask) {
         Optional<Task> existingTask = getTaskById(String.valueOf(taskId));
@@ -75,8 +82,8 @@ public class TaskService {
     }
 
     /**
-     * Delete a task by ID
-     * @param taskId
+     * Deletes a task from the repository based on the provided task ID.
+     * @param taskId the unique identifier of the task to be deleted
      */
     public void deleteTask(int taskId) {
         taskRepository.deleteTaskById(Integer.parseInt(String.valueOf(taskId)));

@@ -27,6 +27,14 @@ public class SubprojectController {
             this.projectService = projectService;
         }
 
+        /**
+         * Handles the creation of a subproject for a specific user and project by adding necessary attributes
+         * to the model and forwarding to the subproject creation page.
+         * @param userId the ID of the user associated with the project
+         * @param projectId the ID of the project under which the subproject is being created
+         * @param model the model to add attributes required for rendering the subproject creation view
+         * @return the name of the view responsible for rendering the subproject creation form
+         */
         //todo fix user
         @GetMapping("/{userId}/portfolio/{projectId}/createsubproject")
         public String createProject(@PathVariable("userId") int userId, @PathVariable("projectId") int projectId, Model model){
@@ -43,6 +51,15 @@ public class SubprojectController {
             return "create-subproject";
         }
 
+        /**
+         * Handles the creation of a new subproject under a specific project.
+         * Sets the project ID for the subproject and initializes its total assigned employees to 0.
+         * Redirects to the portfolio page of the user after successfully creating the subproject.
+         * @param userId the ID of the user to whom the portfolio belongs
+         * @param projectId the ID of the project under which the subproject is created
+         * @param subproject the subproject details submitted through the form
+         * @return the redirection path to the user's portfolio for the specific project
+         */
         @PostMapping("/{userId}/portfolio/{projectId}/createsubproject")
         public String createProject(@PathVariable("userId") int userId, @PathVariable("projectId") int projectId, @ModelAttribute Subproject subproject){
             subproject.setProjectId(projectId);
@@ -51,6 +68,12 @@ public class SubprojectController {
             return "redirect:/" + userId + "/portfolio/" + projectId;
         }
 
+    /**
+     * Marks the specified subproject as complete.
+     * @param subprojectId the unique identifier of the subproject to be marked as complete
+     * @return a ResponseEntity containing a success message if the operation is successful,
+     *         or an error message with HTTP status INTERNAL_SERVER_ERROR in case of failure
+     */
     @PostMapping("/subproject/{subprojectId}/complete")
     @ResponseBody
     public ResponseEntity<String> markSubprojectComplete(@PathVariable int subprojectId) {
@@ -62,6 +85,13 @@ public class SubprojectController {
         }
     }
 
+    /**
+     * Deletes a subproject associated with a specific user and project.
+     * @param userId       the unique identifier of the user
+     * @param projectId    the unique identifier of the project to which the subproject belongs
+     * @param subprojectId the unique identifier of the subproject to be deleted
+     * @return a redirection URL to the user's portfolio page for the given project
+     */
     @GetMapping("/{userId}/portfolio/{projectId}/{subprojectId}/deletesubproject")
     public String deleteSubproject(@PathVariable("userId") int userId,
                                    @PathVariable("projectId") int projectId,
