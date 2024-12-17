@@ -8,7 +8,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class SessionInterceptor implements HandlerInterceptor {
 
     /**
-     * Pre-hhandle method to check session validity before request processing
+     * Pre-handle method to check session validity before request processing
      * @param request The HTTP request
      * @param response The HTTP response
      * @param handler The handler for the request
