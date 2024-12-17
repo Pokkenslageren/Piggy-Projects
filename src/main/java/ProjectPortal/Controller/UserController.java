@@ -2,10 +2,10 @@ package ProjectPortal.Controller;
 
 import ProjectPortal.Service.UserService;
 import ProjectPortal.Model.User;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
@@ -15,6 +15,23 @@ public class UserController {
     private final UserService userService;
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping("/login")
+    public String runLogin() {
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String runLogin(@RequestParam String username,
+                           @RequestParam String password,
+                           HttpSession session) {
+        User user = userService.authenticate(username, password);
+        if (user != null) {
+            session.setAttribute("userId", user.getUserId());
+            return "redirect:/" + user.getUserId() + "/portfolio";
+        }
+        return "redirect:/login?error";
     }
 
     /**
@@ -45,21 +62,16 @@ public class UserController {
         return "redirect:/home";
     }
 
-    @GetMapping("/{userId}/portfolio/update")
-    public String updateUser(@PathVariable("userId") User user, int userId) {
-        userService.updateUser(user, userId);
-        return "update-user";
-    }
-
-    @PostMapping("/{userId}/portfolio/update")
-    public String updateUser(@PathVariable("userId")int userId,  @ModelAttribute User user) {
-        userService.updateUser(user,userId);
-        return "redirect:/home";
-    }
 
     @GetMapping("/{userId}/portfolio/delete")
     public String deleteUser(@PathVariable("userId")int userId) {
         userService.deleteUser(userId);
         return "redirect:/home";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
     }
 }
