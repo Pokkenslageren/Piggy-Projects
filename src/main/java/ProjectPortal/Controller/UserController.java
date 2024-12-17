@@ -68,4 +68,10 @@ public class UserController {
         userService.deleteUser(userId);
         return "redirect:/home";
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
+    }
 }
