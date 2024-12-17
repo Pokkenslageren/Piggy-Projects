@@ -13,7 +13,7 @@ public class DynamicValues {
     public int calculateTotalAvailableEmployees(List<Subproject> listOfSubprojects, Project project){
         System.out.println(listOfSubprojects.size());
         var iterator = listOfSubprojects.iterator();
-        int totalProjectEmployees = project.getAssignedEmployees();
+        int totalProjectEmployees = project.getTotalAssignedEmployees();
         int totalEmployeesInUse = 0;
         while(iterator.hasNext()){
             totalEmployeesInUse = totalEmployeesInUse + iterator.next().getTotalAssignedEmployees();
