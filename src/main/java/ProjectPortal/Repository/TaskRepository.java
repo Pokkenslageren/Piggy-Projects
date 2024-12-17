@@ -22,8 +22,9 @@ public class TaskRepository {
     }
 
     /**
-     * Get all tasks belonging to subproject id
-     * @return
+     * Retrieves a list of tasks associated with the specified subproject ID.
+     * @param subprojectId the ID of the subproject for which tasks are to be retrieved
+     * @return a list of {@code Task} objects associated with the given subproject ID
      */
     public List<Task> readTasksBySubprojectId(int subprojectId) {
         String query = "SELECT * FROM tasks WHERE subproject_id = ?;";
@@ -32,9 +33,10 @@ public class TaskRepository {
     }
 
     /**
-     * Get a single task by ID
-     * @param id
-     * @return
+     * Retrieves a task from the database based on the specified task ID.
+     * @param id the ID of the task to retrieve
+     * @return the Task object corresponding to the provided ID
+     *         or throws an exception if no task is found
      */
     public Task getTaskById(int id) {
         String query = "SELECT * FROM tasks WHERE task_id = ?;";
@@ -42,6 +44,12 @@ public class TaskRepository {
         return jdbcTemplate.queryForObject(query, rowMapper, id);
     }
 
+    /**
+     * Inserts a new task into the database with the provided task details.
+     * @param task the Task object containing the details of the task to be added. This includes:
+     *             subproject ID, task name, start date, end date, estimated cost, assigned employees,
+     *             completion status, task description, hours allocated, and priority.
+     */
     public void createTask(Task task) {
         String query = "INSERT INTO tasks (subproject_id, task_name, start_date, end_date, " +
                 "estimated_cost, assigned_employees, is_complete, task_description, " +
@@ -63,8 +71,8 @@ public class TaskRepository {
     }
 
     /**
-     * Deletes a task by ID
-     * @param taskId
+     * Deletes a task from the database by its unique identifier.
+     * @param taskId the unique identifier of the task to be deleted
      */
     public void deleteTaskById(int taskId) {
         String query = "DELETE FROM tasks WHERE task_id = ?;";
@@ -72,15 +80,15 @@ public class TaskRepository {
     }
 
     /**
-     * Update a task
-     * @param taskName
-     * @param taskId
-     * @param assignedEmployees
-     * @param estimatedCost
-     * @param startDate
-     * @param endDate
-     * @param isComplete
-     * @param description
+     * Updates an existing task in the database with the provided details.
+     * @param taskName          The name of the task to update.
+     * @param taskId            The unique identifier of the task to update.
+     * @param assignedEmployees The number of employees assigned to the task.
+     * @param estimatedCost     The estimated cost of the task.
+     * @param startDate         The start date of the task.
+     * @param endDate           The end date of the task.
+     * @param isComplete        A boolean value indicating whether the task is complete.
+     * @param description       A description of the task.
      */
     public void updateTask(String taskName, int taskId, int assignedEmployees, int estimatedCost, LocalDate startDate, LocalDate endDate, boolean isComplete, String description){
         String query = "UPDATE tasks " +
@@ -97,10 +105,11 @@ public class TaskRepository {
     }
 
     /**
-     * Computes the total number of hours as a function of number of days and number of employees
-     * assuming eight-hour work days for each employee
-     * @param task
-     * @return
+     * Calculates the total number of work hours required for a given task.
+     * The calculation is based on the task duration in days and the number of assigned employees,
+     * assuming an 8-hour work day.
+     * @param task the Task object containing details such as start date, end date, and assigned employees
+     * @return the total number of work hours for the task
      */
     public int totalTaskHours(Task task){
         int taskDays = task.getEndDate().getDayOfYear() - task.getStartDate().getDayOfYear();
@@ -108,15 +117,20 @@ public class TaskRepository {
     }
 
     /**
-     * Checks if enough hours have been allocated to the task
-     * @param task
-     * @return
+     * Determines if the task has sufficient allocated hours compared to the total required hours.
+     * @param task the task whose hours allocation is being checked
+     * @return true if the allocated hours for the task exceed the total task hours, false otherwise
      */
     public boolean sufficientHours(Task task){
         int totalTaskHours = totalTaskHours(task);
         return (task.getHoursAllocated() > totalTaskHours );
     }
 
+    /**
+     * Marks a task as complete in the database by setting the `is_complete`
+     * field to true for the task with the specified task ID.
+     * @param taskId the ID of the task to mark as complete
+     */
     public void markComplete(int taskId) {
         String sql = "UPDATE tasks SET is_complete = true WHERE task_id = ?";
         jdbcTemplate.update(sql, taskId);
