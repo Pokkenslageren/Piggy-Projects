@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import ProjectPortal.Service.SubprojectService;
 
@@ -113,20 +112,13 @@ public class ProjectController {
         for (Subproject s : subprojects){
             subprojectData.add(List.of(s.getSubprojectName(),s.getHoursAllocated()));
         }
-        //subprojectData.add(List.of("test",300));
+        subprojectData.add(List.of("test",300));
         // timeline chart (gantt)
         List<List<Object>> subprojectGantt = new ArrayList<>();
         LocalDate startDate = LocalDate.of(2024,10,10);
         LocalDate endDate = LocalDate.of(2025,10,10);
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        for (Subproject s : subprojects){
-            subprojectGantt.add(List.of("Subproject ID: " + s.getSubprojectId(), s.getSubprojectName(), s.getStartDate().format(dateTimeFormatter),s.getEndDate().format(dateTimeFormatter)));
-        }
-        //subprojectGantt.add(List.of("Subproject ID: 3", "input", startDate.format(dateTimeFormatter), endDate.format(dateTimeFormatter)));
-
-
-       // subprojectGantt.add(Arrays.asList("Eat","Me",projectService.formatForJavaScript(startDate),projectService.formatForJavaScript(endDate)));
-        //subprojectGantt.add(Arrays.asList("Drink","Me",projectService.formatForJavaScript(startDate),projectService.formatForJavaScript(endDate)));
+        subprojectGantt.add(Arrays.asList("Eat","Me",projectService.formatForJavaScript(startDate),projectService.formatForJavaScript(endDate)));
+        subprojectGantt.add(Arrays.asList("Drink","Me",projectService.formatForJavaScript(startDate),projectService.formatForJavaScript(endDate)));
 
         System.out.println(subprojectGantt);
         //Pie estimated cost
@@ -151,10 +143,7 @@ public class ProjectController {
         List<List<Object>> taskData = new ArrayList<>();
         List<List<Object>> taskEstimatedCostPie = new ArrayList<>();
         List<List<Object>> costBarChart = new ArrayList<>();
-        List<List<Object>> ganttChartTasks = new ArrayList<>();
         List<Task> tasks = subprojectService.readAllTasksBySubproject(subprojectId);
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
         for (Task t : tasks){
             taskData.add(List.of(t.getTaskName(),t.getHoursAllocated()));
         }
@@ -166,16 +155,15 @@ public class ProjectController {
         costBarChart.add(List.of("Estimated Subproject Cost", subproject.getTotalEstimatedCost()));
         costBarChart.add(List.of("Actual Subproject Cost", subprojectService.calculateTotalActualCost(tasks)));
 
-        for(Task t : tasks){
-            ganttChartTasks.add(List.of("Task ID: " + t.getTaskId(), t.getTaskName(), t.getStartDate().format(dateTimeFormatter), t.getEndDate().format(dateTimeFormatter)));
-        }
 
-
+/*        List<List<Object>> taskData = List.of(
+                                                List.of("task1", 500),
+                                                List.of("task2", 750),
+                                                List.of("task3", 300)); */
 
         model.addAttribute("taskData", taskData);
         model.addAttribute("taskEstimatedCostPie", taskEstimatedCostPie);
         model.addAttribute("costBarChart", costBarChart);
-        model.addAttribute("ganttChartTasks", ganttChartTasks);
 
         return "subproject-analytics";
     }

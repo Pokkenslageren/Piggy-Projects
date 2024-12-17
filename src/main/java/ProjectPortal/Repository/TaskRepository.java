@@ -117,37 +117,9 @@ public class TaskRepository {
         return (task.getHoursAllocated() > totalTaskHours );
     }
 
-    /**
-     *
-     * @param task
-     */
-    /*
-    public void update(Task task) {
-        String query = "UPDATE tasks SET task_name = ?, assigned_employees = ?, estimated_cost = ?, start_date = ?, end_date = ?, is_complete = ?, task_description = ? WHERE task_id = ?;";
-        jdbcTemplate.update(query, task.getTaskName(), task.getAssignedEmployees(), task.getEstimatedCost(), task.getStartDate(), task.getEndDate(), task.getIsComplete(), task.getTaskDescription(), Integer.parseInt(task.getTaskId()));
+    public void markComplete(int taskId) {
+        String sql = "UPDATE tasks SET is_complete = true WHERE task_id = ?";
+        jdbcTemplate.update(sql, taskId);
     }
 
-     */
-
-
-    /**
-     * Mapping database-row to a Task-object
-     * @param rs
-     * @return
-     * @throws SQLException
-     */
-/*    private Task mapRowToTask(ResultSet rs) throws SQLException {
-        return new Task(
-                rs.getInt("projectId"),
-                rs.getInt("subprojectId"),
-                rs.getInt("taskId"),
-                rs.getString("taskName"),
-                rs.getInt("assignedEmployees"),
-                rs.getDouble("estimatedCost"),
-                rs.getInt("startDate"),
-                rs.getInt("endDate"),
-                rs.getBoolean("isComplete"),
-                rs.getString("taskDescription")
-        );
-    }*/
 }

@@ -53,6 +53,10 @@ public class SubprojectService {
         return subprojects;
     }
 
+    public void markComplete(int subprojectId) {
+        subprojectRepository.markComplete(subprojectId);
+    }
+
     public void updateSubprojectCalculations(Subproject subproject) {
         List<Task> tasks = taskService.readTasksBySubprojectId(subproject.getSubprojectId());
         int totalEmployees = calculateTotalEmployees(tasks);
@@ -69,7 +73,7 @@ public class SubprojectService {
                 .mapToInt(Task::getAssignedEmployees)
                 .sum();
     }
-
+    //?
     public int totalActualSubprojectHours(List<Task> listOfTasks){
         return subprojectRepository.totalActualSubprojectHours(listOfTasks);
     }

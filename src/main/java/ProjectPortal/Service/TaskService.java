@@ -45,6 +45,10 @@ public class TaskService {
         return task;
     }
 
+    public void markComplete(int taskId) {
+        taskRepository.markComplete(taskId);
+    }
+
 
     /**
      * Updates a task

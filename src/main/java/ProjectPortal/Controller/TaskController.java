@@ -51,13 +51,24 @@ public class TaskController {
 
         Subproject subproject = subprojectService.readSubproject(task.getSubprojectId());
 
-        /* if (task.getAssignedEmployees() > subproject.getTotalAssignedEmployees()) {
+        if (task.getAssignedEmployees() > subproject.getTotalAssignedEmployees()) {
 
             task.setAssignedEmployees(subproject.getTotalAssignedEmployees());
-        } */
+        }
 
         taskService.createTask(task);
         return "redirect:/" + userId + "/portfolio/" + projectId;
+    }
+
+    @PostMapping("/task/{taskId}/complete")
+    @ResponseBody
+    public ResponseEntity<String> markTaskComplete(@PathVariable int taskId) {
+        try {
+            taskService.markComplete(taskId);
+            return ResponseEntity.ok("Task marked complete");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error marking task complete");
+        }
     }
 
 }

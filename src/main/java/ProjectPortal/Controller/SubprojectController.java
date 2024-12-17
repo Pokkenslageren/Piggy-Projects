@@ -7,6 +7,8 @@ import ProjectPortal.Model.User;
 import ProjectPortal.Service.SubprojectService;
 import ProjectPortal.Service.UserService;
 import ProjectPortal.Service.ProjectService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -48,6 +50,17 @@ public class SubprojectController {
             subprojectService.createSubproject(subproject);
             return "redirect:/" + userId + "/portfolio/" + projectId;
         }
+
+    @PostMapping("/subproject/{subprojectId}/complete")
+    @ResponseBody
+    public ResponseEntity<String> markSubprojectComplete(@PathVariable int subprojectId) {
+        try {
+            subprojectService.markComplete(subprojectId);
+            return ResponseEntity.ok("Subproject marked complete");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error marking subproject complete");
+        }
+    }
 
     }
 

@@ -47,8 +47,25 @@ public class SubprojectRepository {
 
     public List<Subproject> readAllSubprojectsByProjectId(int projectId) {
         String query = "SELECT * FROM subprojects WHERE project_id = ?";
-        RowMapper<Subproject> rowMapper = new BeanPropertyRowMapper<>(Subproject.class);
-        return jdbcTemplate.query(query, rowMapper, projectId);
+        return jdbcTemplate.query(query, (rs, rowNum) -> {
+            Subproject s = new Subproject();
+            boolean completeValue = rs.getBoolean("is_complete");
+            s.setSubprojectId(rs.getInt("subproject_id"));
+            s.setProjectId(rs.getInt("project_id"));
+            s.setSubprojectName(rs.getString("subproject_name"));
+            s.setStartDate(rs.getDate("start_date").toLocalDate());
+            s.setEndDate(rs.getDate("end_date").toLocalDate());
+            s.setTotalEstimatedCost(rs.getDouble("total_estimated_cost"));
+            s.setTotalActualCost(rs.getDouble("total_actual_cost"));
+            s.setTotalAssignedEmployees(rs.getInt("total_assigned_employees"));
+            s.setComplete(completeValue);
+            s.setSubprojectDescription(rs.getString("subproject_description"));
+            s.setHoursAllocated(rs.getInt("hours_allocated"));
+            if (rs.getString("priority") != null) {
+                s.setPriority(rs.getString("priority"));
+            }
+            return s;
+        }, projectId);
     }
 
     public void updateSubproject(int subprojectId, Subproject subproject) {
@@ -111,5 +128,10 @@ public class SubprojectRepository {
         }
 
         return totalSubprojectEmployees - totalEmployeesInUse;
+    }
+
+    public void markComplete(int subprojectId) {
+        String sql = "UPDATE subprojects SET is_complete = true WHERE subproject_id = ?";
+        jdbcTemplate.update(sql, subprojectId);
     }
 }
