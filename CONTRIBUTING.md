@@ -1,13 +1,12 @@
 ## Contributing
 When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
 
-Please note we have a code of conduct, please follow it in all your interactions with the project.
 
 ## Prerequisites 
 * JDK 22: This project uses JDK 22, which means this should be installed on your device.
-* Apache Maven: This is a Maven project, so this should also be installed on your device.
-* MySQL: The project uses MySQL for the database, so this should be installed and properly set up on your device.
-* MySQL workbench: This is where the database is set, so this should be installed too. 
+* Apache Maven: This is a Maven project, so this should also be installed.
+* MySQL: The project uses MySQL for the database, so this should be installed on your device.
+* MySQL workbench: This is where the database is set, so this should be installed and properly set up too. 
 * IntelliJ: We have used intelliJ as IDE, but any other like VSCode could also work. 
 * Discord: We communicate via discord, so install this to get in contact with us. 
 
