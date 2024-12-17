@@ -79,18 +79,6 @@
                             <p th:text="${project.projectDescription}"></p>
                         </div>
                     </div>
-                    <div class="project-actions">
-                        <button class="btn btn-success" th:onclick="'markComplete(' + ${project.projectId} + ')'">
-                            <i class="fas fa-check"></i>
-                        </button>
-                        <button class="btn btn-primary"
-                                th:onclick="'window.location.href=\'' + @{/{userId}/portfolio/{projectId}/update(userId=${user.userId},projectId=${project.projectId})} + '\''">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn btn-danger" th:onclick="'confirmDelete(' + ${project.projectId} + ')'">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>

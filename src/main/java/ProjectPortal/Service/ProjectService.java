@@ -32,7 +32,7 @@ public class ProjectService {
     public List<Project> readAllProjects() {
         List<Project> projects = projectRepository.readAllProjects();
 
-        // Populate each project with calculated values
+        // Populate each project with calculatedn values
         for (Project project : projects) {
             updateProjectCalculations(project);
         }

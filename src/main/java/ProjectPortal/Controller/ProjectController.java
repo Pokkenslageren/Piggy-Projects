@@ -55,10 +55,9 @@ public class ProjectController {
 
     @GetMapping("/{userId}/portfolio/{projectId}")
     public String showProject(@PathVariable int userId, @PathVariable int projectId, Model model) {
+        User user = userService.readUserById(userId);
         Project project = projectService.readProject(projectId);
-
         projectService.updateProjectCalculations(project);
-
         List<Subproject> subprojects = subprojectService.readAllSubprojectsByProjectId(projectId);
 
         for (Subproject subproject : subprojects) {
@@ -70,6 +69,7 @@ public class ProjectController {
             subproject.setTotalActualCost(subprojectActualCost);
         }
 
+        model.addAttribute("user", user);  // Add this line
         model.addAttribute("project", project);
         model.addAttribute("subprojects", subprojects);
         return "project-overview";
@@ -81,10 +81,14 @@ public class ProjectController {
         return "redirect:/" + userId + "/portfolio";
     }
 
-    @GetMapping("/{userId}/portfolio/{projectid}/update")
-    public String updateProject(@PathVariable("userId") int userId, @PathVariable("projectid") int projectId, Model model){
+    @GetMapping("/{userId}/portfolio/{projectId}/update")
+    public String updateProject(@PathVariable int userId, @PathVariable int projectId, Model model) {
+        User user = userService.readUserById(userId);
         Project project = projectService.readProject(projectId);
+
+        model.addAttribute("user", user);
         model.addAttribute("project", project);
+
         return "update-project";
     }
 
@@ -94,12 +98,56 @@ public class ProjectController {
         return "redirect:/" + userId +"/portfolio";
     }
 
+    @GetMapping("/{userId}/portfolio/{projectId}/{subprojectId}/{taskId}/update")
+    public String updateTask(@PathVariable int userId, @PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, Model model) {
+        User user = userService.readUserById(userId);
+        Project project = projectService.readProject(projectId);
+        Subproject subproject = subprojectService.readSubproject(subprojectId);
+        Optional<Task> task = taskService.getTaskById(String.valueOf(taskId));
+
+        model.addAttribute("user", user);
+        model.addAttribute("project", project);
+        model.addAttribute("subproject", subproject);
+        model.addAttribute("task", task.get());
+
+        return "update-task";
+    }
+
+    @PostMapping("/{userId}/portfolio/{projectId}/{subprojectId}/{taskId}/update")
+    public String updateTask(@PathVariable int userId, @PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, @ModelAttribute Task task) {
+        task.setSubprojectId(subprojectId);
+        taskService.updateTask(taskId, task);
+        return "redirect:/" + userId + "/portfolio/" + projectId;
+    }
+
+    @GetMapping("/{userId}/portfolio/{projectId}/{subprojectId}/update")
+    public String updateSubproject(@PathVariable int userId, @PathVariable int projectId, @PathVariable int subprojectId, Model model) {
+        User user = userService.readUserById(userId);
+        Project project = projectService.readProject(projectId);
+        Subproject subproject = subprojectService.readSubproject(subprojectId);
+
+        model.addAttribute("user", user);
+        model.addAttribute("project", project);
+        model.addAttribute("subproject", subproject);
+
+        return "update-subproject";
+    }
+
+    @PostMapping("/{userId}/portfolio/{projectId}/{subprojectId}/update")
+    public String updateSubproject(@PathVariable int userId, @PathVariable int projectId, @PathVariable int subprojectId, @ModelAttribute Subproject subproject) {
+        subproject.setProjectId(projectId);
+        subprojectService.updateSubproject(subprojectId, subproject);
+        return "redirect:/" + userId + "/portfolio/" + projectId;
+    }
+
 
     @GetMapping("/{userId}/portfolio/{projectid}/delete")
     public String deleteProject(@PathVariable("userId") int userId, @PathVariable("projectid") int projectId){
         projectService.deleteProject(projectId);
         return "redirect:/" + userId + "/portfolio";
     }
+
+
 
     @GetMapping("/{userId}/portfolio/{projectid}/analytics")
     public String displayAnalytics(@PathVariable("userId") int userId, @PathVariable("projectid") int projectId, Model model){
@@ -139,6 +187,8 @@ public class ProjectController {
 
     @GetMapping("/{userId}/portfolio/{projectid}/{subprojectid}/analytics")
     public String displayAnalyticsSubproject(@PathVariable("userId") int userId, @PathVariable("projectid") int projectId, @PathVariable("subprojectid") int subprojectId, Model model){
+        Project project = projectService.readProject(projectId);
+        User user = userService.readUserById(userId);
         Subproject subproject = subprojectService.readSubproject(subprojectId);
         List<List<Object>> taskData = new ArrayList<>();
         List<List<Object>> taskEstimatedCostPie = new ArrayList<>();
@@ -160,7 +210,8 @@ public class ProjectController {
                                                 List.of("task1", 500),
                                                 List.of("task2", 750),
                                                 List.of("task3", 300)); */
-
+        model.addAttribute("project", project);
+        model.addAttribute("user", user);
         model.addAttribute("taskData", taskData);
         model.addAttribute("taskEstimatedCostPie", taskEstimatedCostPie);
         model.addAttribute("costBarChart", costBarChart);

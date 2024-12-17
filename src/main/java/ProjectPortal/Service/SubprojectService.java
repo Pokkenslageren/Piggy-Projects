@@ -37,6 +37,10 @@ public class SubprojectService {
         return subproject;
     }
 
+    public void updateSubproject(int subprojectId, Subproject subproject) {
+        subprojectRepository.updateSubproject(subprojectId, subproject);
+    }
+
     /**
      * Deletes subproject by subprojectid
      * @param subprojectId
