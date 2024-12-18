@@ -226,8 +226,16 @@ public class ProjectController {
         List<List<Object>> subprojectGantt = new ArrayList<>();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+
+
+
         for (Subproject s : subprojects){
-            subprojectData.add(List.of(s.getSubprojectName(),s.getHoursAllocated()));
+            List<Task> taskList = taskService.readTasksBySubprojectId(s.getSubprojectId());
+            int totalTaskHoursBySubproject = 0;
+            for(Task t : taskList){
+                totalTaskHoursBySubproject += t.getHoursAllocated();
+            }
+            subprojectData.add(List.of(s.getSubprojectName(),totalTaskHoursBySubproject));
         }
 
         for (Subproject s : subprojects){
@@ -235,7 +243,31 @@ public class ProjectController {
         }
 
         for(Subproject s : subprojects){
-            subprojectEstimatedCostPie.add(List.of(s.getSubprojectName(), s.getTotalEstimatedCost()));
+            List<Task> taskList = taskService.readTasksBySubprojectId(s.getSubprojectId());
+            int totalTaskCostBySubproject = 0;
+            for (Task t : taskList){
+                totalTaskCostBySubproject += t.getEstimatedCost();
+            }
+            subprojectEstimatedCostPie.add(List.of(s.getSubprojectName(), totalTaskCostBySubproject));
+        }
+
+        for (Subproject subproject : subprojects) {
+            List<Task> tasks = taskService.readTasksBySubprojectId(subproject.getSubprojectId());
+
+            int totalEmployees = 0;
+            double totalCost = 0;
+            int totalHours = 0;
+
+            for (Task task : tasks) {
+                totalEmployees += task.getAssignedEmployees();
+                totalCost += task.getEstimatedCost();
+                totalHours += task.getHoursAllocated();
+            }
+
+            subproject.setTotalAssignedEmployees(totalEmployees);
+            subproject.setTotalEstimatedCost(totalCost);
+            subproject.setHoursAllocated(totalHours);
+            subproject.setTasks(tasks);
         }
 
 
