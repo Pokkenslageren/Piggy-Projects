@@ -22,7 +22,7 @@
 
             <img th:src="@{/alpha_solutions_logo.png}" alt="Alpha Solutions"/>
             <h3>Alpha Solutions</h3>
-            <p>Portfolio</p>
+            <p>Project manager</p>
         </div>
 
         <ul>
@@ -78,15 +78,6 @@
                         <input type="date" th:field="*{endDate}" th:value="${subproject.endDate}" required>
                     </div>
 
-                    <div>
-                        <label>Estimated Cost</label>
-                        <input type="number" th:field="*{totalEstimatedCost}" th:value="${subproject.totalEstimatedCost}" required>
-                    </div>
-
-                    <div>
-                        <label>Hours Allocated</label>
-                        <input type="number" th:field="*{hoursAllocated}" th:value="${subproject.hoursAllocated}" required>
-                    </div>
 
                     <div>
                         <div>
