@@ -251,26 +251,6 @@ public class ProjectController {
             subprojectEstimatedCostPie.add(List.of(s.getSubprojectName(), totalTaskCostBySubproject));
         }
 
-        for (Subproject subproject : subprojects) {
-            List<Task> tasks = taskService.readTasksBySubprojectId(subproject.getSubprojectId());
-
-            int totalEmployees = 0;
-            double totalCost = 0;
-            int totalHours = 0;
-
-            for (Task task : tasks) {
-                totalEmployees += task.getAssignedEmployees();
-                totalCost += task.getEstimatedCost();
-                totalHours += task.getHoursAllocated();
-            }
-
-            subproject.setTotalAssignedEmployees(totalEmployees);
-            subproject.setTotalEstimatedCost(totalCost);
-            subproject.setHoursAllocated(totalHours);
-            subproject.setTasks(tasks);
-        }
-
-
         model.addAttribute("project", project);
         model.addAttribute("subprojectData", subprojectData );
         model.addAttribute("subprojectGantt",subprojectGantt);
