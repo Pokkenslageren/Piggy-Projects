@@ -62,8 +62,11 @@ public class SubprojectController {
          */
         @PostMapping("/{userId}/portfolio/{projectId}/createsubproject")
         public String createProject(@PathVariable("userId") int userId, @PathVariable("projectId") int projectId, @ModelAttribute Subproject subproject){
+            Project project = projectService.readProject(projectId);
             subproject.setProjectId(projectId);
             subproject.setTotalAssignedEmployees(0);
+            project.setTotalEstimatedCost(project.getTotalEstimatedCost() + subproject.getTotalEstimatedCost());
+            projectService.updateProject(project, projectId);
             subprojectService.createSubproject(subproject);
             return "redirect:/" + userId + "/portfolio/" + projectId;
         }

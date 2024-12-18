@@ -290,6 +290,7 @@ public class ProjectController {
      */
     @GetMapping("/{userId}/portfolio/{projectid}/{subprojectid}/analytics")
     public String displayAnalyticsSubproject(@PathVariable("userId") int userId, @PathVariable("projectid") int projectId, @PathVariable("subprojectid") int subprojectId, Model model){
+        Project project = projectService.readProject(projectId);
         Subproject subproject = subprojectService.readSubproject(subprojectId);
         List<List<Object>> taskData = new ArrayList<>();
         List<List<Object>> taskEstimatedCostPie = new ArrayList<>();
@@ -313,6 +314,7 @@ public class ProjectController {
             ganttChartTasks.add(List.of("Task ID: " + t.getTaskId(), t.getTaskName(), t.getStartDate().format(dateTimeFormatter), t.getEndDate().format(dateTimeFormatter)));
         }
 
+        model.addAttribute("project", project);
         model.addAttribute("taskData", taskData);
         model.addAttribute("taskEstimatedCostPie", taskEstimatedCostPie);
         model.addAttribute("costBarChart", costBarChart);

@@ -47,11 +47,6 @@
     box-sizing: border-box;
 }
 
-.login-container h1 {
-    text-align: center;
-    margin-bottom: 30px;
-    color: #fff;
-}
 
 .form-box textarea {
     width: 100%;
@@ -200,3 +195,13 @@
 .form-box select:hover {
     cursor: pointer;
 }
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+

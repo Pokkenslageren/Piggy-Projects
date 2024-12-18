@@ -56,6 +56,8 @@ public class TaskController {
     /**
      * Creates a new task for the specified project and user. The assigned employees for the task will
      * be adjusted if the specified number exceeds the total employees assigned to the subproject.
+     * adds its hours to its parent subprojects hours.
+     * adds its estimated cost to its parent subproject
      * @param userId the ID of the user to whom the portfolio belongs
      * @param projectId the ID of the project under which the task is created
      * @param task the task object containing the details of the new task
@@ -70,6 +72,10 @@ public class TaskController {
 
             task.setAssignedEmployees(subproject.getTotalAssignedEmployees());
         }
+
+        subproject.setHoursAllocated(subproject.getHoursAllocated() + task.getHoursAllocated());
+        subproject.setTotalEstimatedCost(subproject.getTotalEstimatedCost() + task.getEstimatedCost());
+        subprojectService.updateSubproject(task.getSubprojectId(), subproject);
 
         taskService.createTask(task);
         return "redirect:/" + userId + "/portfolio/" + projectId;
