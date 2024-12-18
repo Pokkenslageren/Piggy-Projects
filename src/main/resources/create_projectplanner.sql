@@ -1,5 +1,7 @@
 USE project_planner;
 
+CREATE DATABASE project_planner;
+
 DROP TABLE IF EXISTS tasks;
 DROP TABLE IF EXISTS subprojects;
 DROP TABLE IF EXISTS projects;
