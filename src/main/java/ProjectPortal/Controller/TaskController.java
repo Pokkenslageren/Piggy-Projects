@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("")
@@ -73,6 +74,47 @@ public class TaskController {
         subprojectService.updateSubproject(task.getSubprojectId(), subproject);
 
         taskService.createTask(task);
+        return "redirect:/" + userId + "/portfolio/" + projectId;
+    }
+
+    /**
+     * Handles the update operation for a specific task by retrieving the associated user, project, subproject,
+     * and task details, and adding them to the model for rendering the update task page.
+     * @param userId        the ID of the user who owns the portfolio
+     * @param projectId     the ID of the project the task belongs to
+     * @param subprojectId  the ID of the subproject the task belongs to
+     * @param taskId        the ID of the task to be updated
+     * @param model         the Spring {@code Model} object used to pass attributes to the view
+     * @return the name of the view to render the task update form
+     */
+    @GetMapping("/{userId}/portfolio/{projectId}/{subprojectId}/{taskId}/update")
+    public String updateTask(@PathVariable int userId, @PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, Model model) {
+        User user = userService.readUserById(userId);
+        Project project = projectService.readProject(projectId);
+        Subproject subproject = subprojectService.readSubproject(subprojectId);
+        Optional<Task> task = taskService.getTaskById(String.valueOf(taskId));
+
+        model.addAttribute("user", user);
+        model.addAttribute("project", project);
+        model.addAttribute("subproject", subproject);
+        model.addAttribute("task", task.get());
+
+        return "update-task";
+    }
+
+    /**
+     * Updates an existing task associated with a specific user, project, and subproject.
+     * @param userId The ID of the user associated with the portfolio.
+     * @param projectId The ID of the project containing the task.
+     * @param subprojectId The ID of the subproject containing the task.
+     * @param taskId The ID of the task to be updated.
+     * @param task The Task object containing the updated details of the task.
+     * @return A redirect URL to the user's portfolio page for the specified project.
+     */
+    @PostMapping("/{userId}/portfolio/{projectId}/{subprojectId}/{taskId}/update")
+    public String updateTask(@PathVariable int userId, @PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, @ModelAttribute Task task) {
+        task.setSubprojectId(subprojectId);
+        taskService.updateTask(taskId, task);
         return "redirect:/" + userId + "/portfolio/" + projectId;
     }
 

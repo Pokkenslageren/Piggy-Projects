@@ -89,6 +89,45 @@ public class SubprojectController {
     }
 
     /**
+     * Handles the update request for a specific subproject within a user's portfolio.
+     * Retrieves user, project, and subproject data based on provided IDs, adds them to the model,
+     * and returns the name of the view for updating the subproject.
+     * @param userId the unique identifier of the user whose subproject is being updated
+     * @param projectId the unique identifier of the project containing the subproject
+     * @param subprojectId the unique identifier of the subproject to be updated
+     * @param model the model object used to supply attributes to the view
+     * @return the name of the view for updating the subproject
+     */
+    @GetMapping("/{userId}/portfolio/{projectId}/{subprojectId}/update")
+    public String updateSubproject(@PathVariable int userId, @PathVariable int projectId, @PathVariable int subprojectId, Model model) {
+        User user = userService.readUserById(userId);
+        Project project = projectService.readProject(projectId);
+        Subproject subproject = subprojectService.readSubproject(subprojectId);
+
+        model.addAttribute("user", user);
+        model.addAttribute("project", project);
+        model.addAttribute("subproject", subproject);
+
+        return "update-subproject";
+    }
+
+    /**
+     * Updates the subproject associated with the given user, project, and subproject IDs
+     * and redirects to the updated project's portfolio view.
+     * @param userId the ID of the user owning the portfolio
+     * @param projectId the ID of the project to which the subproject belongs
+     * @param subprojectId the ID of the subproject to be updated
+     * @param subproject the Subproject object containing the updated subproject details
+     * @return a String that redirects to the portfolio page of the updated project
+     */
+    @PostMapping("/{userId}/portfolio/{projectId}/{subprojectId}/update")
+    public String updateSubproject(@PathVariable int userId, @PathVariable int projectId, @PathVariable int subprojectId, @ModelAttribute Subproject subproject) {
+        subproject.setProjectId(projectId);
+        subprojectService.updateSubproject(subprojectId, subproject);
+        return "redirect:/" + userId + "/portfolio/" + projectId;
+    }
+
+    /**
      * Deletes a subproject associated with a specific user and project.
      * @param userId       the unique identifier of the user
      * @param projectId    the unique identifier of the project to which the subproject belongs
