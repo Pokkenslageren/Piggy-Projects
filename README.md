@@ -19,8 +19,7 @@ Project Portal is a tool built for Alpha Solutions, with the purpose to maintain
 Contributing file with information regarding the project for future contributers. 
 
 ## First time you acces the site
-Remember to create a new user when it is your first time on the site. This is required to create and save your projects. 
-You do this by pressing the "login" button, and then create user. 
+Remember to login with the preset user.
 
 ## Run the program locally or online
 Azure link for going to the site online: projectportal-fdfug0fda9gvchhm.westeurope-01.azurewebsites.net
