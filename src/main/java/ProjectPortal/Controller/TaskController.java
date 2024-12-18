@@ -68,11 +68,6 @@ public class TaskController {
 
         Subproject subproject = subprojectService.readSubproject(task.getSubprojectId());
 
-        if (task.getAssignedEmployees() > subproject.getTotalAssignedEmployees()) {
-
-            task.setAssignedEmployees(subproject.getTotalAssignedEmployees());
-        }
-
         subproject.setHoursAllocated(subproject.getHoursAllocated() + task.getHoursAllocated());
         subproject.setTotalEstimatedCost(subproject.getTotalEstimatedCost() + task.getEstimatedCost());
         subprojectService.updateSubproject(task.getSubprojectId(), subproject);
