@@ -36,6 +36,7 @@ CREATE TABLE projects (
                           project_description text,
                           PRIMARY KEY (project_id),
                           FOREIGN KEY (user_id) REFERENCES users (user_id)
+                              ON DELETE CASCADE
 );
 
 CREATE TABLE subprojects (
@@ -53,6 +54,7 @@ CREATE TABLE subprojects (
                              priority varchar(10),
                              PRIMARY KEY (subproject_id),
                              FOREIGN KEY (project_id) REFERENCES projects (project_id)
+                                 ON DELETE CASCADE
 );
 
 CREATE TABLE tasks (
@@ -69,4 +71,5 @@ CREATE TABLE tasks (
                        priority varchar(10),
                        PRIMARY KEY (task_id),
                        FOREIGN KEY (subproject_id) REFERENCES subprojects (subproject_id)
+                           ON DELETE CASCADE
 );
