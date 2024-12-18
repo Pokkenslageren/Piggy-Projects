@@ -226,8 +226,16 @@ public class ProjectController {
         List<List<Object>> subprojectGantt = new ArrayList<>();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+
+
+
         for (Subproject s : subprojects){
-            subprojectData.add(List.of(s.getSubprojectName(),s.getHoursAllocated()));
+            List<Task> taskList = taskService.readTasksBySubprojectId(s.getSubprojectId());
+            int totalTaskHoursBySubproject = 0;
+            for(Task t : taskList){
+                totalTaskHoursBySubproject += t.getHoursAllocated();
+            }
+            subprojectData.add(List.of(s.getSubprojectName(),totalTaskHoursBySubproject));
         }
 
         for (Subproject s : subprojects){
@@ -235,9 +243,13 @@ public class ProjectController {
         }
 
         for(Subproject s : subprojects){
-            subprojectEstimatedCostPie.add(List.of(s.getSubprojectName(), s.getTotalEstimatedCost()));
+            List<Task> taskList = taskService.readTasksBySubprojectId(s.getSubprojectId());
+            int totalTaskCostBySubproject = 0;
+            for (Task t : taskList){
+                totalTaskCostBySubproject += t.getEstimatedCost();
+            }
+            subprojectEstimatedCostPie.add(List.of(s.getSubprojectName(), totalTaskCostBySubproject));
         }
-
 
         model.addAttribute("project", project);
         model.addAttribute("subprojectData", subprojectData );
