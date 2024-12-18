@@ -27,6 +27,16 @@ public class SubprojectServiceTest {
     @InjectMocks
     private SubprojectService subprojectService;
 
+    /**
+     * Tests the functionality of the {@code readAllTasksBySubproject} method in the service
+     * by verifying that it retrieves all tasks associated with a specific subproject.
+     * The test uses mocked data to simulate tasks belonging to a given subproject ID.
+     * It ensures that:
+     * 1. The service method retrieves the correct number of tasks.
+     * 2. Each task in the returned list matches the expected task details.
+     * The repository is mocked to return a predefined list of tasks, and assertions
+     * are performed to confirm that the response matches the expected output.
+     */
     @Test
     void testReadAllTasksBySubproject() {
         int subprojectId = 1;
@@ -47,7 +57,12 @@ public class SubprojectServiceTest {
         assertEquals(task1, tasks.get(0));
         assertEquals(task2, tasks.get(1));
     }
-
+    /**
+     * This test mocks the behavior of the repository to return an empty list for the
+     * given subproject ID. It verifies that the service method `readAllTasksBySubproject`
+     * correctly returns an empty list and that the size of the result is zero.
+     * The test ensures proper handling of cases where no tasks are found for the provided subproject ID.
+     */
     @Test
     void testReadAllTasksBySubprojectEmptyList() {
         int subprojectId = 1;
