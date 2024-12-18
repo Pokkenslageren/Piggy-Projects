@@ -51,16 +51,44 @@ public class ProjectController {
         return "create-project";
     }
 
-    /**
-     * Initialises a User Object and a List of Project Objects for use in portfolio.html
-     * @param userId ID of the user
-     * @param model Object used by springframework
-     * @return A String reference to portfolio.html
-     */
     @GetMapping("/{userId}/portfolio")
     public String showPortfolio(@PathVariable("userId") int userId, Model model) {
         User user = userService.readUserById(userId);
         List<Project> projects = projectService.readAllProjects();
+
+        // Calculate totals for each project
+        for (Project project : projects) {
+            List<Subproject> subprojects = subprojectService.readAllSubprojectsByProjectId(project.getProjectId());
+
+            int totalProjectEmployees = 0;
+            int totalProjectHours = 0;
+            double totalProjectCost = 0;
+
+            for (Subproject subproject : subprojects) {
+                List<Task> tasks = taskService.readTasksBySubprojectId(subproject.getSubprojectId());
+
+                int subprojectEmployees = 0;
+                double subprojectCost = 0;
+                int subprojectHours = 0;
+
+                for (Task task : tasks) {
+                    subprojectEmployees += task.getAssignedEmployees();
+                    subprojectCost += task.getEstimatedCost();
+                    subprojectHours += task.getHoursAllocated();
+                }
+
+                subproject.setTotalAssignedEmployees(subprojectEmployees);
+                subproject.setTotalEstimatedCost(subprojectCost);
+                subproject.setHoursAllocated(subprojectHours);
+
+                totalProjectEmployees += subprojectEmployees;
+                totalProjectCost += subprojectCost;
+                totalProjectHours += subprojectHours;
+            }
+
+            project.setTotalAssignedEmployees(totalProjectEmployees);
+            project.setTotalEstimatedCost(totalProjectCost);
+        }
 
         model.addAttribute("projects", projects);
         model.addAttribute("user", user);
@@ -81,16 +109,25 @@ public class ProjectController {
     public String showProject(@PathVariable int userId, @PathVariable int projectId, Model model) {
         User user = userService.readUserById(userId);
         Project project = projectService.readProject(projectId);
-        projectService.updateProjectCalculations(project);
         List<Subproject> subprojects = subprojectService.readAllSubprojectsByProjectId(projectId);
 
         for (Subproject subproject : subprojects) {
             List<Task> tasks = taskService.readTasksBySubprojectId(subproject.getSubprojectId());
+
+            int totalEmployees = 0;
+            double totalCost = 0;
+            int totalHours = 0;
+
+            for (Task task : tasks) {
+                totalEmployees += task.getAssignedEmployees();
+                totalCost += task.getEstimatedCost();
+                totalHours += task.getHoursAllocated();
+            }
+
+            subproject.setTotalAssignedEmployees(totalEmployees);
+            subproject.setTotalEstimatedCost(totalCost);
+            subproject.setHoursAllocated(totalHours);
             subproject.setTasks(tasks);
-            double subprojectActualCost = tasks.stream()
-                    .mapToDouble(Task::getEstimatedCost)
-                    .sum();
-            subproject.setTotalActualCost(subprojectActualCost);
         }
 
         model.addAttribute("user", user);
@@ -144,86 +181,6 @@ public class ProjectController {
         return "redirect:/" + userId +"/portfolio";
     }
 
-    /**
-     * Handles the update operation for a specific task by retrieving the associated user, project, subproject,
-     * and task details, and adding them to the model for rendering the update task page.
-     * @param userId        the ID of the user who owns the portfolio
-     * @param projectId     the ID of the project the task belongs to
-     * @param subprojectId  the ID of the subproject the task belongs to
-     * @param taskId        the ID of the task to be updated
-     * @param model         the Spring {@code Model} object used to pass attributes to the view
-     * @return the name of the view to render the task update form
-     */
-    @GetMapping("/{userId}/portfolio/{projectId}/{subprojectId}/{taskId}/update")
-    public String updateTask(@PathVariable int userId, @PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, Model model) {
-        User user = userService.readUserById(userId);
-        Project project = projectService.readProject(projectId);
-        Subproject subproject = subprojectService.readSubproject(subprojectId);
-        Optional<Task> task = taskService.getTaskById(String.valueOf(taskId));
-
-        model.addAttribute("user", user);
-        model.addAttribute("project", project);
-        model.addAttribute("subproject", subproject);
-        model.addAttribute("task", task.get());
-
-        return "update-task";
-    }
-
-    /**
-     * Updates an existing task associated with a specific user, project, and subproject.
-     * @param userId The ID of the user associated with the portfolio.
-     * @param projectId The ID of the project containing the task.
-     * @param subprojectId The ID of the subproject containing the task.
-     * @param taskId The ID of the task to be updated.
-     * @param task The Task object containing the updated details of the task.
-     * @return A redirect URL to the user's portfolio page for the specified project.
-     */
-    @PostMapping("/{userId}/portfolio/{projectId}/{subprojectId}/{taskId}/update")
-    public String updateTask(@PathVariable int userId, @PathVariable int projectId, @PathVariable int subprojectId, @PathVariable int taskId, @ModelAttribute Task task) {
-        task.setSubprojectId(subprojectId);
-        taskService.updateTask(taskId, task);
-        return "redirect:/" + userId + "/portfolio/" + projectId;
-    }
-
-    /**
-     * Handles the update request for a specific subproject within a user's portfolio.
-     * Retrieves user, project, and subproject data based on provided IDs, adds them to the model,
-     * and returns the name of the view for updating the subproject.
-     * @param userId the unique identifier of the user whose subproject is being updated
-     * @param projectId the unique identifier of the project containing the subproject
-     * @param subprojectId the unique identifier of the subproject to be updated
-     * @param model the model object used to supply attributes to the view
-     * @return the name of the view for updating the subproject
-     */
-    @GetMapping("/{userId}/portfolio/{projectId}/{subprojectId}/update")
-    public String updateSubproject(@PathVariable int userId, @PathVariable int projectId, @PathVariable int subprojectId, Model model) {
-        User user = userService.readUserById(userId);
-        Project project = projectService.readProject(projectId);
-        Subproject subproject = subprojectService.readSubproject(subprojectId);
-
-        model.addAttribute("user", user);
-        model.addAttribute("project", project);
-        model.addAttribute("subproject", subproject);
-
-        return "update-subproject";
-    }
-
-    /**
-     * Updates the subproject associated with the given user, project, and subproject IDs
-     * and redirects to the updated project's portfolio view.
-     * @param userId the ID of the user owning the portfolio
-     * @param projectId the ID of the project to which the subproject belongs
-     * @param subprojectId the ID of the subproject to be updated
-     * @param subproject the Subproject object containing the updated subproject details
-     * @return a String that redirects to the portfolio page of the updated project
-     */
-    @PostMapping("/{userId}/portfolio/{projectId}/{subprojectId}/update")
-    public String updateSubproject(@PathVariable int userId, @PathVariable int projectId, @PathVariable int subprojectId, @ModelAttribute Subproject subproject) {
-        subproject.setProjectId(projectId);
-        subprojectService.updateSubproject(subprojectId, subproject);
-        return "redirect:/" + userId + "/portfolio/" + projectId;
-    }
-
 
     /**
      * Deletes a project for a specified user and redirects to the user's portfolio view.
@@ -266,7 +223,6 @@ public class ProjectController {
         List<Subproject> subprojects = subprojectService.readAllSubprojectsByProjectId(projectId);
         List<List<Object>> subprojectData = new ArrayList<>();
         List<List<Object>> subprojectEstimatedCostPie = new ArrayList<>();
-        List<List<Object>> costHistogram = new ArrayList<>();
         List<List<Object>> subprojectGantt = new ArrayList<>();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -281,14 +237,12 @@ public class ProjectController {
         for(Subproject s : subprojects){
             subprojectEstimatedCostPie.add(List.of(s.getSubprojectName(), s.getTotalEstimatedCost()));
         }
-        costHistogram.add(List.of("Estimated Project Cost",project.getTotalEstimatedCost()));
-        costHistogram.add(List.of("Actual Project Cost", projectService.calculateTotalActualCost(subprojects)));
+
 
         model.addAttribute("project", project);
         model.addAttribute("subprojectData", subprojectData );
         model.addAttribute("subprojectGantt",subprojectGantt);
         model.addAttribute("subprojectEstimatedCostPie", subprojectEstimatedCostPie);
-        model.addAttribute("costHistogram", costHistogram);
         return "project-analytics";
     }
 
@@ -307,7 +261,6 @@ public class ProjectController {
         Subproject subproject = subprojectService.readSubproject(subprojectId);
         List<List<Object>> taskData = new ArrayList<>();
         List<List<Object>> taskEstimatedCostPie = new ArrayList<>();
-        List<List<Object>> costBarChart = new ArrayList<>();
         List<List<Object>> ganttChartTasks = new ArrayList<>();
         List<Task> tasks = subprojectService.readAllTasksBySubproject(subprojectId);
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -320,8 +273,6 @@ public class ProjectController {
             taskEstimatedCostPie.add(List.of(t.getTaskName(), t.getEstimatedCost()));
         }
 
-        costBarChart.add(List.of("Estimated Subproject Cost", subproject.getTotalEstimatedCost()));
-        costBarChart.add(List.of("Actual Subproject Cost", subprojectService.calculateTotalActualCost(tasks)));
 
         for(Task t : tasks){
             ganttChartTasks.add(List.of("Task ID: " + t.getTaskId(), t.getTaskName(), t.getStartDate().format(dateTimeFormatter), t.getEndDate().format(dateTimeFormatter)));
@@ -330,7 +281,6 @@ public class ProjectController {
         model.addAttribute("project", project);
         model.addAttribute("taskData", taskData);
         model.addAttribute("taskEstimatedCostPie", taskEstimatedCostPie);
-        model.addAttribute("costBarChart", costBarChart);
         model.addAttribute("ganttChartTasks", ganttChartTasks);
 
         return "subproject-analytics";

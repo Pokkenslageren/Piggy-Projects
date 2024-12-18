@@ -11,7 +11,6 @@ public class Project {
     private LocalDate startDate;
     private LocalDate endDate;
     private double totalEstimatedCost;
-    private double totalActualCost;
     private int totalAssignedEmployees;
     private boolean isComplete;
     private String projectDescription;
@@ -62,7 +61,6 @@ public class Project {
         this.subprojectEmployees = new ArrayList<>();
         this.totalCostPerTask = new ArrayList<>();
         this.totalCostPerSubproject = new ArrayList<>();
-        this.totalActualCost = 0;
     }
 
     /**
@@ -115,13 +113,7 @@ public class Project {
     public double getTotalEstimatedCost() {
         return totalEstimatedCost;
     }
-    /**
-     * Retrieves the total actual cost associated with the project.
-     * @return the total actual cost as a double
-     */
-    public double getTotalActualCost() {
-        return totalActualCost;
-    }
+
     /**
      * Retrieves the total number of employees assigned to the project.
      * @return the total number of assigned employees as an integer
@@ -214,13 +206,7 @@ public class Project {
     public void setTotalEstimatedCost(double totalEstimatedCost) {
         this.totalEstimatedCost = totalEstimatedCost;
     }
-    /**
-     * Sets the total actual cost for the project.
-     * @param actualCost The actual cost incurred for the project.
-     */
-    public void setTotalActualCost(double actualCost) {
-        this.totalActualCost = actualCost;
-    }
+
     /**
      * Sets the total number of employees assigned to the project.
      * @param assignedEmployees the number of employees assigned to the project

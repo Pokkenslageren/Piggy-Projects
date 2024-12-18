@@ -37,7 +37,6 @@ public class SubprojectService {
      */
     public Subproject readSubproject(int subprojectId) {
         Subproject subproject = subprojectRepository.readSubproject(subprojectId);
-        updateSubprojectCalculations(subproject);
         return subproject;
     }
 
@@ -66,9 +65,6 @@ public class SubprojectService {
      */
     public List<Subproject> readAllSubprojectsByProjectId(int projectId) {
         List<Subproject> subprojects = subprojectRepository.readAllSubprojectsByProjectId(projectId);
-        for (Subproject subproject : subprojects) {
-            updateSubprojectCalculations(subproject);
-        }
         return subprojects;
     }
 
@@ -81,22 +77,6 @@ public class SubprojectService {
         subprojectRepository.markComplete(subprojectId);
     }
 
-    /**
-     * Updates the subproject's calculated fields based on its associated tasks.
-     * It calculates and updates the total number of assigned employees and
-     * the total actual cost based on the associated tasks of the given subproject.
-     * @param subproject the subproject whose calculated fields are to be updated
-     */
-    public void updateSubprojectCalculations(Subproject subproject) {
-        List<Task> tasks = taskService.readTasksBySubprojectId(subproject.getSubprojectId());
-        int totalEmployees = calculateTotalEmployees(tasks);
-        subproject.setTotalAssignedEmployees(totalEmployees);
-
-        double totalActualCost = tasks.stream()
-                .mapToDouble(Task::getEstimatedCost)
-                .sum();
-        subproject.setTotalActualCost(totalActualCost);
-    }
 
     /**
      * Calculates the total number of employees assigned to all tasks in the provided list.
@@ -108,25 +88,7 @@ public class SubprojectService {
                 .mapToInt(Task::getAssignedEmployees)
                 .sum();
     }
-    /**
-     * Calculates the total actual hours spent on subproject tasks.
-     * @param listOfTasks a list of tasks associated with the subproject
-     * @return the total actual hours worked across all specified tasks
-     */
-    //?
-    public int totalActualSubprojectHours(List<Task> listOfTasks){
-        return subprojectRepository.totalActualSubprojectHours(listOfTasks);
-    }
 
-    /**
-     * Calculates the total number of available employees for a specific subproject based on a list of tasks.
-     * @param listOfTasks the list of tasks associated with the subproject
-     * @param subproject the subproject for which the available employees are calculated
-     * @return the total number of available employees for the given subproject
-     */
-    public int calculateTotalAvailableEmployees(List<Task> listOfTasks, Subproject subproject){
-        return subprojectRepository.calculateTotalAvailableEmployees(listOfTasks, subproject);
-    }
 
     /**
      * Retrieves all tasks associated with a specific subproject.
