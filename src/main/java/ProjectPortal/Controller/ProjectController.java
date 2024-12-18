@@ -7,6 +7,8 @@ import ProjectPortal.Model.User;
 import ProjectPortal.Service.ProjectService;
 import ProjectPortal.Service.TaskService;
 import ProjectPortal.Service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -233,6 +235,17 @@ public class ProjectController {
     public String deleteProject(@PathVariable("userId") int userId, @PathVariable("projectid") int projectId){
         projectService.deleteProject(projectId);
         return "redirect:/" + userId + "/portfolio";
+    }
+
+    @PostMapping("/project/{projectId}/complete")
+    @ResponseBody
+    public ResponseEntity<String> markProjectComplete(@PathVariable int projectId) {
+        try {
+            projectService.markComplete(projectId);
+            return ResponseEntity.ok("Project marked complete");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error marking project complete");
+        }
     }
 
 

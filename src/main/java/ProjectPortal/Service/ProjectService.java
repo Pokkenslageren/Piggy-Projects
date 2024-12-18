@@ -87,6 +87,11 @@ public class ProjectService {
         project.setTotalAssignedEmployees(totalEmployees);
     }
 
+    public void markComplete(int projectId) {
+        projectRepository.markComplete(projectId);
+    }
+
+
     /**
      * Calculates the total actual cost for the provided list of subprojects.
      * @param subprojects the list of subprojects for which the total actual cost is to be calculated

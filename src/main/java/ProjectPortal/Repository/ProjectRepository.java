@@ -75,13 +75,27 @@ public class ProjectRepository {
 
     /**
      * Retrieves a list of all projects from the database.
+     * custom rowmapper
      * @return a list of {@link Project} objects representing all projects stored in the database.
      */
     public List<Project> readAllProjects() {
         try {
-            String query = "SELECT * FROM projects;";
-            RowMapper<Project> rowMapper = new BeanPropertyRowMapper<>(Project.class);
-            return jdbcTemplate.query(query, rowMapper);
+            String query = "SELECT * FROM projects";
+            return jdbcTemplate.query(query, (rs, rowNum) -> {
+                Project p = new Project();
+                boolean completeValue = rs.getBoolean("is_complete");
+                p.setProjectId(rs.getInt("project_id"));
+                p.setProjectName(rs.getString("project_name"));
+                p.setStartDate(rs.getDate("start_date").toLocalDate());
+                p.setEndDate(rs.getDate("end_date").toLocalDate());
+                p.setTotalEstimatedCost(rs.getDouble("total_estimated_cost"));
+                p.setTotalActualCost(rs.getDouble("total_actual_cost"));
+                p.setTotalAssignedEmployees(rs.getInt("total_assigned_employees"));
+                p.setComplete(completeValue);
+                p.setProjectDescription(rs.getString("project_description"));
+
+                return p;
+            });
         } catch (DataAccessException e) {
             return Collections.emptyList();
         }
@@ -172,6 +186,15 @@ public class ProjectRepository {
         }
 
         return totalEmployees;
+    }
+
+    public void markComplete(int projectId) {
+        try {
+            String sql = "UPDATE projects SET is_complete = true WHERE project_id = ?";
+            jdbcTemplate.update(sql, projectId);
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Cannot update project", e);
+        }
     }
 
     /**

@@ -52,9 +52,8 @@
                         <div class="subproject-metrics">
 
                             <div class="metric">
-
-                                <i class="fas fa-check-circle" th:style="${project.complete ? 'color: #28a745' : 'color: #gray'}"></i>
-                                <span th:text="${project.complete ? 'Complete' : 'In Progress'}"></span>
+                                <i class="fas fa-check-circle" th:style="${project.isComplete ? 'color: #28a745' : 'color: #gray'}"></i>
+                                <span th:text="${project.isComplete ? 'Complete' : 'In Progress'}"></span>
                             </div>
                             <div class="metric">
                                 <i class="fas fa-money-bill"></i>
@@ -79,6 +78,13 @@
                             <p th:text="${project.projectDescription}"></p>
                         </div>
                     </div>
+
+                    <div class="task-actions">
+                        <button class="btn btn-success btn-sm" th:onclick="'markProjectComplete(' + ${project.projectId} + ')'">
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -86,6 +92,20 @@
 </div>
 
 <script>
+
+    function markProjectComplete(projectId) {
+        fetch(`/project/${projectId}/complete`, {
+            method: 'POST',
+        })
+            .then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    alert('Error marking project complete');
+                }
+            });
+    }
+
     function confirmDelete(projectId) {
         if (confirm('Are you sure you want to delete this project?')) {
             window.location.href = `/${userId}/portfolio/${projectId}/delete`;
