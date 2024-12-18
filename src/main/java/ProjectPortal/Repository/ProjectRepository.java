@@ -133,7 +133,7 @@ public class ProjectRepository {
      */
     public void deleteProject(int projectId) {
         try {
-            String query = "DELETE FROM projects WHERE project_id = ?;";
+            String query = "DELETE FROM projects WHERE project_id = ?";
             jdbcTemplate.update(query, projectId);
         } catch (DataAccessException e) {
             throw new RuntimeException("Cannot delete project", e);

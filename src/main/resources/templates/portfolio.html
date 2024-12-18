@@ -83,6 +83,9 @@
                         <button class="btn btn-success btn-sm" th:onclick="'markProjectComplete(' + ${project.projectId} + ')'">
                             <i class="fas fa-check"></i>
                         </button>
+                        <button class="btn btn-danger" th:onclick="'confirmDelete(' + ${project.projectId} + ')'">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </div>
 
                 </div>
@@ -108,7 +111,9 @@
 
     function confirmDelete(projectId) {
         if (confirm('Are you sure you want to delete this project?')) {
-            window.location.href = `/${userId}/portfolio/${projectId}/delete`;
+            const pathParts = window.location.pathname.split('/');
+            const userId = pathParts[1];
+            window.location.href = `/${userId}/portfolio/${projectId}/deleteproject`;
         }
         event.stopPropagation();
     }

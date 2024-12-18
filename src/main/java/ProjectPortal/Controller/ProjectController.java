@@ -231,8 +231,8 @@ public class ProjectController {
      * @param projectId the ID of the project to be deleted
      * @return a redirect string to the user's portfolio view
      */
-    @GetMapping("/{userId}/portfolio/{projectid}/delete")
-    public String deleteProject(@PathVariable("userId") int userId, @PathVariable("projectid") int projectId){
+    @GetMapping("/{userId}/portfolio/{projectId}/deleteproject")
+    public String deleteProject(@PathVariable("userId") int userId, @PathVariable("projectId") int projectId) {
         projectService.deleteProject(projectId);
         return "redirect:/" + userId + "/portfolio";
     }
