@@ -80,8 +80,6 @@ public class ProjectService {
     public void updateProjectCalculations(Project project) {
         List<Subproject> subprojects = subprojectService.readAllSubprojectsByProjectId(project.getProjectId());
 
-        double calculatedActualCost = calculateTotalActualCost(subprojects);
-        project.setTotalActualCost(calculatedActualCost);
 
         int totalEmployees = calculateTotalProjectEmployees(project.getProjectId());
         project.setTotalAssignedEmployees(totalEmployees);

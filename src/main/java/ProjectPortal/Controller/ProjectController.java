@@ -87,10 +87,6 @@ public class ProjectController {
         for (Subproject subproject : subprojects) {
             List<Task> tasks = taskService.readTasksBySubprojectId(subproject.getSubprojectId());
             subproject.setTasks(tasks);
-            double subprojectActualCost = tasks.stream()
-                    .mapToDouble(Task::getEstimatedCost)
-                    .sum();
-            subproject.setTotalActualCost(subprojectActualCost);
         }
 
         model.addAttribute("user", user);
@@ -266,7 +262,6 @@ public class ProjectController {
         List<Subproject> subprojects = subprojectService.readAllSubprojectsByProjectId(projectId);
         List<List<Object>> subprojectData = new ArrayList<>();
         List<List<Object>> subprojectEstimatedCostPie = new ArrayList<>();
-        List<List<Object>> costHistogram = new ArrayList<>();
         List<List<Object>> subprojectGantt = new ArrayList<>();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -281,14 +276,12 @@ public class ProjectController {
         for(Subproject s : subprojects){
             subprojectEstimatedCostPie.add(List.of(s.getSubprojectName(), s.getTotalEstimatedCost()));
         }
-        costHistogram.add(List.of("Estimated Project Cost",project.getTotalEstimatedCost()));
-        costHistogram.add(List.of("Actual Project Cost", projectService.calculateTotalActualCost(subprojects)));
+
 
         model.addAttribute("project", project);
         model.addAttribute("subprojectData", subprojectData );
         model.addAttribute("subprojectGantt",subprojectGantt);
         model.addAttribute("subprojectEstimatedCostPie", subprojectEstimatedCostPie);
-        model.addAttribute("costHistogram", costHistogram);
         return "project-analytics";
     }
 
@@ -307,7 +300,6 @@ public class ProjectController {
         Subproject subproject = subprojectService.readSubproject(subprojectId);
         List<List<Object>> taskData = new ArrayList<>();
         List<List<Object>> taskEstimatedCostPie = new ArrayList<>();
-        List<List<Object>> costBarChart = new ArrayList<>();
         List<List<Object>> ganttChartTasks = new ArrayList<>();
         List<Task> tasks = subprojectService.readAllTasksBySubproject(subprojectId);
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -320,8 +312,6 @@ public class ProjectController {
             taskEstimatedCostPie.add(List.of(t.getTaskName(), t.getEstimatedCost()));
         }
 
-        costBarChart.add(List.of("Estimated Subproject Cost", subproject.getTotalEstimatedCost()));
-        costBarChart.add(List.of("Actual Subproject Cost", subprojectService.calculateTotalActualCost(tasks)));
 
         for(Task t : tasks){
             ganttChartTasks.add(List.of("Task ID: " + t.getTaskId(), t.getTaskName(), t.getStartDate().format(dateTimeFormatter), t.getEndDate().format(dateTimeFormatter)));
@@ -330,7 +320,6 @@ public class ProjectController {
         model.addAttribute("project", project);
         model.addAttribute("taskData", taskData);
         model.addAttribute("taskEstimatedCostPie", taskEstimatedCostPie);
-        model.addAttribute("costBarChart", costBarChart);
         model.addAttribute("ganttChartTasks", ganttChartTasks);
 
         return "subproject-analytics";

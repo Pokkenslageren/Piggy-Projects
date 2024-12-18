@@ -9,7 +9,6 @@
         google.charts.setOnLoadCallback(drawChartHoursAllocated);
         google.charts.setOnLoadCallback(drawChartGantt); //crasher måske hele lortet!
         google.charts.setOnLoadCallback(drawChartEstimatedCost);
-        google.charts.setOnLoadCallback(drawHistogram);
 
         function drawChartHoursAllocated() {
             var data = new google.visualization.DataTable();
@@ -66,29 +65,6 @@
             chart.draw(data, options);
         }
 
-        function drawHistogram(){
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'costType');
-            data.addColumn('number', 'cost');
-            data.addRows([[${costHistogram}]]);
-
-
-            var options = {
-                title: 'Estimated vs. Total Actual Cost For Project',
-                legend: { position: 'none' },
-                hAxis: {
-                    title: 'Cost'
-                },
-                vAxis: {
-                    title: 'Cost Type'
-                },
-                colors: ['#ff5733', '#33c1ff', '#a833ff', '#0f9527', '#ff9933']
-            };
-
-            var chart = new google.visualization.BarChart(document.getElementById('histogram'));
-            chart.draw(data, options);
-
-        }
 
     </script>
 
@@ -140,7 +116,7 @@
         <div id="piechart" style="width: 500px; height: 375px; position: absolute; top: 455px; left: 225px"></div>
         <div id="timeline" style="width: 1455px; height: 700px; position: absolute; top: 200px; left: 225px" ></div>
         <div id="donutchart" style="width: 500px; height: 375px; position: absolute; top: 455px; left: 726px"></div>
-        <div id="histogram" style="width: 455px; height: 375px; position: absolute; top: 455px; left: 1226px"></div>
+
     </div>
 
 

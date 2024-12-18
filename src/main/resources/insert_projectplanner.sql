@@ -22,16 +22,16 @@ INSERT INTO subprojects (project_id, subproject_name, start_date, end_date,
                          subproject_description, hours_allocated, priority)
 VALUES
     (1, 'Frontend Development', '2024-12-12', '2025-06-12',
-     400000.0, 10, 0.0, false, 'User interface development', 2000, 'HIGH'),
+     0, 0, 0.0, false, 'User interface development', 0, 'HIGH'),
     (1, 'Backend Development', '2024-12-12', '2025-09-12',
-     600000.0, 15, 0.0, false, 'Server-side development', 3000, 'HIGH');
+     0, 0, 0.0, false, 'Server-side development', 0, 'HIGH');
 
 INSERT INTO subprojects (project_id, subproject_name, start_date, end_date,
                          total_estimated_cost, total_assigned_employees, total_actual_cost, is_complete,
                          subproject_description, hours_allocated, priority)
 VALUES
     (2, 'Initial Planning', '2025-01-01', '2025-03-15',
-     250000.0, 10, 0.0, false, 'Feasibility, PO meetings', 0, 'HIGH');
+     0, 0, 0.0, false, 'Feasibility, PO meetings', 0, 'HIGH');
 
 
 -- Insert tasks for project 1
