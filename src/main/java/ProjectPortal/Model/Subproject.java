@@ -10,7 +10,7 @@ public class Subproject {
     private LocalDate startDate;
     private LocalDate endDate;
     private double totalEstimatedCost;
-    private double totalActualCost;  // Added to match DB
+    private double totalActualCost;
     private int totalAssignedEmployees;
     private boolean isComplete;
     private String subprojectDescription;

@@ -12,9 +12,9 @@ VALUES (1, 1, 'Danske Bank - Payment Processor', '2024-12-12', '2025-12-12',
         1000000.0, 0, false, 'A payment processor for a bank');
 
 INSERT INTO projects (company_id, user_id, project_name, start_date, end_date,
-                        total_estimated_cost, total_assigned_employees, is_complete, project_description)
-VALUES (1, 1, 'Bergmann Gruppen - Employee Management Program', '2025-01-01', '2025-11-11',
-        8000000.0, 0, false, 'A web based employee management system');
+                      total_estimated_cost, total_assigned_employees, is_complete, project_description)
+VALUES (1, 1, 'Nordea - Employee Management System', '2025-01-01', '2025-11-01',
+        800000.0, 0, false, 'Web-based Employee Management application for a bank');
 
 -- Insert subprojects
 INSERT INTO subprojects (project_id, subproject_name, start_date, end_date,

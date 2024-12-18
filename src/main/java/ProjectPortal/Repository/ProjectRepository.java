@@ -89,7 +89,6 @@ public class ProjectRepository {
                 p.setStartDate(rs.getDate("start_date").toLocalDate());
                 p.setEndDate(rs.getDate("end_date").toLocalDate());
                 p.setTotalEstimatedCost(rs.getDouble("total_estimated_cost"));
-                p.setTotalActualCost(rs.getDouble("total_actual_cost"));
                 p.setTotalAssignedEmployees(rs.getInt("total_assigned_employees"));
                 p.setComplete(completeValue);
                 p.setProjectDescription(rs.getString("project_description"));

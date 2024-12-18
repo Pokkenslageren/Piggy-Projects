@@ -11,7 +11,7 @@ public class Project {
     private LocalDate startDate;
     private LocalDate endDate;
     private double totalEstimatedCost;
-    private double totalActualCost;  // Calculated from subprojects
+    private double totalActualCost;
     private int totalAssignedEmployees;
     private boolean isComplete;
     private String projectDescription;
