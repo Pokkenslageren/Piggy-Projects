@@ -282,15 +282,13 @@ public class Subproject {
     }
 
     /**
-     * Calculates and returns the progress percentage of the subproject based on the
-     * total actual hours worked and the allocated hours.
-     * If no hours are allocated, the progress percentage defaults to 0.
-     * @return the progress percentage as a double value. The percentage is calculated
-     *         as the ratio of total actual hours to allocated hours multiplied by 100.
-     *         Returns 0 if hoursAllocated is 0.
+     * calculates hours pr workday needed based on the total days between start and enddate
+     * assuming 5 day workweek.
+     * @return the resulting daily hours as a float
      */
-    public double getProgressPercentage() {
-        if (hoursAllocated == 0) return 0;
-        return (double) totalActualHours / hoursAllocated * 100;
+    public int getHoursPerWorkday() {
+        long totalDays = endDate.toEpochDay() - startDate.toEpochDay();
+        long workdays = totalDays * 5/7;
+        return Math.round(hoursAllocated / (float)workdays);
     }
 }

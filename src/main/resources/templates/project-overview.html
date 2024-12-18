@@ -69,7 +69,7 @@
 
                     <div class="metric">
                         <i class="fas fa-money-bill"></i>
-                        <span>Estimated Cost: <span th:text="${project.totalActualCost + '/' + project.totalEstimatedCost + ' dkk'}"></span></span>
+                        <span>Total Cost: <span th:text="${project.totalEstimatedCost}"></span></span>
                     </div>
                     <div class="metric">
                         <i class="fas fa-users"></i>
@@ -90,11 +90,11 @@
                 <div class="header-actions">
                     <button class="btn btn-primary"
                             th:onclick="|location.href='@{/{userId}/portfolio/{projectId}/analytics(userId=${userId}, projectId=${projectId})}'|">
-                        <i class="fas fa-chart-line"></i> Analytics
+                        <i class="fas fa-chart-line"></i>
                     </button>
                     <button class="btn btn-primary"
                             th:onclick="|location.href='@{/{userId}/portfolio/{projectId}/update(userId=${userId}, projectId=${projectId})}'|">
-                        <i class="fas fa-edit"></i> Update
+                        <i class="fas fa-edit"></i>
                     </button>
                 </div>
             </div>
@@ -140,9 +140,10 @@
                                 <div class="metric">
                                     <i class="fas fa-clock"></i>
                                     <div class="hours-progress">
-                                        <span th:text="${subproject.hoursAllocated + ' hours'}"></span>
+                                        <span th:text="${subproject.hoursAllocated + ' hours (' + subproject.hoursPerWorkday + ' hours daily)'}"></span>
                                     </div>
                                 </div>
+
 
                             </div>
                         </div>

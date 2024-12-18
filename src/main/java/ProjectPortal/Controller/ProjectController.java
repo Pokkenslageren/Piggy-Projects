@@ -58,7 +58,7 @@ public class ProjectController {
     @GetMapping("/{userId}/portfolio")
     public String showPortfolio(@PathVariable("userId") int userId, Model model) {
         User user = userService.readUserById(userId);
-        List<Project> projects = projectService.readAllProjects(); // Now includes all calculations
+        List<Project> projects = projectService.readAllProjects();
 
         model.addAttribute("projects", projects);
         model.addAttribute("user", user);
@@ -91,7 +91,7 @@ public class ProjectController {
             subproject.setTotalActualCost(subprojectActualCost);
         }
 
-        model.addAttribute("user", user);  // Add this line
+        model.addAttribute("user", user);
         model.addAttribute("project", project);
         model.addAttribute("subprojects", subprojects);
         return "project-overview";
@@ -290,6 +290,7 @@ public class ProjectController {
      */
     @GetMapping("/{userId}/portfolio/{projectid}/{subprojectid}/analytics")
     public String displayAnalyticsSubproject(@PathVariable("userId") int userId, @PathVariable("projectid") int projectId, @PathVariable("subprojectid") int subprojectId, Model model){
+        Project project = projectService.readProject(projectId);
         Subproject subproject = subprojectService.readSubproject(subprojectId);
         List<List<Object>> taskData = new ArrayList<>();
         List<List<Object>> taskEstimatedCostPie = new ArrayList<>();
@@ -313,6 +314,7 @@ public class ProjectController {
             ganttChartTasks.add(List.of("Task ID: " + t.getTaskId(), t.getTaskName(), t.getStartDate().format(dateTimeFormatter), t.getEndDate().format(dateTimeFormatter)));
         }
 
+        model.addAttribute("project", project);
         model.addAttribute("taskData", taskData);
         model.addAttribute("taskEstimatedCostPie", taskEstimatedCostPie);
         model.addAttribute("costBarChart", costBarChart);

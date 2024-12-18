@@ -68,6 +68,7 @@
     color: #6c757d;
 }
 
+
 .tasks-container {
     padding: 20px;
     background: #f8f9fa;
@@ -123,6 +124,16 @@
     transform: translateY(-1px);
 }
 
+.header-actions .btn {
+    min-width: 50px;
+    max-width: 50px;
+    padding: 8px 16px;
+    margin: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .subproject-actions, .task-actions {
     display: flex;
     gap: 8px;
@@ -142,9 +153,8 @@
 }
 
 .project-description {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid #eee;
+    margin: 5px 0;
+    padding-top: 12px;
 }
 
 .project-description p {
@@ -159,12 +169,6 @@
     min-width: 150px;
 }
 
-.progress-bar {
-    background-color: #e9ecef;
-    border-radius: 4px;
-    height: 8px;
-    overflow: hidden;
-}
 
 .progress-fill {
     background-color: #326df6;
@@ -186,3 +190,4 @@
     color: #666;
     white-space: nowrap;
 }
+
