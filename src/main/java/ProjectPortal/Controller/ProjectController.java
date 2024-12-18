@@ -51,16 +51,44 @@ public class ProjectController {
         return "create-project";
     }
 
-    /**
-     * Initialises a User Object and a List of Project Objects for use in portfolio.html
-     * @param userId ID of the user
-     * @param model Object used by springframework
-     * @return A String reference to portfolio.html
-     */
     @GetMapping("/{userId}/portfolio")
     public String showPortfolio(@PathVariable("userId") int userId, Model model) {
         User user = userService.readUserById(userId);
         List<Project> projects = projectService.readAllProjects();
+
+        // Calculate totals for each project
+        for (Project project : projects) {
+            List<Subproject> subprojects = subprojectService.readAllSubprojectsByProjectId(project.getProjectId());
+
+            int totalProjectEmployees = 0;
+            int totalProjectHours = 0;
+            double totalProjectCost = 0;
+
+            for (Subproject subproject : subprojects) {
+                List<Task> tasks = taskService.readTasksBySubprojectId(subproject.getSubprojectId());
+
+                int subprojectEmployees = 0;
+                double subprojectCost = 0;
+                int subprojectHours = 0;
+
+                for (Task task : tasks) {
+                    subprojectEmployees += task.getAssignedEmployees();
+                    subprojectCost += task.getEstimatedCost();
+                    subprojectHours += task.getHoursAllocated();
+                }
+
+                subproject.setTotalAssignedEmployees(subprojectEmployees);
+                subproject.setTotalEstimatedCost(subprojectCost);
+                subproject.setHoursAllocated(subprojectHours);
+
+                totalProjectEmployees += subprojectEmployees;
+                totalProjectCost += subprojectCost;
+                totalProjectHours += subprojectHours;
+            }
+
+            project.setTotalAssignedEmployees(totalProjectEmployees);
+            project.setTotalEstimatedCost(totalProjectCost);
+        }
 
         model.addAttribute("projects", projects);
         model.addAttribute("user", user);
@@ -81,11 +109,24 @@ public class ProjectController {
     public String showProject(@PathVariable int userId, @PathVariable int projectId, Model model) {
         User user = userService.readUserById(userId);
         Project project = projectService.readProject(projectId);
-        projectService.updateProjectCalculations(project);
         List<Subproject> subprojects = subprojectService.readAllSubprojectsByProjectId(projectId);
 
         for (Subproject subproject : subprojects) {
             List<Task> tasks = taskService.readTasksBySubprojectId(subproject.getSubprojectId());
+
+            int totalEmployees = 0;
+            double totalCost = 0;
+            int totalHours = 0;
+
+            for (Task task : tasks) {
+                totalEmployees += task.getAssignedEmployees();
+                totalCost += task.getEstimatedCost();
+                totalHours += task.getHoursAllocated();
+            }
+
+            subproject.setTotalAssignedEmployees(totalEmployees);
+            subproject.setTotalEstimatedCost(totalCost);
+            subproject.setHoursAllocated(totalHours);
             subproject.setTasks(tasks);
         }
 

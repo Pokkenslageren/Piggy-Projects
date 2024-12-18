@@ -30,20 +30,17 @@ public class SubprojectRepository {
     public void createSubproject(Subproject subproject) {
         try {
             String query = "INSERT INTO subprojects (project_id, subproject_name, start_date, " +
-                    "end_date, total_estimated_cost, total_actual_cost, " +
-                    "is_complete, subproject_description, hours_allocated, priority) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "end_date," +
+                    "is_complete, subproject_description, priority) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
             jdbcTemplate.update(query,
                     subproject.getProjectId(),
                     subproject.getSubprojectName(),
                     subproject.getStartDate(),
                     subproject.getEndDate(),
-                    subproject.getTotalEstimatedCost(),
-                    0.0, // initial actual cost
                     subproject.isComplete(),
                     subproject.getSubprojectDescription(),
-                    subproject.getHoursAllocated(),
                     subproject.getPriority().toString()
             );
         } catch (DataAccessException e) {
@@ -77,17 +74,15 @@ public class SubprojectRepository {
             return jdbcTemplate.query(query, (rs, rowNum) -> {
                 Subproject s = new Subproject();
                 boolean completeValue = rs.getBoolean("is_complete");
+
                 s.setSubprojectId(rs.getInt("subproject_id"));
                 s.setProjectId(rs.getInt("project_id"));
                 s.setSubprojectName(rs.getString("subproject_name"));
                 s.setStartDate(rs.getDate("start_date").toLocalDate());
                 s.setEndDate(rs.getDate("end_date").toLocalDate());
-                s.setTotalEstimatedCost(rs.getDouble("total_estimated_cost"));
-                s.setTotalActualCost(rs.getDouble("total_actual_cost"));
-                s.setTotalAssignedEmployees(rs.getInt("total_assigned_employees"));
                 s.setComplete(completeValue);
                 s.setSubprojectDescription(rs.getString("subproject_description"));
-                s.setHoursAllocated(rs.getInt("hours_allocated"));
+
                 if (rs.getString("priority") != null) {
                     s.setPriority(rs.getString("priority"));
                 }
@@ -110,8 +105,7 @@ public class SubprojectRepository {
     public void updateSubproject(int subprojectId, Subproject subproject) {
         try {
             String query = "UPDATE subprojects SET project_id = ?, subproject_name = ?, " +
-                    "start_date = ?, end_date = ?, total_estimated_cost = ?, " +
-                    "total_assigned_employees = ?, total_actual_cost = ?, hours_allocated = ?, " +
+                    "start_date = ?, end_date = ?," +
                     "priority = ?, is_complete = ?, subproject_description = ? " +
                     "WHERE subproject_id = ?";
 
@@ -120,10 +114,6 @@ public class SubprojectRepository {
                     subproject.getSubprojectName(),
                     subproject.getStartDate(),
                     subproject.getEndDate(),
-                    subproject.getTotalEstimatedCost(),
-                    subproject.getTotalAssignedEmployees(),
-                    subproject.getTotalActualCost(),
-                    subproject.getHoursAllocated(),
                     subproject.getPriority().toString(),
                     subproject.isComplete(),
                     subproject.getSubprojectDescription(),
@@ -173,41 +163,6 @@ public class SubprojectRepository {
             totalActualCost += task.getEstimatedCost();
         }
         return totalActualCost;
-    }
-
-    /**
-     * Calculates the total number of actual work hours for all the given tasks in the subproject.
-     * Each task's total hours are calculated based on the number of days between its start and end dates,
-     * the number of assigned employees, and an assumption of an eight-hour workday.
-     * @param listOfTasks a list of Task objects representing all tasks in the subproject
-     * @return the total number of actual work hours for all tasks in the provided list
-     */
-    public int totalActualSubprojectHours(List<Task> listOfTasks) {
-        int totalActualHours = 0;
-        for (Task task : listOfTasks) {
-            int taskDays = (int) (task.getEndDate().toEpochDay() - task.getStartDate().toEpochDay());
-            totalActualHours += taskDays * task.getAssignedEmployees() * 8;  // 8 hours per workday
-        }
-        return totalActualHours;
-    }
-
-    /**
-     * Calculates the total number of available employees for a given subproject
-     * by subtracting the number of employees currently assigned to tasks
-     * from the total employees assigned to the subproject.
-     * @param listOfTasks the list of tasks within the subproject, each containing the number of assigned employees
-     * @param subproject the subproject for which the total available employees are to be calculated
-     * @return the total number of employees available for the specified subproject after accounting for task assignments
-     */
-    public int calculateTotalAvailableEmployees(List<Task> listOfTasks, Subproject subproject) {
-        int totalSubprojectEmployees = subproject.getTotalAssignedEmployees();
-        int totalEmployeesInUse = 0;
-
-        for (Task task : listOfTasks) {
-            totalEmployeesInUse += task.getAssignedEmployees();
-        }
-
-        return totalSubprojectEmployees - totalEmployeesInUse;
     }
 
     /**

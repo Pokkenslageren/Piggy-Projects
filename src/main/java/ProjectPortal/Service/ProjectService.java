@@ -46,11 +46,6 @@ public class ProjectService {
     public List<Project> readAllProjects() {
         List<Project> projects = projectRepository.readAllProjects();
 
-        // Populate each project with calculatedn values
-        for (Project project : projects) {
-            updateProjectCalculations(project);
-        }
-
         return projects;
     }
 
@@ -71,44 +66,11 @@ public class ProjectService {
         projectRepository.deleteProject(projectId);
     }
 
-    /**
-     * Updates project calculations for the given project. This includes calculating
-     * the total actual cost based on associated subprojects and determining the total number
-     * of employees assigned to the project.
-     * @param project the project whose calculations are to be updated. It must include a valid project ID for data retrieval and updates.
-     */
-    public void updateProjectCalculations(Project project) {
-        List<Subproject> subprojects = subprojectService.readAllSubprojectsByProjectId(project.getProjectId());
-
-
-        int totalEmployees = calculateTotalProjectEmployees(project.getProjectId());
-        project.setTotalAssignedEmployees(totalEmployees);
-    }
 
     public void markComplete(int projectId) {
         projectRepository.markComplete(projectId);
     }
 
-
-    /**
-     * Calculates the total actual cost for the provided list of subprojects.
-     * @param subprojects the list of subprojects for which the total actual cost is to be calculated
-     * @return the calculated total actual cost as a double value
-     */
-    public double calculateTotalActualCost(List<Subproject> subprojects) {
-        return projectRepository.calculateTotalActualCost(subprojects);
-    }
-
-    /**
-     * Calculates the total number of employees assigned to all tasks
-     * within a specific project.
-     * @param projectId The unique identifier of the project for which
-     *                  the total number of assigned employees is to be calculated.
-     * @return The total number of employees assigned to the specified project.
-     */
-    public int calculateTotalProjectEmployees(int projectId) {
-        return projectRepository.calculateTotalProjectEmployees(projectId);
-    }
 
     /**
      * Formats a given LocalDate into a JavaScript-compatible date string representation.

@@ -10,14 +10,12 @@ public class Subproject {
     private LocalDate startDate;
     private LocalDate endDate;
     private double totalEstimatedCost;
-    private double totalActualCost;
     private int totalAssignedEmployees;
     private boolean isComplete;
     private String subprojectDescription;
     private int hoursAllocated;
     private Priority priority;
     private List<Task> tasks;
-    private int totalActualHours;
 
     /**
      * Default constructor for the Subproject class.
@@ -33,7 +31,6 @@ public class Subproject {
      * @param startDate the start date of the subproject
      * @param endDate the end date of the subproject
      * @param totalEstimatedCost the total estimated cost for the subproject
-     * @param totalActualCost the total actual cost incurred for the subproject
      * @param totalAssignedEmployees the total number of employees assigned to the subproject
      * @param isComplete indicates whether the subproject is complete or not
      * @param subprojectDescription a detailed description of the subproject
@@ -42,7 +39,7 @@ public class Subproject {
      */
     public Subproject(int projectId, String subprojectName, int subprojectId,
                       LocalDate startDate, LocalDate endDate, double totalEstimatedCost,
-                      double totalActualCost, int totalAssignedEmployees, boolean isComplete,
+                      int totalAssignedEmployees, boolean isComplete,
                       String subprojectDescription, int hoursAllocated, Priority priority) {
         this.projectId = projectId;
         this.subprojectName = subprojectName;
@@ -50,7 +47,6 @@ public class Subproject {
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalEstimatedCost = totalEstimatedCost;
-        this.totalActualCost = totalActualCost;
         this.totalAssignedEmployees = totalAssignedEmployees;
         this.isComplete = isComplete;
         this.subprojectDescription = subprojectDescription;
@@ -97,13 +93,6 @@ public class Subproject {
         return totalEstimatedCost;
     }
 
-    /**
-     * Retrieves the total actual cost incurred for the sub-project.
-     * @return the total actual cost as a double
-     */
-    public double getTotalActualCost() {
-        return totalActualCost;
-    }
 
     /**
      * Retrieves the total number of employees assigned to the subproject.
@@ -160,14 +149,6 @@ public class Subproject {
     public List<Task> getTasks() { return tasks; }
 
     /**
-     * Retrieves the total actual hours spent on the subproject.
-     * @return the total actual hours as an integer
-     */
-    public int getTotalActualHours() {
-        return totalActualHours;
-    }
-
-    /**
      * Sets the project ID associated with the subproject.
      * @param projectId the unique identifier of the project to set
      */
@@ -205,14 +186,6 @@ public class Subproject {
      */
     public void setTotalEstimatedCost(double totalEstimatedCost) {
         this.totalEstimatedCost = totalEstimatedCost;
-    }
-
-    /**
-     * Updates the total actual cost associated with the subproject.
-     * @param totalActualCost the total actual cost to set for the subproject
-     */
-    public void setTotalActualCost(double totalActualCost) {
-        this.totalActualCost = totalActualCost;
     }
 
     /**
@@ -273,13 +246,6 @@ public class Subproject {
      */
     public void setTasks(List<Task> tasks) { this.tasks = tasks; }
 
-    /**
-     * Sets the total actual hours for the subproject.
-     * @param totalActualHours the total actual hours worked on the subproject
-     */
-    public void setTotalActualHours(int totalActualHours) {
-        this.totalActualHours = totalActualHours;
-    }
 
     /**
      * calculates hours pr workday needed based on the total days between start and enddate

@@ -38,8 +38,8 @@ public class ProjectRepository {
 
         try {
             String query = "INSERT INTO projects (company_id, user_id, project_name, start_date, " +
-                    "end_date, total_estimated_cost, total_assigned_employees, is_complete, " +
-                    "project_description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    "end_date, is_complete, " +
+                    "project_description) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
             jdbcTemplate.update(query,
                     project.getCompanyId(),
@@ -47,8 +47,6 @@ public class ProjectRepository {
                     project.getProjectName(),
                     project.getStartDate(),
                     project.getEndDate(),
-                    project.getTotalEstimatedCost(),
-                    project.getTotalAssignedEmployees(),
                     project.isComplete(),
                     project.getProjectDescription()
             );
@@ -88,8 +86,6 @@ public class ProjectRepository {
                 p.setProjectName(rs.getString("project_name"));
                 p.setStartDate(rs.getDate("start_date").toLocalDate());
                 p.setEndDate(rs.getDate("end_date").toLocalDate());
-                p.setTotalEstimatedCost(rs.getDouble("total_estimated_cost"));
-                p.setTotalAssignedEmployees(rs.getInt("total_assigned_employees"));
                 p.setComplete(completeValue);
                 p.setProjectDescription(rs.getString("project_description"));
 
@@ -108,15 +104,13 @@ public class ProjectRepository {
     public void updateProject(Project project, int projectId) {
         try {
             String query = "UPDATE projects SET company_id = ?, project_name = ?, start_date = ?, " +
-                    "end_date = ?, total_estimated_cost = ?, total_assigned_employees = ?, " +
+                    "end_date = ?, " +
                     "is_complete = ?, project_description = ? WHERE project_id = ?;";
             jdbcTemplate.update(query,
                     project.getCompanyId(),
                     project.getProjectName(),
                     project.getStartDate(),
                     project.getEndDate(),
-                    project.getTotalEstimatedCost(),
-                    project.getTotalAssignedEmployees(),
                     project.isComplete(),
                     project.getProjectDescription(),
                     projectId
@@ -139,53 +133,6 @@ public class ProjectRepository {
         }
     }
 
-    /**
-     * Calculates the total actual cost of all subprojects within the provided list.
-     * The method retrieves the sum of estimated costs for tasks belonging to each subproject,
-     * processes the sum for all subprojects, and returns the total cost.
-     * @param subprojects a list of Subproject objects for which the total actual cost needs to be calculated
-     * @return the total actual cost as a double value for all provided subprojects
-     */
-    public double calculateTotalActualCost(List<Subproject> subprojects) {
-        double totalActualCost = 0.0;
-
-        for (Subproject subproject : subprojects) {
-            String query = "SELECT SUM(estimated_cost) FROM tasks WHERE subproject_id = ?";
-            Double subprojectCost = jdbcTemplate.queryForObject(query, Double.class, subproject.getSubprojectId());
-
-            if (subprojectCost != null) {
-                totalActualCost += subprojectCost;
-            }
-        }
-
-        return totalActualCost;
-    }
-
-    /**
-     * Calculates the total number of employees assigned to all tasks
-     * within all subprojects of a given project.
-     * @param projectId The unique identifier of the project for which
-     *                  the total number of employees is to be calculated.
-     * @return The total number of employees assigned to all tasks
-     *         across all subprojects of the specified project.
-     */
-    public int calculateTotalProjectEmployees(int projectId) {
-        String subprojectQuery = "SELECT subproject_id FROM subprojects WHERE project_id = ?";
-        List<Integer> subprojectIds = jdbcTemplate.queryForList(subprojectQuery, Integer.class, projectId);
-
-        int totalEmployees = 0;
-
-        for (Integer subprojectId : subprojectIds) {
-            String taskQuery = "SELECT SUM(assigned_employees) FROM tasks WHERE subproject_id = ?";
-            Integer subprojectEmployees = jdbcTemplate.queryForObject(taskQuery, Integer.class, subprojectId);
-
-            if (subprojectEmployees != null) {
-                totalEmployees += subprojectEmployees;
-            }
-        }
-
-        return totalEmployees;
-    }
 
     public void markComplete(int projectId) {
         try {
